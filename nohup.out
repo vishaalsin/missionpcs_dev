@@ -1,0 +1,113 @@
+** Setting up & migrating database **
+
+No changes detected
+
+
+
+
+
+Operations to perform:
+  Apply all migrations: admin, auth, authtoken, contenttypes, django_celery_beat, django_celery_results, grades, letsprepare, notifications_plugin, sessions, social_django, taggit, yaksh
+Running migrations:
+  No migrations to apply.
+Watching for file changes with StatReloader
+[28/Jun/2020 13:17:21] "GET / HTTP/1.1" 302 0
+[28/Jun/2020 13:17:21] "GET /letsprepare/ HTTP/1.1" 302 0
+[28/Jun/2020 13:17:22] "GET /exam/login/?next=/letsprepare/ HTTP/1.1" 200 4770
+[28/Jun/2020 13:17:37] "GET /exam/login/?next=/letsprepare/ HTTP/1.1" 200 4770
+[28/Jun/2020 13:17:40] "GET /exam/login/?next=/letsprepare/ HTTP/1.1" 200 4770
+[28/Jun/2020 13:17:40] "GET /static/yaksh/css/custom.css HTTP/1.1" 200 2221
+[28/Jun/2020 13:17:40] "GET /static/yaksh/css/animate.min.css HTTP/1.1" 200 56048
+[28/Jun/2020 13:17:40] "GET /static/yaksh/css/font-awesome.css HTTP/1.1" 200 35134
+[28/Jun/2020 13:17:40] "GET /static/yaksh/css/ontop.css HTTP/1.1" 200 361
+[28/Jun/2020 13:17:40] "GET /static/yaksh/css/bootstrap.min.css HTTP/1.1" 200 187270
+[28/Jun/2020 13:17:40] "GET /static/yaksh/js/popper.min.js HTTP/1.1" 200 20336
+[28/Jun/2020 13:17:40] "GET /static/yaksh/js/bootstrap.min.js HTTP/1.1" 200 50731
+[28/Jun/2020 13:17:40] "GET /static/yaksh/js/wow.min.js HTTP/1.1" 200 8415
+[28/Jun/2020 13:17:40] "GET /static/yaksh/js/jquery-3.3.1.min.js HTTP/1.1" 200 86927
+[28/Jun/2020 13:17:40] "GET /static/yaksh/images/check_answer.gif HTTP/1.1" 200 77058
+[28/Jun/2020 13:17:40] "GET /static/yaksh/images/lp.png HTTP/1.1" 200 2384
+[28/Jun/2020 13:17:42] "GET /static/yaksh/fonts/fontawesome-webfont.woff2?v=4.6.3 HTTP/1.1" 200 71896
+Not Found: /favicon.ico
+[28/Jun/2020 13:17:42] "GET /favicon.ico HTTP/1.1" 404 3611
+[28/Jun/2020 13:17:48] "GET / HTTP/1.1" 302 0
+[28/Jun/2020 13:17:48] "GET /letsprepare/ HTTP/1.1" 302 0
+[28/Jun/2020 13:17:48] "GET /exam/login/?next=/letsprepare/ HTTP/1.1" 200 4770
+** Done! Migrations complete **
+** Loading fixtures into database **
+** Done! Loaded fixtures into database **
+** Running the Django web server. Press Ctrl-C to Exit **
+Performing system checks...
+
+System check identified no issues (0 silenced).
+June 28, 2020 - 13:16:56
+Django version 3.0.3, using settings 'online_test.settings'
+Starting development server at http://0.0.0.0:8000/
+Quit the server with CONTROL-C.
+Traceback (most recent call last):
+  File "/Users/Shared/anaconda3/envs/work/bin/invoke", line 10, in <module>
+    sys.exit(program.run())
+  File "/Users/Shared/anaconda3/envs/work/lib/python3.6/site-packages/invoke/program.py", line 293, in run
+    self.execute()
+  File "/Users/Shared/anaconda3/envs/work/lib/python3.6/site-packages/invoke/program.py", line 414, in execute
+    executor.execute(*self.tasks)
+  File "/Users/Shared/anaconda3/envs/work/lib/python3.6/site-packages/invoke/executor.py", line 129, in execute
+    result = call.task(*args, **call.kwargs)
+  File "/Users/Shared/anaconda3/envs/work/lib/python3.6/site-packages/invoke/tasks.py", line 115, in __call__
+    result = self.body(*args, **kwargs)
+  File "/Volumes/GoogleDrive/My Drive/letsprepare/tasks.py", line 69, in serve
+    ctx.run("{} manage.py runserver 0.0.0.0:8000".format(PYTHON_COMMAND))
+  File "/Users/Shared/anaconda3/envs/work/lib/python3.6/site-packages/invoke/context.py", line 82, in run
+    return self._run(runner, command, **kwargs)
+  File "/Users/Shared/anaconda3/envs/work/lib/python3.6/site-packages/invoke/context.py", line 89, in _run
+    return runner.run(command, **kwargs)
+  File "/Users/Shared/anaconda3/envs/work/lib/python3.6/site-packages/invoke/runners.py", line 262, in run
+    return self._run_body(command, **kwargs)
+  File "/Users/Shared/anaconda3/envs/work/lib/python3.6/site-packages/invoke/runners.py", line 356, in _run_body
+    raise ThreadException(thread_exceptions)
+invoke.exceptions.ThreadException: 
+Saw 1 exceptions within threads (error):
+
+
+Thread args: {'kwargs': {'echo': None,
+            'input_': <_io.TextIOWrapper name='<stdin>' mode='r' encoding='US-ASCII'>,
+            'output': <_io.TextIOWrapper name='<stdout>' mode='w' encoding='US-ASCII'>},
+ 'target': <bound method Runner.handle_stdin of <invoke.runners.Local object at 0x7ff2e2367b00>>}
+
+Traceback (most recent call last):
+
+  File "/Users/Shared/anaconda3/envs/work/lib/python3.6/site-packages/invoke/platform.py", line 144, in character_buffered
+    yield
+
+  File "/Users/Shared/anaconda3/envs/work/lib/python3.6/site-packages/invoke/runners.py", line 624, in handle_stdin
+    data = self.read_our_stdin(input_)
+
+  File "/Users/Shared/anaconda3/envs/work/lib/python3.6/site-packages/invoke/runners.py", line 586, in read_our_stdin
+    bytes_ = input_.read(bytes_to_read(input_))
+
+OSError: [Errno 5] Input/output error
+
+
+During handling of the above exception, another exception occurred:
+
+
+Traceback (most recent call last):
+
+  File "/Users/Shared/anaconda3/envs/work/lib/python3.6/site-packages/invoke/util.py", line 202, in run
+    super(ExceptionHandlingThread, self).run()
+
+  File "/Users/Shared/anaconda3/envs/work/lib/python3.6/threading.py", line 864, in run
+    self._target(*self._args, **self._kwargs)
+
+  File "/Users/Shared/anaconda3/envs/work/lib/python3.6/site-packages/invoke/runners.py", line 650, in handle_stdin
+    time.sleep(self.input_sleep)
+
+  File "/Users/Shared/anaconda3/envs/work/lib/python3.6/contextlib.py", line 99, in __exit__
+    self.gen.throw(type, value, traceback)
+
+  File "/Users/Shared/anaconda3/envs/work/lib/python3.6/site-packages/invoke/platform.py", line 146, in character_buffered
+    termios.tcsetattr(stream, termios.TCSADRAIN, old_settings)
+
+termios.error: (25, 'Inappropriate ioctl for device')
+
+
