@@ -145,7 +145,6 @@ function call_skip(url)
 {
     form = document.forms["code"]
     form.action = url
-    console.log("in form submission",form.action);
     form.submit();
 }
 init_val = '{{ last_attempt|escape_quotes|safe }}';
@@ -160,7 +159,6 @@ function checkbox(val){
   var option = "tag"+val;
   var check = "checkbox"+val;
   var checkvalue=  document.getElementById(check).checked;
-<!--  console.log(document.getElementById("round"+val));-->
   if(document.getElementById("round"+val).checked)
   {
     document.getElementById(check).checked=false;
@@ -169,7 +167,6 @@ function checkbox(val){
   {
     if(checkvalue==true)
     {
-      console.log(val,option,document.getElementById(option));
       var e = document.getElementById(option);
 
 
@@ -200,7 +197,6 @@ function roundboxx(val){
           document.getElementById("checkbox"+val).checked =false;
               var d = document.createElement('span');
             var e = document.getElementById("tag"+val);
-            console.log("unchecked",e);
             d.innerHTML = e.innerHTML;
 
             e.parentNode.replaceChild(d, e);
