@@ -15,6 +15,29 @@
         background: #FBC2C4 !important;
         color: #8a1f11 !important;
       }
+  {% if question.type == "mcq" %}
+      input[type="checkbox"]:before {
+    content: "\2717";
+    display: inline-block;
+    font: 14px/1em sans-serif;
+    height: 16px;
+    margin: 0 0 0 0;
+    padding: 0;
+    vertical-align: top;
+    width: 16px;
+
+  }
+  input[type="checkbox"]:checked:before {
+    background: #EC8575;
+    color: #333;
+    content: "\2717";
+    text-align: center;
+  }
+  input[type="checkbox"]:checked:after {
+    background: #EC8575;
+    font-weight: bold;
+  }
+  {%endif%}
 </style>
 {% endblock %}
 
@@ -122,6 +145,7 @@ function call_skip(url)
 {
     form = document.forms["code"]
     form.action = url
+    console.log("in form submission",form.action);
     form.submit();
 }
 init_val = '{{ last_attempt|escape_quotes|safe }}';
@@ -129,6 +153,62 @@ lang = "{{ question.language }}";
 course_id = "{{course.id}}";
 module_id = "{{module.id}}";
 question_type = "{{ question.type }}";
+
+
+<!--for creating cross-out -->
+function checkbox(val){
+  var option = "tag"+val;
+  var check = "checkbox"+val;
+  var checkvalue=  document.getElementById(check).checked;
+<!--  console.log(document.getElementById("round"+val));-->
+  if(document.getElementById("round"+val).checked)
+  {
+    document.getElementById(check).checked=false;
+  }
+  else
+  {
+    if(checkvalue==true)
+    {
+      console.log(val,option,document.getElementById(option));
+      var e = document.getElementById(option);
+
+
+      var d = document.createElement('del');
+      d.innerHTML = e.innerHTML;
+
+      e.parentNode.replaceChild(d, e);
+      d.setAttribute('id',option);
+    }
+    else
+    {
+
+      var d = document.createElement('span');
+      var e = document.getElementById(option);
+      d.innerHTML = e.innerHTML;
+
+      e.parentNode.replaceChild(d, e);
+      d.setAttribute('id',option);
+    }
+  }
+}
+function roundboxx(val){
+    if(document.getElementById("round"+val).checked)
+    {
+
+      if(document.getElementById("checkbox"+val).checked)
+      {
+          document.getElementById("checkbox"+val).checked =false;
+              var d = document.createElement('span');
+            var e = document.getElementById("tag"+val);
+            console.log("unchecked",e);
+            d.innerHTML = e.innerHTML;
+
+            e.parentNode.replaceChild(d, e);
+            d.setAttribute('id',"tag"+val);
+      }
+    }
+
+}
 
 </script>
 {% endblock script %}
@@ -209,6 +289,7 @@ question_type = "{{ question.type }}";
           {{ question.description|safe }}
         </div>
         {% if files %}
+        
           <div class="col-md-5">
               <div class="card">
                 <div class="card-header">
@@ -243,13 +324,25 @@ question_type = "{{ question.type }}";
         <div>
           <!-- MCQ type question -->
           {% if question.type == "mcq" %}
+
             {% for test_case in test_cases %}
+              
               {% if last_attempt and last_attempt|to_int == test_case.id %}
-              <input name="answer" type="radio" value="{{ test_case.id }}" checked />
-                {{ test_case.options|safe }} <br/>
+              <input id='checkbox{{test_case.id}}' name='strike_box' class='strike_out_button' onclick="checkbox({{test_case.id}})"type="checkbox" value="{{ test_case.id }}">
+              <input id="round{{test_case.id}}" name="answer" onclick="roundboxx({{test_case.id}})" type="radio" value="{{ test_case.id }}" checked />
+
+                <span  id='tag{{test_case.id}}' >{{ test_case.options|safe }} <br/></span >
               {% else %}
-              <input name="answer" type="radio" value="{{ test_case.id }}" />
-                {{ test_case.options|safe }} <br/>
+
+                  {% if test_case.id in strike_off%}
+                      <input id='checkbox{{test_case.id}}' name='strike_box' class='strike_out_button' onclick="checkbox({{test_case.id}})"type="checkbox" value="{{ test_case.id }}" checked>
+                      <input id="round{{test_case.id}}" name="answer" type="radio" onclick="roundboxx({{test_case.id}})" value="{{ test_case.id }}" />
+                      <del  id='tag{{test_case.id}}' >{{ test_case.options|safe }} <br/></del >
+                  {% else %}
+                    <input id='checkbox{{test_case.id}}' name='strike_box' class='strike_out_button' onclick="checkbox({{test_case.id}})"type="checkbox" value="{{ test_case.id }}">
+                    <input id="round{{test_case.id}}" name="answer" type="radio" onclick="roundboxx({{test_case.id}})" value="{{ test_case.id }}" />
+                    <span  id='tag{{test_case.id}}' >{{ test_case.options|safe }} <br/></span >
+                  {% endif %}
               {% endif %}
             {% endfor %}
           {% endif %}

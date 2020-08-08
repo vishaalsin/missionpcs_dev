@@ -40,7 +40,8 @@ from yaksh.settings import SERVER_POOL_PORT, SERVER_HOST_NAME
 from django.conf import settings
 from django.forms.models import model_to_dict
 from grades.models import GradingSystem
-
+from django.db.models import IntegerField, Model
+from django_mysql.models import ListTextField
 languages = (
         ("python", "Python"),
         ("bash", "Bash"),
@@ -1324,6 +1325,7 @@ class Question(models.Model):
     # Snippet of code provided to the user.
     snippet = models.TextField(blank=True)
 
+
     # user for particular question
     user = models.ForeignKey(User, related_name="user",
                              on_delete=models.CASCADE)
@@ -1654,6 +1656,8 @@ class Answer(models.Model):
     # The answer submitted by the user.
     answer = models.TextField(null=True, blank=True)
 
+
+
     # Error message when auto-checking the answer.
     error = models.TextField()
 
@@ -1678,6 +1682,14 @@ class Answer(models.Model):
 
 
 ###############################################################################
+class Strike(models.Model):
+
+    # Strike off options
+    strike = ListTextField(null=True, base_field=IntegerField(), size=4, )  # Maximum of 100 ids in list)
+
+    # The question for which user answers.
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+
 class QuestionPaperManager(models.Manager):
 
     def _create_trial_from_questionpaper(self, original_quiz_id):
@@ -2127,8 +2139,13 @@ class AnswerPaper(models.Model):
         Question, related_name='questions_answered'
     )
 
+
     # All the submitted answers.
     answers = models.ManyToManyField(Answer)
+
+    # All the submitted strike off
+
+    strikes = models.ManyToManyField(Strike)
 
     # Teacher comments on the question paper.
     comments = models.TextField()
@@ -2322,6 +2339,10 @@ class AnswerPaper(models.Model):
     def get_latest_answer(self, question_id):
         return self.answers.filter(question=question_id).order_by("id").last()
 
+    def get_latest_strike(self,question_id):
+        return self.strikes.filter(question=question_id).order_by("id").last()
+
+
     def get_questions(self):
         return self.questions.filter(active=True)
 
@@ -2342,6 +2363,9 @@ class AnswerPaper(models.Model):
 
     def get_previous_answers(self, question):
         return self.answers.filter(question=question).order_by('-id')
+
+    def get_previous_strikes(self,question):
+        return self.strikes.filter(question=question).order_by('-id')
 
     def get_categorized_question_indices(self):
         category_question_map = defaultdict(list)

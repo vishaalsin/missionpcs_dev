@@ -42,7 +42,7 @@ from yaksh.models import (
     QuestionPaper, QuestionSet, Quiz, Question, StandardTestCase,
     StdIOBasedTestCase, StringTestCase, TestCase, User,
     get_model_class, FIXTURES_DIR_PATH, MOD_GROUP_NAME, Lesson, LessonFile,
-    LearningUnit, LearningModule, CourseStatus, question_types, Post, Comment
+    LearningUnit, LearningModule, CourseStatus, question_types, Post, Comment, Strike
 )
 from yaksh.forms import (
     UserRegisterForm, UserLoginForm, QuizForm, QuestionForm,
@@ -732,6 +732,7 @@ def show_question(request, question, paper, error_message=None,
         'files': files,
         'notification': notification,
         'last_attempt': question.snippet.encode('unicode-escape'),
+        'strike_off': [],
         'course': course,
         'module': module,
         'can_skip': can_skip,
@@ -740,10 +741,28 @@ def show_question(request, question, paper, error_message=None,
         'all_modules': all_modules,
     }
     answers = paper.get_previous_answers(question)
+    strikes = paper.get_previous_strikes(question)
     if answers:
         last_attempt = answers[0].answer
+
         if last_attempt:
             context['last_attempt'] = last_attempt.encode('unicode-escape')
+            context['strike_off']=[]
+    if strikes:
+        last_strikes = strikes[0].strike
+        if last_strikes:
+            for i in last_strikes:
+                context['strike_off'].append(i)
+    # else:
+    #     new_answer = Answer(
+    #         question=current_question,strike=cut_box,
+    #         correct=False, error=json.dumps([])
+    #     )
+    #     new_answer.save()
+    #     uid = new_answer.id
+    #     paper.answers.add(new_answer)
+
+
     return my_render_to_response(request, 'yaksh/question.html', context)
 
 
@@ -771,6 +790,17 @@ def skip(request, q_id, next_q=None, attempt_num=None, questionpaper_id=None,
             )
             new_answer.save()
             paper.answers.add(new_answer)
+    elif request.method == 'POST' and question.type == 'mcq':
+        cut_box = request.POST.getlist('strike_box')
+        # current_question = get_object_or_404(Question, pk=q_id)
+        if paper.get_latest_strike(question.id):
+            new_strike = paper.get_latest_strike(question)
+            new_strike.strike = cut_box
+        else:
+            new_strike = Strike(question=question, strike=cut_box)
+        new_strike.save()
+        paper.strikes.add(new_strike)
+
     if next_q is not None:
         next_q = get_object_or_404(Question, pk=next_q)
     else:
@@ -804,6 +834,7 @@ def check(request, q_id, attempt_num=None, questionpaper_id=None,
             )
         if current_question.type == 'mcq':
             user_answer = request.POST.get('answer')
+            cut_box = request.POST.getlist('strike_box')
         elif current_question.type == 'integer':
             try:
                 user_answer = int(request.POST.get('answer'))
@@ -883,15 +914,37 @@ def check(request, q_id, attempt_num=None, questionpaper_id=None,
                 and current_question.type not in ['code', 'upload']:
             new_answer = paper.get_latest_answer(current_question.id)
             new_answer.answer = user_answer
+            if current_question.type == "mcq":
+                new_strike = paper.get_latest_strike(current_question.id)
+                new_strike.strike = cut_box
             new_answer.correct = False
         else:
-            new_answer = Answer(
-                question=current_question, answer=user_answer,
-                correct=False, error=json.dumps([])
-            )
+            if current_question.type == "mcq":
+                new_answer = Answer(
+                    question=current_question, answer=user_answer,
+                    correct=False, error=json.dumps([])
+                )
+                if paper.get_latest_strike(current_question.id):
+                    new_strike = paper.get_latest_strike(current_question.id)
+                    new_strike.strike = cut_box
+                else:
+                    new_strike = Strike(question=current_question,strike=cut_box)
+
+            else:
+                new_answer = Answer(
+                    question=current_question, answer=user_answer,
+                    correct=False, error=json.dumps([])
+                )
+        # print("here strike", new_answer.strike)
         new_answer.save()
         uid = new_answer.id
         paper.answers.add(new_answer)
+
+        # if
+        if current_question.type == "mcq":
+            new_strike.save()
+            paper.strikes.add(new_strike)
+
         # If we were not skipped, we were asked to check.  For any non-mcq
         # questions, we obtain the results via XML-RPC with the code executed
         # safely in a separate process (the code_server.py) running as nobody.

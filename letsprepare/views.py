@@ -334,13 +334,19 @@ def report_error(request):
 def send_otp(request):
     data = json.loads(request.POST['data'])
     number = data['number']
-    otp = randint(111111,999999)
-    body = 'Hi there! Your OTP to register on missionpcs is : ' + str(otp)
-    try:
-        send_sms(body, number)
+    if settings.IS_DEVELOPMENT == False:
+        otp = randint(111111,999999)
+        body = 'Hi there! Your OTP to register on missionpcs is : ' + str(otp)
+        try:
+            send_sms(body, number)
+            return JsonResponse({'SENT': otp})
+        except Exception as e:
+            return JsonResponse({'NUMBER NOT VALID' : str(e)})
+    else:
+        otp = "000000"
         return JsonResponse({'SENT': otp})
-    except Exception as e:
-        return JsonResponse({'NUMBER NOT VALID' : str(e)})
+    
+    
 
 
 def send_sms(body, number):

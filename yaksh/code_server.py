@@ -17,7 +17,7 @@ import json
 from multiprocessing import Process, Queue, Manager
 import os
 from os.path import dirname, abspath
-import pwd
+import getpass
 import sys
 import time
 
@@ -39,7 +39,7 @@ MY_DIR = abspath(dirname(__file__))
 def run_as_nobody():
     """Runs the current process as nobody."""
     # Set the effective uid and to that of nobody.
-    nobody = pwd.getpwnam('nobody')
+    nobody = getpass.getpwnam('nobody')
     os.setegid(nobody.pw_gid)
     os.seteuid(nobody.pw_uid)
 
