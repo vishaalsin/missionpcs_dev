@@ -156,7 +156,7 @@ PRODUCTION_URL = 'your_project_url'
 
 # Set this variable to <False> once the project is in production.
 # If this variable is kept <True> in production, email will not be verified.
-IS_DEVELOPMENT = False
+IS_DEVELOPMENT = True
 
 sid = 'XXXXXXXXXXXXXXXXXXXXXXXXX'
 token = 'XXXXXXXXXXXXXXXXXXXXXXXXX'
