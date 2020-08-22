@@ -1,0 +1,29 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+      
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Prepare for PCS or State PSC exams like UPPCS, BPSC, RPSC, MPPSC and JPSC with your personal AI guide.</title>
+      <script src="{% static 'new_homepage/vendor/js/jquery.min.js' %} "></script>
+      <link rel="stylesheet" href="{% static 'new_homepage/vendor/css/bootstrap.min.css' %}" type="text/css">
+      <script src="{% static 'new_homepage/vendor/js//bootstrap.min.js' %}"></script>
+      <link rel="stylesheet" href="{% static 'new_homepage/vendor/css/font-awesome.css' %}"type="text/css">
+      <link rel="shortcut icon" href="{% static 'new_homepage/images/favicon.svg' %}" type="image/x-icon"/>
+      {% block head %}
+      {% endblock %}
+  </head>
+  <body>
+
+  {% block navbar %}
+  {% endblock %}
+
+        {% block content %}
+        {% endblock %}
+
+  {% block footer %}
+  {% endblock %}
+  
+  </body>
+</html>
