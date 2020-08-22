@@ -25,6 +25,5 @@ psycopg2
 tornado
 pandas
 twilio
-pycrypto
 razorpay
 django-allauth
