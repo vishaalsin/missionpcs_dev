@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Series</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous" />
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="./style/test-series.css" />
+</head>
+
+<body>
+    <header>
+        <!-- ######### NAVBAR ########## -->
+        <div class="navbar d-flex flex-column flex-md-row align-items-center p-3 px-md-4 shadow-lg">
+            <!-- ####### Logo for Website ####### -->
+            <a class="navbar-brand" href="#">
+                <img src="./images/logo.png" alt="Logo for mission pcs" />
+            </a>
+            <nav class="my-2 my-md-0 mr-md-3 d-flex justify-content-center flex-wrap p-2">
+                <a class="p-2" href="#">Home</a>
+                <a class="p-2" href="#">Test Series</a>
+                <a class="p-2" href="#">Subjects</a>
+                <a class="p-2" href="#">Prev. Papers</a>
+                <button class="btn" href="#">Logout</button>
+            </nav>
+        </div>
+    </header>
+
+
+    <main>
+        <section id="test-series">
+            <div class="container mt-2">
+                <div class="container-head d-flex flex-wrap justify-content-between">
+                    <h3><b>Your Test Series</b></h3>
+                    <button class="btn">Set Test Series</button>
+                </div>
+                <div class="card shadow-lg">
+                    <div class="card-body">
+                        <h5 class="card-title">SSC Test Series</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Completed Tests: 3 / 12</h6>
+                        <div class="progress">
+                            <div class="progress-bar bg-primary" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <h6 class="card-subtitle mt-2 mb-2 text-muted">Next Test</h6>
+                        <div class="card-foot d-flex flex-wrap justify-content-between">
+                            <div class="sub-card d-flex align-items-center justify-content-between shadow p-2">
+                                <h6>Mock Test - 4</h6>
+                                <div class="test-info"><small>
+                                    <img src="./images/question_icon.png" alt="Question icon" /> 10
+                                    Questions
+                                    </small>
+                                    <small><img class="mr-1" src="./images/marks_icon.png" alt="Marks icon" />
+                                    16 Marks</small>
+                                    <small><img class="mr-1" src="./images/time_icon.png" alt="time icon" />30 Minutes</small>
+                                </div>
+                                <div class="badge badge-pill badge-info">Test Date: 30 Aug</div>
+                            </div>
+                            <div class="card-btn">
+                                <a href="#" class="btn btn-1">Performance</a>
+                                <a href="#" class="btn btn-2" type="button" data-toggle="modal" data-target="#ssc-test-series">View Details</a>
+                                <!-- Model View for Test-Series -->
+                                <div class="modal fade" id="ssc-test-series" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalCenterTitle">Test Series</h5>
+
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <h5 class="card-title">SSC Test Series</h5>
+                                                <h6 class="card-subtitle mb-2 text-muted">Completed Tests: 3 / 12</h6>
+                                                <div class="progress mb-2">
+                                                    <div class="progress-bar bg-primary" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                                <h6 class="card-subtitle mt-2 text-muted">Topics Covered</h6>
+                                                <ul>
+                                                    <li>General Intelligence and Reasoning</li>
+                                                    <li>General Awareness</li>
+                                                    <li>Quantitative Aptitude</li>
+                                                    <li>English Comprehension</li>
+                                                </ul>
+
+                                                <div class="completed-test">
+                                                    <div class="head">
+                                                        <center>
+                                                            <h6 class="card-subtitle mt-2 text-muted"><b>Completed Tests</b></h6>
+                                                        </center>
+                                                    </div>
+                                                    <div class="body">
+                                                        <div class="sub-card">
+                                                            <a class="d-flex align-items-center justify-content-between shadow-sm p-2">
+                                                                <h6>Mock Test - 1</h6>
+                                                                <div class="badge badge-pill badge-success">Marks: 70 / 100</div>
+                                                            </a>
+
+                                                        </div>
+                                                        <div class="sub-card">
+                                                            <a class="d-flex align-items-center justify-content-between shadow-sm p-2" href="#">
+                                                                <h6>Mock Test - 2</h6>
+                                                                <div class="badge badge-pill badge-success">Marks: 70 / 100</div>
+                                                            </a>
+                                                        </div>
+                                                        <div class="sub-card">
+                                                            <a class="d-flex align-items-center justify-content-between shadow-sm p-2" href="#">
+                                                                <h6>Mock Test - 3</h6>
+                                                                <div class="badge badge-pill badge-success">Marks: 70 / 100</div>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="upcoming-test">
+                                                    <div class="head">
+                                                        <center>
+                                                            <h6 class="card-subtitle mt-2 text-muted"><b>Upcoming Tests</b></h6>
+                                                        </center>
+                                                    </div>
+                                                    <div class="body">
+                                                        <div class="sub-card">
+                                                            <a class="d-flex align-items-center justify-content-between shadow-sm p-2" href="#">
+                                                                <h6>Mock Test - 4</h6>
+                                                                <div class="badge badge-pill badge-info">Test Date: 30 Aug</div>
+                                                            </a>
+
+                                                        </div>
+                                                        <div class="sub-card">
+                                                            <a class="d-flex align-items-center justify-content-between shadow-sm p-2" href="#">
+                                                                <h6>Mock Test - 5</h6>
+                                                                <div class="badge badge-pill badge-info">Test Date: 10 Sept</div>
+                                                            </a>
+                                                        </div>
+                                                        <div class="sub-card">
+                                                            <a class="d-flex align-items-center justify-content-between shadow-sm p-2" href="#">
+                                                                <h6>Mock Test - 6</h6>
+                                                                <div class="badge badge-pill badge-info">Test Date: 20 Sept</div>
+                                                            </a>
+                                                        </div>
+                                                        <div class="sub-card">
+                                                            <a class="d-flex align-items-center justify-content-between shadow-sm p-2" href="#">
+                                                                <h6>Mock Test - 7</h6>
+                                                                <div class="badge badge-pill badge-info">Test Date: 30 Sept</div>
+                                                            </a>
+                                                        </div>
+                                                        <div class="sub-card">
+                                                            <a class="d-flex align-items-center justify-content-between shadow-sm p-2" href="#">
+                                                                <h6>Mock Test - 8</h6>
+                                                                <div class="badge badge-pill badge-info">Test Date: 10 Oct</div>
+                                                            </a>
+                                                        </div>
+                                                        <div class="sub-card">
+                                                            <a class="d-flex align-items-center justify-content-between shadow-sm p-2" href="#">
+                                                                <h6>Mock Test - 9</h6>
+                                                                <div class="badge badge-pill badge-info">Test Date: 20 Oct</div>
+                                                            </a>
+                                                        </div>
+                                                        <div class="sub-card">
+                                                            <a class="d-flex align-items-center justify-content-between shadow-sm p-2" href="#">
+                                                                <h6>Mock Test - 10</h6>
+                                                                <div class="badge badge-pill badge-info">Test Date: 30 Oct</div>
+                                                            </a>
+                                                        </div>
+                                                        <div class="sub-card">
+                                                            <a class="d-flex align-items-center justify-content-between shadow-sm p-2" href="#">
+                                                                <h6>Mock Test - 11</h6>
+                                                                <div class="badge badge-pill badge-info">Test Date: 10 Nov</div>
+                                                            </a>
+                                                        </div>
+                                                        <div class="sub-card">
+                                                            <a class="d-flex align-items-center justify-content-between shadow-sm p-2" href="#">
+                                                                <h6>Mock Test - 12</h6>
+                                                                <div class="badge badge-pill badge-info">Test Date: 20 Nov</div>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <a href="#" class="btn btn-1">Performance</a>
+                                                <button type="button" class="btn btn-primary" disabled>Edit Test Series</button>
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card shadow-lg">
+                    <div class="card-body">
+                        <h5 class="card-title">Gate Test Series</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Completed Tests: 3 / 12</h6>
+                        <div class="progress">
+                            <div class="progress-bar bg-primary" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <h6 class="card-subtitle mt-2 mb-2 text-muted">Next Test</h6>
+                        <div class="card-foot d-flex flex-wrap justify-content-between">
+                            <div class="sub-card d-flex align-items-center justify-content-between shadow p-2">
+                                <h6>Mock Test - 4</h6>
+                                <div class="test-info"><small>
+                                    <img src="./images/question_icon.png" alt="Question icon" /> 10
+                                    Questions
+                                    </small>
+                                    <small><img class="mr-1" src="./images/marks_icon.png" alt="Marks icon" />
+                                    16 Marks</small>
+                                    <small><img class="mr-1" src="./images/time_icon.png" alt="time icon" />30 Minutes</small>
+                                </div>
+                                <div class="badge badge-pill badge-info">Test Date: 30 Aug</div>
+                            </div>
+                            <div class="card-btn">
+                                <a href="#" class="btn btn-1">Performance</a>
+                                <a href="#" class="btn btn-2" type="button" data-toggle="modal" data-target="#gate-test-series">View Details</a>
+                                <!-- Model View for Test-Series -->
+                                <div class="modal fade" id="gate-test-series" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalCenterTitle">Test Series</h5>
+
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <h5 class="card-title">Gate Test Series</h5>
+                                                <h6 class="card-subtitle mb-2 text-muted">Completed Tests: 3 / 12</h6>
+                                                <div class="progress mb-2">
+                                                    <div class="progress-bar bg-primary" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                                <h6 class="card-subtitle mt-2 text-muted">Topics Covered</h6>
+                                                <ul>
+                                                    <li>General Intelligence and Reasoning</li>
+                                                    <li>General Awareness</li>
+                                                    <li>Quantitative Aptitude</li>
+                                                    <li>English Comprehension</li>
+                                                </ul>
+
+                                                <div class="completed-test">
+                                                    <div class="head">
+                                                        <center>
+                                                            <h6 class="card-subtitle mt-2 text-muted"><b>Completed Tests</b></h6>
+                                                        </center>
+                                                    </div>
+                                                    <div class="body">
+                                                        <div class="sub-card">
+                                                            <a class="d-flex align-items-center justify-content-between shadow-sm p-2">
+                                                                <h6>Mock Test - 1</h6>
+                                                                <div class="badge badge-pill badge-success">Marks: 70 / 100</div>
+                                                            </a>
+
+                                                        </div>
+                                                        <div class="sub-card">
+                                                            <a class="d-flex align-items-center justify-content-between shadow-sm p-2" href="#">
+                                                                <h6>Mock Test - 2</h6>
+                                                                <div class="badge badge-pill badge-success">Marks: 70 / 100</div>
+                                                            </a>
+                                                        </div>
+                                                        <div class="sub-card">
+                                                            <a class="d-flex align-items-center justify-content-between shadow-sm p-2" href="#">
+                                                                <h6>Mock Test - 3</h6>
+                                                                <div class="badge badge-pill badge-success">Marks: 70 / 100</div>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="upcoming-test">
+                                                    <div class="head">
+                                                        <center>
+                                                            <h6 class="card-subtitle mt-2 text-muted"><b>Upcoming Tests</b></h6>
+                                                        </center>
+                                                    </div>
+                                                    <div class="body">
+                                                        <div class="sub-card">
+                                                            <a class="d-flex align-items-center justify-content-between shadow-sm p-2" href="#">
+                                                                <h6>Mock Test - 4</h6>
+                                                                <div class="badge badge-pill badge-info">Test Date: 30 Aug</div>
+                                                            </a>
+
+                                                        </div>
+                                                        <div class="sub-card">
+                                                            <a class="d-flex align-items-center justify-content-between shadow-sm p-2" href="#">
+                                                                <h6>Mock Test - 5</h6>
+                                                                <div class="badge badge-pill badge-info">Test Date: 10 Sept</div>
+                                                            </a>
+                                                        </div>
+                                                        <div class="sub-card">
+                                                            <a class="d-flex align-items-center justify-content-between shadow-sm p-2" href="#">
+                                                                <h6>Mock Test - 6</h6>
+                                                                <div class="badge badge-pill badge-info">Test Date: 20 Sept</div>
+                                                            </a>
+                                                        </div>
+                                                        <div class="sub-card">
+                                                            <a class="d-flex align-items-center justify-content-between shadow-sm p-2" href="#">
+                                                                <h6>Mock Test - 7</h6>
+                                                                <div class="badge badge-pill badge-info">Test Date: 30 Sept</div>
+                                                            </a>
+                                                        </div>
+                                                        <div class="sub-card">
+                                                            <a class="d-flex align-items-center justify-content-between shadow-sm p-2" href="#">
+                                                                <h6>Mock Test - 8</h6>
+                                                                <div class="badge badge-pill badge-info">Test Date: 10 Oct</div>
+                                                            </a>
+                                                        </div>
+                                                        <div class="sub-card">
+                                                            <a class="d-flex align-items-center justify-content-between shadow-sm p-2" href="#">
+                                                                <h6>Mock Test - 9</h6>
+                                                                <div class="badge badge-pill badge-info">Test Date: 20 Oct</div>
+                                                            </a>
+                                                        </div>
+                                                        <div class="sub-card">
+                                                            <a class="d-flex align-items-center justify-content-between shadow-sm p-2" href="#">
+                                                                <h6>Mock Test - 10</h6>
+                                                                <div class="badge badge-pill badge-info">Test Date: 30 Oct</div>
+                                                            </a>
+                                                        </div>
+                                                        <div class="sub-card">
+                                                            <a class="d-flex align-items-center justify-content-between shadow-sm p-2" href="#">
+                                                                <h6>Mock Test - 11</h6>
+                                                                <div class="badge badge-pill badge-info">Test Date: 10 Nov</div>
+                                                            </a>
+                                                        </div>
+                                                        <div class="sub-card">
+                                                            <a class="d-flex align-items-center justify-content-between shadow-sm p-2" href="#">
+                                                                <h6>Mock Test - 12</h6>
+                                                                <div class="badge badge-pill badge-info">Test Date: 20 Nov</div>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <a href="#" class="btn btn-1">Performance</a>
+                                                <button type="button" class="btn btn-primary" disabled>Edit Test Series</button>
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card shadow-lg">
+                    <div class="card-body">
+                        <h5 class="card-title">UPSC Test Series</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Completed Tests: 3 / 12</h6>
+                        <div class="progress">
+                            <div class="progress-bar bg-primary" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <h6 class="card-subtitle mt-2 mb-2 text-muted">Next Test</h6>
+                        <div class="card-foot d-flex flex-wrap justify-content-between">
+                            <div class="sub-card d-flex align-items-center justify-content-between shadow p-2">
+                                <h6>Mock Test - 4</h6>
+                                <div class="test-info"><small>
+                                    <img src="./images/question_icon.png" alt="Question icon" /> 10
+                                    Questions
+                                    </small>
+                                    <small><img class="mr-1" src="./images/marks_icon.png" alt="Marks icon" />
+                                    16 Marks</small>
+                                    <small><img class="mr-1" src="./images/time_icon.png" alt="time icon" />30 Minutes</small>
+                                </div>
+                                <div class="badge badge-pill badge-info">Test Date: 30 Aug</div>
+                            </div>
+                            <div class="card-btn">
+                                <a href="#" class="btn btn-1">Performance</a>
+                                <a href="#" class="btn btn-2" type="button" data-toggle="modal" data-target="#upsc-test-series">View Details</a>
+                                <!-- Model View for Test-Series -->
+                                <div class="modal fade" id="upsc-test-series" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalCenterTitle">Test Series</h5>
+
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <h5 class="card-title">UPSC Test Series</h5>
+                                                <h6 class="card-subtitle mb-2 text-muted">Completed Tests: 3 / 12</h6>
+                                                <div class="progress mb-2">
+                                                    <div class="progress-bar bg-primary" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                                <h6 class="card-subtitle mt-2 text-muted">Topics Covered</h6>
+                                                <ul>
+                                                    <li>General Intelligence and Reasoning</li>
+                                                    <li>General Awareness</li>
+                                                    <li>Quantitative Aptitude</li>
+                                                    <li>English Comprehension</li>
+                                                </ul>
+
+                                                <div class="completed-test">
+                                                    <div class="head">
+                                                        <center>
+                                                            <h6 class="card-subtitle mt-2 text-muted"><b>Completed Tests</b></h6>
+                                                        </center>
+                                                    </div>
+                                                    <div class="body">
+                                                        <div class="sub-card">
+                                                            <a class="d-flex align-items-center justify-content-between shadow-sm p-2">
+                                                                <h6>Mock Test - 1</h6>
+                                                                <div class="badge badge-pill badge-success">Marks: 70 / 100</div>
+                                                            </a>
+
+                                                        </div>
+                                                        <div class="sub-card">
+                                                            <a class="d-flex align-items-center justify-content-between shadow-sm p-2" href="#">
+                                                                <h6>Mock Test - 2</h6>
+                                                                <div class="badge badge-pill badge-success">Marks: 70 / 100</div>
+                                                            </a>
+                                                        </div>
+                                                        <div class="sub-card">
+                                                            <a class="d-flex align-items-center justify-content-between shadow-sm p-2" href="#">
+                                                                <h6>Mock Test - 3</h6>
+                                                                <div class="badge badge-pill badge-success">Marks: 70 / 100</div>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="upcoming-test">
+                                                    <div class="head">
+                                                        <center>
+                                                            <h6 class="card-subtitle mt-2 text-muted"><b>Upcoming Tests</b></h6>
+                                                        </center>
+                                                    </div>
+                                                    <div class="body">
+                                                        <div class="sub-card">
+                                                            <a class="d-flex align-items-center justify-content-between shadow-sm p-2" href="#">
+                                                                <h6>Mock Test - 4</h6>
+                                                                <div class="badge badge-pill badge-info">Test Date: 30 Aug</div>
+                                                            </a>
+
+                                                        </div>
+                                                        <div class="sub-card">
+                                                            <a class="d-flex align-items-center justify-content-between shadow-sm p-2" href="#">
+                                                                <h6>Mock Test - 5</h6>
+                                                                <div class="badge badge-pill badge-info">Test Date: 10 Sept</div>
+                                                            </a>
+                                                        </div>
+                                                        <div class="sub-card">
+                                                            <a class="d-flex align-items-center justify-content-between shadow-sm p-2" href="#">
+                                                                <h6>Mock Test - 6</h6>
+                                                                <div class="badge badge-pill badge-info">Test Date: 20 Sept</div>
+                                                            </a>
+                                                        </div>
+                                                        <div class="sub-card">
+                                                            <a class="d-flex align-items-center justify-content-between shadow-sm p-2" href="#">
+                                                                <h6>Mock Test - 7</h6>
+                                                                <div class="badge badge-pill badge-info">Test Date: 30 Sept</div>
+                                                            </a>
+                                                        </div>
+                                                        <div class="sub-card">
+                                                            <a class="d-flex align-items-center justify-content-between shadow-sm p-2" href="#">
+                                                                <h6>Mock Test - 8</h6>
+                                                                <div class="badge badge-pill badge-info">Test Date: 10 Oct</div>
+                                                            </a>
+                                                        </div>
+                                                        <div class="sub-card">
+                                                            <a class="d-flex align-items-center justify-content-between shadow-sm p-2" href="#">
+                                                                <h6>Mock Test - 9</h6>
+                                                                <div class="badge badge-pill badge-info">Test Date: 20 Oct</div>
+                                                            </a>
+                                                        </div>
+                                                        <div class="sub-card">
+                                                            <a class="d-flex align-items-center justify-content-between shadow-sm p-2" href="#">
+                                                                <h6>Mock Test - 10</h6>
+                                                                <div class="badge badge-pill badge-info">Test Date: 30 Oct</div>
+                                                            </a>
+                                                        </div>
+                                                        <div class="sub-card">
+                                                            <a class="d-flex align-items-center justify-content-between shadow-sm p-2" href="#">
+                                                                <h6>Mock Test - 11</h6>
+                                                                <div class="badge badge-pill badge-info">Test Date: 10 Nov</div>
+                                                            </a>
+                                                        </div>
+                                                        <div class="sub-card">
+                                                            <a class="d-flex align-items-center justify-content-between shadow-sm p-2" href="#">
+                                                                <h6>Mock Test - 12</h6>
+                                                                <div class="badge badge-pill badge-info">Test Date: 20 Nov</div>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <a href="#" class="btn btn-1">Performance</a>
+                                                <button type="button" class="btn btn-primary" disabled>Edit Test Series</button>
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+
+    <footer class="d-flex p-2 align-items-center flex-wrap justify-content-around">
+        <div>
+            <img src="./images/logo.png" alt="missionpcs">
+        </div>
+        <div class="d-flex align-items-center">
+            <img src="./images/icon-location.svg" alt="Location">
+            <p>We are 100% online. Please keep visiting!!</p>
+        </div>
+        <div class="d-flex align-items-center">
+            <img src="./images/icon-email.svg" alt="contact">
+            <p>missionpcs.help@gmail.com</p>
+        </div>
+    </footer>
+</body>
+
+</html>

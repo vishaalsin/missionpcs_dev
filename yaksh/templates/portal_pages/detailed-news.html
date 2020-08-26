@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detaied Current Affairs</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous" />
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="./style/current-affairs.css" />
+</head>
+
+<body>
+    <header>
+        <!-- ######### NAVBAR ########## -->
+        <div class="navbar d-flex flex-column flex-md-row align-items-center p-3 px-md-4 shadow-lg">
+            <!-- ####### Logo for Website ####### -->
+            <a class="navbar-brand" href="#">
+                <img src="./images/logo.png" alt="Logo for mission pcs" />
+            </a>
+            <nav class="my-2 my-md-0 mr-md-3 d-flex justify-content-center flex-wrap p-2">
+                <a class="p-2" href="#">Home</a>
+                <a class="p-2" href="#">Test Series</a>
+                <a class="p-2" href="#">Subjects</a>
+                <a class="p-2" href="#">Prev. Papers</a>
+                <button class="btn" href="#">Logout</button>
+            </nav>
+        </div>
+    </header>
+    <main role="main">
+        <section id="current-affairs">
+            <div class="head d-flex align-items-center justify-content-between p-3 mt-3 rounded shadow-lg">
+                <div>
+                    <h2 class="mb-0 "><b>Current Affairs</b></h2>
+                </div>
+                <div class="filter">
+                    <h2><a href="javascript:void(0)" class="icon" onclick="toggleCategory()">&#9776;</a></h2>
+                </div>
+            </div>
+            <div id="Content" class="content d-flex flex-wrap justify-content-between">
+                <div class="category mt-2">
+                    <div id="months">
+                        <div class="head"><b>Curren Affairs By Months</b></div>
+                        <div class="list-group">
+                            <a href="#" class="list-group-item list-group-item-action">Current Affairs- August 2020</a>
+                            <a href="#" class="list-group-item list-group-item-action">Current Affairs- July 2020</a>
+                            <a href="#" class="list-group-item list-group-item-action">Current Affairs- June 2020</a>
+                            <a href="#" class="list-group-item list-group-item-action">Current Affairs- May 2020</a>
+                            <a href="#" class="list-group-item list-group-item-action">Current Affairs- April 2020</a>
+                            <a href="#" class="list-group-item list-group-item-action">Current Affairs- March 2020</a>
+                            <a href="#" class="list-group-item list-group-item-action">Current Affairs- February 2020</a>
+                            <a href="#" class="list-group-item list-group-item-action">Current Affairs- January 2020</a>
+                            <a href="#" class="list-group-item list-group-item-action">Current Affairs- December 2019</a>
+                            <a href="#" class="list-group-item list-group-item-action">Current Affairs- November 2019</a>
+                        </div>
+                    </div>
+                    <div id="news-category">
+                        <div class="head"><b>Category</b></div>
+                        <div class="list-group">
+                            <a href="#" class="list-group-item list-group-item-action">Persons in News</a>
+                            <a href="#" class="list-group-item list-group-item-action">Important Days and Events</a>
+                            <a href="#" class="list-group-item list-group-item-action">Defence current affairs</a>
+                            <a href="#" class="list-group-item list-group-item-action">Government Schemes in India</a>
+                            <a href="#" class="list-group-item list-group-item-action">International Current Affairs</a>
+                            <a href="#" class="list-group-item list-group-item-action">States Current Affairs</a>
+                            <a href="#" class="list-group-item list-group-item-action">Environmental Current Affairs</a>
+                            <a href="#" class="list-group-item list-group-item-action">Sports Current Affairs</a>
+                            <a href="#" class="list-group-item list-group-item-action">India Current Affairs</a>
+                            <a href="#" class="list-group-item list-group-item-action">Economic & Banking Current Affairs</a>
+                            <a href="#" class="list-group-item list-group-item-action">Legal Current Affairs</a>
+                            <a href="#" class="list-group-item list-group-item-action">Science & Tech Current Affairs</a>
+                            <a href="#" class="list-group-item list-group-item-action">Awards Current Affairs</a>
+                            <a href="#" class="list-group-item list-group-item-action">Art & Culture Current Affairs</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="news mt-2 p-2 shadow-lg">
+                    <div class="news-head">
+                        <h2><b>Drone based Surveillance System introduced in Indian Railways</b></h2>
+                        <h6 id="date"><img src="./images/date-icon.png" alt="Date"> August 19, 2020</h6>
+                    </div>
+                    <div class="news-content">
+                        <center><img src="./images/news-1.jpg" alt="News-1"></center>
+                        <div>
+
+                            <p>On August 18, 2020, the Ministry of Railways announced that the drone-based surveillance system is to be introduced for the purpose of railway security.</p>
+                            <h4>Highlights</h4>
+                            <p>The Railway Protection Force has so far procured drones at a cost of Rs 32 lakhs. The drones are to be implemented in Central Railway, South Eastern Railway, Central Railway and South Western Railway.</p>
+                            <h4>About the Drones</h4>
+                            <p>In order to implement the surveillance, the Ministry has procured Ninja UAV (Unmanned Aerial Vehicle). The drones are capable of video streaming and real time tracking.</p>
+                            <h4>Drone Categories in India</h4>
+                            <p>The registration of drones of all categories are essential except for the nano category. The categories of drones in India are as follows</p>
+                            <ul>
+                                <li>Nano: Less than or equal to 250 grams</li>
+                                <li>Micro: between 250 grams and 2 kg</li>
+                                <li>Small: Between 2 kg and 25 kg</li>
+                                <li>Medium: Between 25 kg and 150 kg</li>
+                                <li>Large: Greater than 150 kg</li>
+                            </ul>
+                            <h4>Required Drone Equipment in India</h4>
+                            <p>India has specific requirement in regard to the type of feature a drone should have to fly in Indian skies. This excludes Nano category. The features are GPS, anti-collision light, return to home, ID plate, RFID, a flight controller
+                                with flight data logging capability.</p>
+                            <h4>National Drone Policy</h4>
+                            <p>The National Drone Policy of India came into effect on December 1, 2018. It is called the Drone Regulations 1.0. The policy clarifies when, where and how drones can be operated within India.</p>
+                            <h4>Digital Sky Portal</h4>
+                            <p>It is an online platform for the drones to register. It is a part of an enforcement system designated as No Permission No Takeoff. The Directorate General of Civil Aviation is the authority responsible for providing permission
+                                to fly drones in Indian skies. The permission is provided through a Unique Identification Number.</p>
+                            <p>The user has to pay fees of Rs 1000 to obtain the UNI or the Unmanned Aircraft Operator Permit.</p>
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+    </main>
+    <footer class="d-flex p-2 align-items-center flex-wrap justify-content-around">
+        <div>
+            <img src="./images/logo.png" alt="missionpcs">
+        </div>
+        <div class="d-flex align-items-center">
+            <img src="./images/icon-location.svg" alt="Location">
+            <p>We are 100% online. Please keep visiting!!</p>
+        </div>
+        <div class="d-flex align-items-center">
+            <img src="./images/icon-email.svg" alt="contact">
+            <p>missionpcs.help@gmail.com</p>
+        </div>
+    </footer>
+</body>
+
+<script>
+    function toggleCategory() {
+        var x = document.getElementById("Content");
+        if (x.className === "content d-flex flex-wrap justify-content-between") {
+            x.className += " responsive";
+        } else {
+            x.className = "content d-flex flex-wrap justify-content-between";
+        }
+    }
+</script>
+
+</html>
