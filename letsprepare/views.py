@@ -90,7 +90,9 @@ def show_all_modules(request):
         'user': user, 'modules': modules_data,
         'title': 'ALL  AVAILABLE  MODULES'
     }
-    return my_render_to_response(request, "yaksh/all_modules.html", context)
+    #return my_render_to_response(request, "yaksh/all_modules.html", context)
+    
+    return my_render_to_response(request, "portal_pages/subjects.html", context)
 
 def show_all_on_sale(request):
     user = request.user
@@ -359,7 +361,10 @@ def send_sms(body, number):
 
 def index(request):
     if request.user.id == None:
-        return my_render_to_response(request, "index.html")
+        courses = Course.objects.all()
+        subjects = LearningModule.objects.all()
+        ctx = {'courses': ['ankit', 'portal', 'geeks', 'computer', 'ANPSC', 'APPSC', 'APSC', 'BPSC', 'CPSC', 'GPSC'], 'subjects': subjects}
+        return my_render_to_response(request, "index.html", context=ctx)
     else:
         return my_redirect('/exam/login/?next=/letsprepare/show_modules/')
 

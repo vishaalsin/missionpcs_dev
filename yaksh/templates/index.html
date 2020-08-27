@@ -24,20 +24,17 @@
                 <li class="nav-item drop-down">
                     <a href="#" class="nav-link">Exams<span class="fa fa-chevron-down"></span></a>
                     <ul class="dropdown-content">
-                        <li><a href="#">Previous year papers</a></li>
-                        <li><a href="#">Subjects</a></li>
-                        <li><a href="#">Announcements</a></li>
-                        <li><a href="#">Test series</a></li>
+                    {% for course in courses %}
+                    <li><a href="#">{{ course }}</a></li>
+                    {% endfor %}
                     </ul>
                 </li>
                 <li class="nav-item drop-down">
                     <a href="#" class="nav-link">Subjects<span class="fa fa-chevron-down"></span></a>
                     <ul class="dropdown-content">
-                        <li><a href="#">English</a></li>
-                        <li><a href="#">Maths</a></li>
-                        <li><a href="#">Chemistry</a></li>
-                        <li><a href="#">Physics</a></li>
-                        <li><a href="#">Computer Science</a></li>
+                        {% for subject in subjects %}
+                        <li><a href="{% url 'letsprepare:quizzes' %}?id={{ subject.id }}">{{ subject }}</a></li>
+                        {% endfor %}
                     </ul>
                 </li>
                 <li class="nav-item"><a href="#" class="nav-link">Test Series</a></li>
@@ -313,121 +310,84 @@
       <section id="exam">
         <h3 class="sub-head">&diamond; Select your exam &diamond;</h3>
         <ul class="nav nav-tabs" id="myTab" role="tablist">
+        {% for course in courses %}
           <li class="nav-item">
-            <a class="nav-link active" id="anpsc-tab" data-toggle="tab" href="#anpsc" role="tab" aria-controls="anpsc" aria-selected="true">ANPSC</a>
+            <a class="nav-link {% if forloop.counter == 1 %}active{% endif %} {% if forloop.counter > 2 %}d-none {% endif %}{% if forloop.counter > 4 and forloop.counter < 6 %}d-sm-none {% endif %}{% if forloop.counter > 8 %}d-lg-block {% endif %}" id="{{ course }}-tab" data-toggle="tab" href="#{{ course }}" role="tab" aria-controls="anpsc" aria-selected="true">{{ course }}</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" id="appsc-tab" data-toggle="tab" href="#appsc" role="tab" aria-controls="appsc" aria-selected="false">APPSC</a>
-          </li>
-          <li class="nav-item d-none d-md-block">
-            <a class="nav-link" id="apsc-tab" data-toggle="tab" href="#apsc" role="tab" aria-controls="apsc" aria-selected="false">APSC</a>
-          </li>
+          {% if forloop.counter %}{% endif %}
+        {% endfor %}
           <li class="nav-item primary-btn">
             <a class="btn primary-btn" id="v-more" href="#"><b>View More <i class="fa fa-chevron-circle-right"></i></b></a>
           </li>
         </ul>
         
         <div class="tab-content" id="myTabContent">
-          <div class="tab-pane fade show active" id="anpsc" role="tabpanel" aria-labelledby="anpsc-tab">
-            <div class="row">
-              <div class="col-lg-6 col-12 mb-3">
-                <div class="card">
-                  <a href="#" class="card-body card-prop" id="subjects-body">
-                    <div class="row">
-                      <div class="col-md-6 col-12">
-                        <h5 class="card-title text-left">Subjects</h5>
-                        <p class="card-text text-left">With supporting text below as a natural lead-in to additional content.</p>
+          {% for course in courses %}
+            <div class="tab-pane fade {% if forloop.counter == 1 %}active show{% endif %}" id="{{ course }}" role="tabpanel" aria-labelledby="{{ course }}-tab">
+              <div class="row">
+                <div class="col-lg-6 col-12 mb-3">
+                  <div class="card">
+                    <a href="#" class="card-body card-prop" id="subjects-body">
+                      <div class="row">
+                        <div class="col-md-6 col-12">
+                          <h5 class="card-title text-left">Subjects</h5>
+                          <p class="card-text text-left">With supporting text below as a natural lead-in to additional content.</p>
+                        </div>
+                        <div class="col-md-6 col-12">
+                          <img src="{% static 'new_homepage/images/Subject.svg' %} ">
+                        </div>
+                        </div>
+                    </a>
+                  </div>
+                </div>
+                <div class="col-lg-6 mb-3 col-12">
+                  <div class="card">
+                    <a href="#" class="card-body card-prop" id="testseries-body">
+                      <div class="row">
+                        <div class="col-md-6 col-12">
+                          <h5 class="card-title text-left">Set up Test Series by Calendar and Schedule</h5>
+                          <p class="card-text text-left">With supporting text below as a natural lead-in to additional content.</p>
+                        </div>
+                        <div class="col-md-6 col-12">
+                          <img src="{% static 'new_homepage/images/test-schedule.svg' %}">
+                        </div>
                       </div>
-                      <div class="col-md-6 col-12">
-                        <img src="{% static 'new_homepage/images/Subject.svg' %} ">
+                    </a>
+                  </div>
+                </div>
+                <div class="col-lg-6 mb-3 col-12">
+                  <div class="card">
+                    <a href="#" class="card-body card-prop" id="previospaper-body">
+                      <div class="row">
+                        <div class="col-md-6 col-12">
+                          <h5 class="card-title text-left">Previous year papers</h5>
+                          <p class="card-text text-left">With supporting text below as a natural lead-in to additional content.</p>
+                        </div>
+                        <div class="col-md-6 col-12">
+                          <img src="{% static 'new_homepage/images/preiviousyearp.svg' %}">
+                        </div>
                       </div>
+                    </a>
+                  </div>
+                </div>
+                <div class="col-lg-6 mb-3 col-12">
+                  <div class="card">
+                    <a href="#" class="card-body card-prop" id="announcements-body">
+                      <div class="row">
+                        <div class="col-md-6 col-12">
+                          <h5 class="card-title text-left">Announcements</h5>
+                          <p class="card-text text-left">With supporting text below as a natural lead-in to additional content.</p>
+                        </div>
+                        <div class="col-md-6 col-12">
+                          <img src="{% static 'new_homepage/images/announcement.svg' %}">
+                        </div>
                       </div>
-                  </a>
+                    </a>
+                  </div>
                 </div>
               </div>
-              <div class="col-lg-6 mb-3 col-12">
-                <div class="card">
-                  <a href="#" class="card-body card-prop" id="testseries-body">
-                    <div class="row">
-                      <div class="col-md-6 col-12">
-                        <h5 class="card-title text-left">Set up Test Series by Calendar and Schedule</h5>
-                        <p class="card-text text-left">With supporting text below as a natural lead-in to additional content.</p>
-                      </div>
-                      <div class="col-md-6 col-12">
-                        <img src="{% static 'new_homepage/images/test-schedule.svg' %}">
-                      </div>
-                    </div>
-                  </a>
-                </div>
-              </div>
-              <div class="col-lg-6 mb-3 col-12">
-                <div class="card">
-                  <a href="#" class="card-body card-prop" id="previospaper-body">
-                    <div class="row">
-                      <div class="col-md-6 col-12">
-                        <h5 class="card-title text-left">Previous year papers</h5>
-                        <p class="card-text text-left">With supporting text below as a natural lead-in to additional content.</p>
-                      </div>
-                      <div class="col-md-6 col-12">
-                        <img src="{% static 'new_homepage/images/preiviousyearp.svg' %}">
-                      </div>
-                    </div>
-                  </a>
-                </div>
-              </div>
-              <div class="col-lg-6 mb-3 col-12">
-                <div class="card">
-                  <a href="#" class="card-body card-prop" id="announcements-body">
-                    <div class="row">
-                      <div class="col-md-6 col-12">
-                        <h5 class="card-title text-left">Announcements</h5>
-                        <p class="card-text text-left">With supporting text below as a natural lead-in to additional content.</p>
-                      </div>
-                      <div class="col-md-6 col-12">
-                        <img src="{% static 'new_homepage/images/announcement.svg' %}">
-                      </div>
-                    </div>
-                  </a>
-                </div>
-              </div>
             </div>
-          </div>
-          <div class="tab-pane fade" id="appsc" role="tabpanel" aria-labelledby="appsc-tab">
-            <div class="row">
-              <div class="col-6">
-                Subjects
-              </div>
-              <div class="col-6">
-                Set up test series by calendar and schedule
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-6">
-                Previous year papers
-              </div>
-              <div class="col-6">
-                Announcements
-              </div>
-            </div>
-          </div>
-          <div class="tab-pane fade" id="apsc" role="tabpanel" aria-labelledby="apsc-tab">
-            <div class="row">
-              <div class="col-6">
-                Subjects
-              </div>
-              <div class="col-6">
-                Set up test series by calendar and schedule
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-6">
-                Previous year papers
-              </div>
-              <div class="col-6">
-                Announcements
-              </div>
-            </div>
-          </div>
+          {% endfor %}
         </div>
       </section>
 

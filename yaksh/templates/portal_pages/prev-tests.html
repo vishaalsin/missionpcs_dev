@@ -1,35 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Previous Year Tests</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous" />
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="./style/tests.css" />
-</head>
-
-<body>
-    <header>
-        <!-- ######### NAVBAR ########## -->
-        <div class="navbar d-flex flex-column flex-md-row align-items-center p-3 px-md-4 shadow-lg">
-            <!-- ####### Logo for Website ####### -->
-            <a class="navbar-brand" href="#">
-                <img src="./images/logo.png" alt="Logo for mission pcs" />
-            </a>
-            <nav class="my-2 my-md-0 mr-md-3 d-flex justify-content-center flex-wrap p-2">
-                <a class="p-2" href="#">Home</a>
-                <a class="p-2" href="#">Test Series</a>
-                <a class="p-2" href="#">Subjects</a>
-                <a class="p-2" href="#">Prev. Papers</a>
-                <button class="btn" href="#">Logout</button>
-            </nav>
-        </div>
-    </header>
-    <!-- ###################### Test Sections ################ -->
+{% extends 'portal_pages/base.html' %}
+{% load static %}
+{% block cssfile %}
+    <link rel="stylesheet" href=" {% static 'portal_pages/style/tests.css' %}" />
+{% endblock %}
+{% block content %}
     <section id="tests">
         <div class="head">
             <h2 class="head-text"> <b>Previous Year Papers</b></h2>
@@ -45,12 +19,12 @@
 
                         <p>Muslim invasion in India, slave dynasty <br>
                             <small>
-                    <img src="./images/question_icon.png" alt="Question icon" /> 10
+                    <img src="{% static 'portal_pages/images/question_icon.png' %}" alt="Question icon" /> 10
                     Questions
                     </small>
-                            <small><img class="mr-1" src="./images/marks_icon.png" alt="Marks icon" />
+                            <small><img class="mr-1" src="{% static 'portal_pages/images/marks_icon.png' %}" alt="Marks icon" />
                     16 Marks</small>
-                            <small><img class="mr-1" src="./images/time_icon.png" alt="time icon" />30 Minutes</small>
+                            <small><img class="mr-1" src="{% static 'portal_pages/images/time_icon.png' %}" alt="time icon" />30 Minutes</small>
                         </p>
                     </div>
                     <div>
@@ -73,12 +47,12 @@
 
                         <p>Muslim invasion in India, slave dynasty <br>
                             <small>
-                    <img src="./images/question_icon.png" alt="Question icon" /> 10
+                    <img src="{% static 'portal_pages/images/question_icon.png' %}" alt="Question icon" /> 10
                     Questions
                     </small>
-                            <small><img class="mr-1" src="./images/marks_icon.png" alt="Marks icon" />
+                            <small><img class="mr-1" src="{% static 'portal_pages/images/marks_icon.png' %}" alt="Marks icon" />
                     16 Marks</small>
-                            <small><img class="mr-1" src="./images/time_icon.png" alt="time icon" />30 Minutes</small>
+                            <small><img class="mr-1" src="{% static 'portal_pages/images/time_icon.png' %}" alt="time icon" />30 Minutes</small>
                         </p>
                     </div>
                     <div>
@@ -101,12 +75,12 @@
 
                         <p>Muslim invasion in India, slave dynasty <br>
                             <small>
-                    <img src="./images/question_icon.png" alt="Question icon" /> 10
+                    <img src="{% static 'portal_pages/images/question_icon.png' %}" alt="Question icon" /> 10
                     Questions
                     </small>
-                            <small><img class="mr-1" src="./images/marks_icon.png" alt="Marks icon" />
+                            <small><img class="mr-1" src="{% static 'portal_pages/images/marks_icon.png' %}" alt="Marks icon" />
                     16 Marks</small>
-                            <small><img class="mr-1" src="./images/time_icon.png" alt="time icon" />30 Minutes</small>
+                            <small><img class="mr-1" src="{% static 'portal_pages/images/time_icon.png' %}" alt="time icon" />30 Minutes</small>
                         </p>
                     </div>
                     <div>
@@ -129,12 +103,12 @@
 
                         <p>Muslim invasion in India, slave dynasty <br>
                             <small>
-                    <img src="./images/question_icon.png" alt="Question icon" /> 10
+                    <img src="{% static 'portal_pages/images/question_icon.png' %}" alt="Question icon" /> 10
                     Questions
                     </small>
-                            <small><img class="mr-1" src="./images/marks_icon.png" alt="Marks icon" />
+                            <small><img class="mr-1" src="{% static 'portal_pages/images/marks_icon.png' %}" alt="Marks icon" />
                     16 Marks</small>
-                            <small><img class="mr-1" src="./images/time_icon.png" alt="time icon" />30 Minutes</small>
+                            <small><img class="mr-1" src="{% static 'portal_pages/images/time_icon.png' %}" alt="time icon" />30 Minutes</small>
                         </p>
                     </div>
                     <div>
@@ -157,12 +131,12 @@
 
                         <p>Muslim invasion in India, slave dynasty <br>
                             <small>
-                    <img src="./images/question_icon.png" alt="Question icon" /> 10
+                    <img src="{% static 'portal_pages/images/question_icon.png' %}" alt="Question icon" /> 10
                     Questions
                     </small>
-                            <small><img class="mr-1" src="./images/marks_icon.png" alt="Marks icon" />
+                            <small><img class="mr-1" src="{% static 'portal_pages/images/marks_icon.png' %}" alt="Marks icon" />
                     16 Marks</small>
-                            <small><img class="mr-1" src="./images/time_icon.png" alt="time icon" />30 Minutes</small>
+                            <small><img class="mr-1" src="{% static 'portal_pages/images/time_icon.png' %}" alt="time icon" />30 Minutes</small>
                         </p>
                     </div>
                     <div>
@@ -185,12 +159,12 @@
 
                         <p>Muslim invasion in India, slave dynasty <br>
                             <small>
-                    <img src="./images/question_icon.png" alt="Question icon" /> 10
+                    <img src="{% static 'portal_pages/images/question_icon.png' %}" alt="Question icon" /> 10
                     Questions
                     </small>
-                            <small><img class="mr-1" src="./images/marks_icon.png" alt="Marks icon" />
+                            <small><img class="mr-1" src="{% static 'portal_pages/images/marks_icon.png' %}" alt="Marks icon" />
                     16 Marks</small>
-                            <small><img class="mr-1" src="./images/time_icon.png" alt="time icon" />30 Minutes</small>
+                            <small><img class="mr-1" src="{% static 'portal_pages/images/time_icon.png' %}" alt="time icon" />30 Minutes</small>
                         </p>
                     </div>
                     <div>
@@ -213,12 +187,12 @@
 
                         <p>Muslim invasion in India, slave dynasty <br>
                             <small>
-                    <img src="./images/question_icon.png" alt="Question icon" /> 10
+                    <img src="{% static 'portal_pages/images/question_icon.png' %}" alt="Question icon" /> 10
                     Questions
                     </small>
-                            <small><img class="mr-1" src="./images/marks_icon.png" alt="Marks icon" />
+                            <small><img class="mr-1" src="{% static 'portal_pages/images/marks_icon.png' %}" alt="Marks icon" />
                     16 Marks</small>
-                            <small><img class="mr-1" src="./images/time_icon.png" alt="time icon" />30 Minutes</small>
+                            <small><img class="mr-1" src="{% static 'portal_pages/images/time_icon.png' %}" alt="time icon" />30 Minutes</small>
                         </p>
                     </div>
                     <div>
@@ -241,12 +215,12 @@
 
                         <p>Muslim invasion in India, slave dynasty <br>
                             <small>
-                    <img src="./images/question_icon.png" alt="Question icon" /> 10
+                    <img src="{% static 'portal_pages/images/question_icon.png' %}" alt="Question icon" /> 10
                     Questions
                     </small>
-                            <small><img class="mr-1" src="./images/marks_icon.png" alt="Marks icon" />
+                            <small><img class="mr-1" src="{% static 'portal_pages/images/marks_icon.png' %}" alt="Marks icon" />
                     16 Marks</small>
-                            <small><img class="mr-1" src="./images/time_icon.png" alt="time icon" />30 Minutes</small>
+                            <small><img class="mr-1" src="{% static 'portal_pages/images/time_icon.png' %}" alt="time icon" />30 Minutes</small>
                         </p>
                     </div>
                     <div>
@@ -269,12 +243,12 @@
 
                         <p>Muslim invasion in India, slave dynasty <br>
                             <small>
-                    <img src="./images/question_icon.png" alt="Question icon" /> 10
+                    <img src="{% static 'portal_pages/images/question_icon.png' %}" alt="Question icon" /> 10
                     Questions
                     </small>
-                            <small><img class="mr-1" src="./images/marks_icon.png" alt="Marks icon" />
+                            <small><img class="mr-1" src="{% static 'portal_pages/images/marks_icon.png' %}" alt="Marks icon" />
                     16 Marks</small>
-                            <small><img class="mr-1" src="./images/time_icon.png" alt="time icon" />30 Minutes</small>
+                            <small><img class="mr-1" src="{% static 'portal_pages/images/time_icon.png' %}" alt="time icon" />30 Minutes</small>
                         </p>
                     </div>
                     <div>
@@ -297,12 +271,12 @@
 
                         <p>Muslim invasion in India, slave dynasty <br>
                             <small>
-                    <img src="./images/question_icon.png" alt="Question icon" /> 10
+                    <img src="{% static 'portal_pages/images/question_icon.png' %}" alt="Question icon" /> 10
                     Questions
                     </small>
-                            <small><img class="mr-1" src="./images/marks_icon.png" alt="Marks icon" />
+                            <small><img class="mr-1" src="{% static 'portal_pages/images/marks_icon.png' %}" alt="Marks icon" />
                     16 Marks</small>
-                            <small><img class="mr-1" src="./images/time_icon.png" alt="time icon" />30 Minutes</small>
+                            <small><img class="mr-1" src="{% static 'portal_pages/images/time_icon.png' %}" alt="time icon" />30 Minutes</small>
                         </p>
                     </div>
                     <div>
@@ -325,12 +299,12 @@
 
                         <p>Muslim invasion in India, slave dynasty <br>
                             <small>
-                    <img src="./images/question_icon.png" alt="Question icon" /> 10
+                    <img src="{% static 'portal_pages/images/question_icon.png' %}" alt="Question icon" /> 10
                     Questions
                     </small>
-                            <small><img class="mr-1" src="./images/marks_icon.png" alt="Marks icon" />
+                            <small><img class="mr-1" src="{% static 'portal_pages/images/marks_icon.png' %}" alt="Marks icon" />
                     16 Marks</small>
-                            <small><img class="mr-1" src="./images/time_icon.png" alt="time icon" />30 Minutes</small>
+                            <small><img class="mr-1" src="{% static 'portal_pages/images/time_icon.png' %}" alt="time icon" />30 Minutes</small>
                         </p>
                     </div>
                     <div>
@@ -353,12 +327,12 @@
 
                         <p>Muslim invasion in India, slave dynasty <br>
                             <small>
-                    <img src="./images/question_icon.png" alt="Question icon" /> 10
+                    <img src="{% static 'portal_pages/images/question_icon.png' %}" alt="Question icon" /> 10
                     Questions
                     </small>
-                            <small><img class="mr-1" src="./images/marks_icon.png" alt="Marks icon" />
+                            <small><img class="mr-1" src="{% static 'portal_pages/images/marks_icon.png' %}" alt="Marks icon" />
                     16 Marks</small>
-                            <small><img class="mr-1" src="./images/time_icon.png" alt="time icon" />30 Minutes</small>
+                            <small><img class="mr-1" src="{% static 'portal_pages/images/time_icon.png' %}" alt="time icon" />30 Minutes</small>
                         </p>
                     </div>
                     <div>
@@ -381,12 +355,12 @@
 
                         <p>Muslim invasion in India, slave dynasty <br>
                             <small>
-                    <img src="./images/question_icon.png" alt="Question icon" /> 10
+                    <img src="{% static 'portal_pages/images/question_icon.png' %}" alt="Question icon" /> 10
                     Questions
                     </small>
-                            <small><img class="mr-1" src="./images/marks_icon.png" alt="Marks icon" />
+                            <small><img class="mr-1" src="{% static 'portal_pages/images/marks_icon.png' %}" alt="Marks icon" />
                     16 Marks</small>
-                            <small><img class="mr-1" src="./images/time_icon.png" alt="time icon" />30 Minutes</small>
+                            <small><img class="mr-1" src="{% static 'portal_pages/images/time_icon.png' %}" alt="time icon" />30 Minutes</small>
                         </p>
                     </div>
                     <div>
@@ -402,19 +376,5 @@
         </div>
 
     </section>
-    <footer class="d-flex p-2 align-items-center flex-wrap justify-content-around">
-        <div>
-            <img src="./images/logo.png" alt="missionpcs">
-        </div>
-        <div class="d-flex align-items-center">
-            <img src="./images/icon-location.svg" alt="Location">
-            <p>We are 100% online. Please keep visiting!!</p>
-        </div>
-        <div class="d-flex align-items-center">
-            <img src="./images/icon-email.svg" alt="contact">
-            <p>missionpcs.help@gmail.com</p>
-        </div>
-    </footer>
-</body>
 
-</html>
+{% endblock %}
