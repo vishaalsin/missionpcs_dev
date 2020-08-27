@@ -1,0 +1,122 @@
+body {
+    background-color: rgb(255, 255, 255);
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+header {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.navbar {
+    background-image: linear-gradient(to right, rgb(0, 153, 255), rgb(0, 4, 255));
+    box-shadow: 0 0 11px rgba(33, 33, 33, 0.2);
+    z-index: 1;
+    margin-bottom: 0px;
+}
+
+nav a {
+    color: white !important;
+    text-decoration: none !important;
+}
+
+nav button {
+    color: white;
+    font-weight: 900;
+    background-image: linear-gradient( to right, rgb(139, 255, 7), rgb(20, 236, 0));
+}
+
+#current-affairs {
+    width: 80%;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+#current-affairs .head {
+    background-image: linear-gradient(to right, rgb(0, 153, 255), rgb(0, 4, 255));
+    color: whitesmoke;
+}
+
+#current-affairs .affairs {
+    width: 80%;
+}
+
+#current-affairs .card {
+    width: 100%;
+}
+
+#current-affairs .card img {
+    width: inherit;
+    height: 150px;
+}
+
+#current-affairs #date img {
+    width: 20px;
+    height: 20px;
+}
+
+.content {
+    width: 100%;
+}
+
+.list-group-item {
+    height: 2%
+}
+
+.filter img {
+    width: 100px;
+    height: 100px;
+}
+
+.head .icon {
+    display: none;
+}
+
+footer {
+    background-image: linear-gradient(to right, rgb(0, 153, 255), rgb(0, 4, 255));
+    height: 300px;
+    padding-top: 50px;
+    color: white;
+}
+
+
+/* #################### Detailed Current Sfairs #################### */
+
+.news {
+    width: 80%;
+}
+
+.news-content img {
+    width: 30%;
+}
+
+@media only screen and (max-width: 1200px) {
+    #current-affairs {
+        width: 95%;
+    }
+    #current-affairs .affairs {
+        width: 100%;
+    }
+    #current-affairs .card img {
+        width: 250px;
+    }
+    .content.d-flex.flex-wrap.justify-content-between .category {
+        width: 100%;
+        display: none;
+    }
+    .content.d-flex.flex-wrap.justify-content-between.responsive .category {
+        display: inline;
+    }
+    .head .icon {
+        float: right;
+        display: block;
+    }
+    .news {
+        width: 100%;
+    }
+    .news-content img {
+        width: 100%;
+    }
+}
