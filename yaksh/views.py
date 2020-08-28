@@ -152,7 +152,7 @@ def user_register(request):
             u_name, pwd, user_email, key = form.save()
             new_user = authenticate(username=u_name, password=pwd)
             login(request, new_user)
-            initiate_user(new_user)
+            return my_redirect('/exam/select_exam')
             # if user_email and key:
             #     success, msg = send_user_mail(user_email, key)
             #     context = {'activation_msg': msg}
@@ -160,7 +160,7 @@ def user_register(request):
             #         request,
             #         'yaksh/activation_status.html', context
             #     )
-            return index(request)
+            #return index(request)
         else:
             return my_render_to_response(
                 request, 'yaksh/register.html', {'form': form}
@@ -171,9 +171,27 @@ def user_register(request):
             request, 'yaksh/register.html', {'form': form}
         )
 
+def select_exam(request):
+    courses = Course.objects.all()
+    if request.method == 'POST':
+        enrolled_courses_ids = list(map(lambda x: request.POST.getlist(x.name), courses))
+        # Receives all the id's of enrolled courses
+        #print(enrolled_courses_ids)
+        initiate_user(request.user, enrolled_courses_ids)
+        return my_redirect('/letsprepare/')
 
-def initiate_user(new_user):
-    _add_to_course(new_user, list(Course.objects.all())[0])
+    context = {
+        'courses': courses
+    }
+    return my_render_to_response(
+        request, 'portal_pages/select-exams.html', context
+    )
+
+def initiate_user(new_user, enrolled_courses_ids):
+    for course_id in enrolled_courses_ids:
+        if len(course_id) == 0:
+            continue
+        _add_to_course(new_user, Course.objects.get(id=course_id[0]))
     free_quizzes = Quiz.objects.filter(is_free = True)
     for quiz in free_quizzes:
         data = {'user': new_user.id,

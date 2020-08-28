@@ -65,87 +65,32 @@
                 <div class="head sticky-top pt-4 pb-4">
                     <h3>Select Your Exam</h3>
                 </div>
-                <div class="exams p-2">
-                    <div class="accordion" id="accordionExample">
-                        <!-- ######### Exam Category 1 -->
-                        <div class="card">
-                            <div class="card-header" id="headingOne">
-                                <h3 class="box">
-                                    <input type="checkbox" name="SSC" id="SSC" />
-                                    <label for="SSC">SSC Exams</label>
-                                </h3>
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    <div class="exams p-2">
+                        <div class="accordion" id="accordionExample">
+                            <!-- ######### Exam Category  -->
+
+                            {% for course in courses %}
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="box">
+
+                                        <input type="checkbox" name="{{ course }}" id="{{ course }}" value="{{ course.id }}" />
+                                        <label for="{{ course }}">{{ course }}</label>
+                                    </h3>
+                                </div>
                             </div>
-                        </div>
-                        <!-- ######### Exam Category 2 -->
-                        <div class="card">
-                            <div class="card-header" id="headingOne">
-                                <h3 class="box">
-                                    <input type="checkbox" name="railways" id="railways" />
-                                    <label for="railways">Railways Exams</label>
-                                </h3>
-                            </div>
-                        </div>
-                        <!-- ######### Exam Category 3 -->
-                        <div class="card">
-                            <div class="card-header" id="headingOne">
-                                <h3 class="box">
-                                    <input type="checkbox" name="banking" id="banking" />
-                                    <label for="banking">Banking Exams</label>
-                                </h3>
-                            </div>
-                        </div>
-                        <!-- ######### Exam Category 4 -->
-                        <div class="card">
-                            <div class="card-header" id="headingOne">
-                                <h3 class="box">
-                                    <input type="checkbox" name="upsc" id="upsc" />
-                                    <label for="upsc">UPSC</label>
-                                </h3>
-                            </div>
-                        </div>
-                        <!-- ######### Exam Category 5 -->
-                        <div class="card">
-                            <div class="card-header" id="headingOne">
-                                <h3 class="box">
-                                    <input type="checkbox" name="engineering" id="engineering" />
-                                    <label for="engineering">Engineering Exams</label>
-                                </h3>
-                            </div>
-                        </div>
-                        <!-- ######### Exam Category 6 -->
-                        <div class="card">
-                            <div class="card-header" id="headingOne">
-                                <h3 class="box">
-                                    <input type="checkbox" name="defence" id="defence" />
-                                    <label for="defence">Defence Exams</label>
-                                </h3>
-                            </div>
-                        </div>
-                        <!-- ######### Exam Category 7 -->
-                        <div class="card">
-                            <div class="card-header" id="headingOne">
-                                <h3 class="box">
-                                    <input type="checkbox" name="teaching" id="teaching" />
-                                    <label for="teaching">Teaching Exams</label>
-                                </h3>
-                            </div>
-                        </div>
-                        <!-- ######### Exam Category 8 -->
-                        <div class="card">
-                            <div class="card-header" id="headingOne">
-                                <h3 class="box">
-                                    <input type="checkbox" name="mba" id="mba" />
-                                    <label for="mba">MBA</label>
-                                </h3>
-                            </div>
+                            {% endfor %}
+
                         </div>
                     </div>
-                </div>
-                <div class="exam-bottom p-3">
-                    <a type="button" class="btn select-exam-btn btn-lg btn-block">
-              Continue
-            </a>
-                </div>
+                    <div class="exam-bottom p-3">
+                        <button type="submit" class="btn select-exam-btn btn-lg btn-block">
+                            Continue
+                        </button>
+                    </div>
+                </form>
             </div>
         </section>
     </main>

@@ -11,6 +11,7 @@ urlpatterns = [
     url(r'^new_activation/$', views.new_activation, name='new_activation'),
     url(r'^toggle_moderator/$', views.toggle_moderator_role,
         name='toggle_moderator'),
+    url(r'^select_exam/$', views.select_exam, name='select_exam'),
     url(r'^quizzes/$', views.quizlist_user, name='quizlist_user'),
     url(r'^results/$', views.results_user),
     # url(r'^start/(?P<questionpaper_id>\d+)/$', views.lp_start, name="start_quiz"),
