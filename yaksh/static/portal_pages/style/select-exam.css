@@ -1,0 +1,62 @@
+#select-exam {
+    min-height: 60vh;
+}
+body{
+    background-color: white;
+}
+
+
+.exams label {
+    display: block;
+    text-align: center;
+}
+
+
+.exams .exam-box {
+    max-width: 300px;
+    text-align: center;
+    margin: 5px auto;
+    padding: 0.5rem 2rem;
+    border-radius: 1px;
+    position: relative;
+}
+
+.exams .exam-box input {
+    opacity: 0;
+}
+
+.exams .exam-box label {
+    position: absolute;
+    width: 100%;
+    padding: 0.5rem 2rem;
+    transition: 0.2s ease-out;
+    box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    border-radius: 1px;
+}
+
+
+.exams .exam-box:hover {
+    box-shadow: 0 0 11px rgba(33, 33, 33, 0.2);
+}
+
+.exams .exam-box input:checked+label {
+    background-color: rgb(26, 158, 26);
+    color: #fff;
+    border-color: rgb(26, 158, 26);
+}
+
+.exams .exams {
+    overflow-y: auto;
+}
+
+.exam-box > label {
+    background-color: white;
+    font-weight: bold;
+}
+.exams .exams .card {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}

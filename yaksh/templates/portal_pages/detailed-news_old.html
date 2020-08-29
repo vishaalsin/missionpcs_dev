@@ -1,0 +1,94 @@
+{% extends 'portal_pages/base.html' %}
+{% load static %}
+{% block cssfile %}
+    <link rel="stylesheet" href=" {% static 'portal_pages/style/current-affairs.css' %}" />
+{% endblock %}
+{% block content %}
+    <main role="main">
+        <section id="current-affairs">
+            <div class="head d-flex align-items-center justify-content-between p-3 mt-3 rounded shadow-lg">
+                <div>
+                    <h2 class="mb-0 "><b>Current Affairs</b></h2>
+                </div>
+                <div class="filter">
+                    <h2><a href="javascript:void(0)" class="icon" onclick="toggleCategory()">&#9776;</a></h2>
+                </div>
+            </div>
+            <div id="Content" class="content d-flex flex-wrap justify-content-between">
+                <div class="category mt-2">
+                    <div id="months">
+                        <div class="head"><b>Curren Affairs By Months</b></div>
+                        <div class="list-group">
+                            <a href="#" class="list-group-item list-group-item-action">Current Affairs- August 2020</a>
+                            <a href="#" class="list-group-item list-group-item-action">Current Affairs- July 2020</a>
+                            <a href="#" class="list-group-item list-group-item-action">Current Affairs- June 2020</a>
+                            <a href="#" class="list-group-item list-group-item-action">Current Affairs- May 2020</a>
+                            <a href="#" class="list-group-item list-group-item-action">Current Affairs- April 2020</a>
+                            <a href="#" class="list-group-item list-group-item-action">Current Affairs- March 2020</a>
+                            <a href="#" class="list-group-item list-group-item-action">Current Affairs- February 2020</a>
+                            <a href="#" class="list-group-item list-group-item-action">Current Affairs- January 2020</a>
+                            <a href="#" class="list-group-item list-group-item-action">Current Affairs- December 2019</a>
+                            <a href="#" class="list-group-item list-group-item-action">Current Affairs- November 2019</a>
+                        </div>
+                    </div>
+                    <div id="news-category">
+                        <div class="head"><b>Category</b></div>
+                        <div class="list-group">
+                            <a href="#" class="list-group-item list-group-item-action">Persons in News</a>
+                            <a href="#" class="list-group-item list-group-item-action">Important Days and Events</a>
+                            <a href="#" class="list-group-item list-group-item-action">Defence current affairs</a>
+                            <a href="#" class="list-group-item list-group-item-action">Government Schemes in India</a>
+                            <a href="#" class="list-group-item list-group-item-action">International Current Affairs</a>
+                            <a href="#" class="list-group-item list-group-item-action">States Current Affairs</a>
+                            <a href="#" class="list-group-item list-group-item-action">Environmental Current Affairs</a>
+                            <a href="#" class="list-group-item list-group-item-action">Sports Current Affairs</a>
+                            <a href="#" class="list-group-item list-group-item-action">India Current Affairs</a>
+                            <a href="#" class="list-group-item list-group-item-action">Economic & Banking Current Affairs</a>
+                            <a href="#" class="list-group-item list-group-item-action">Legal Current Affairs</a>
+                            <a href="#" class="list-group-item list-group-item-action">Science & Tech Current Affairs</a>
+                            <a href="#" class="list-group-item list-group-item-action">Awards Current Affairs</a>
+                            <a href="#" class="list-group-item list-group-item-action">Art & Culture Current Affairs</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="news mt-2 p-2 shadow-lg">
+                    <div class="news-head">
+                        <h2><b>Drone based Surveillance System introduced in Indian Railways</b></h2>
+                        <h6 id="date"><img src="{% static 'portal_pages/images/date-icon.png' %}" alt="Date"> August 19, 2020</h6>
+                    </div>
+                    <div class="news-content">
+                        <center><img src="{% static 'portal_pages/images/news-1.jpg' %}" alt="News-1"></center>
+                        <div>
+
+                            <p>On August 18, 2020, the Ministry of Railways announced that the drone-based surveillance system is to be introduced for the purpose of railway security.</p>
+                            <h4>Highlights</h4>
+                            <p>The Railway Protection Force has so far procured drones at a cost of Rs 32 lakhs. The drones are to be implemented in Central Railway, South Eastern Railway, Central Railway and South Western Railway.</p>
+                            <h4>About the Drones</h4>
+                            <p>In order to implement the surveillance, the Ministry has procured Ninja UAV (Unmanned Aerial Vehicle). The drones are capable of video streaming and real time tracking.</p>
+                            <h4>Drone Categories in India</h4>
+                            <p>The registration of drones of all categories are essential except for the nano category. The categories of drones in India are as follows</p>
+                            <ul>
+                                <li>Nano: Less than or equal to 250 grams</li>
+                                <li>Micro: between 250 grams and 2 kg</li>
+                                <li>Small: Between 2 kg and 25 kg</li>
+                                <li>Medium: Between 25 kg and 150 kg</li>
+                                <li>Large: Greater than 150 kg</li>
+                            </ul>
+                            <h4>Required Drone Equipment in India</h4>
+                            <p>India has specific requirement in regard to the type of feature a drone should have to fly in Indian skies. This excludes Nano category. The features are GPS, anti-collision light, return to home, ID plate, RFID, a flight controller
+                                with flight data logging capability.</p>
+                            <h4>National Drone Policy</h4>
+                            <p>The National Drone Policy of India came into effect on December 1, 2018. It is called the Drone Regulations 1.0. The policy clarifies when, where and how drones can be operated within India.</p>
+                            <h4>Digital Sky Portal</h4>
+                            <p>It is an online platform for the drones to register. It is a part of an enforcement system designated as No Permission No Takeoff. The Directorate General of Civil Aviation is the authority responsible for providing permission
+                                to fly drones in Indian skies. The permission is provided through a Unique Identification Number.</p>
+                            <p>The user has to pay fees of Rs 1000 to obtain the UNI or the Unmanned Aircraft Operator Permit.</p>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+{% endblock %}

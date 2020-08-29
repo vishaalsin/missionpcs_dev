@@ -90,7 +90,9 @@ def show_all_modules(request):
         'user': user, 'modules': modules_data,
         'title': 'ALL  AVAILABLE  MODULES'
     }
-    return my_render_to_response(request, "yaksh/all_modules.html", context)
+    #return my_render_to_response(request, "yaksh/all_modules.html", context)
+    
+    return my_render_to_response(request, "portal_pages/subjects.html", context)
 
 def show_all_on_sale(request):
     user = request.user
@@ -334,13 +336,19 @@ def report_error(request):
 def send_otp(request):
     data = json.loads(request.POST['data'])
     number = data['number']
-    otp = randint(111111,999999)
-    body = 'Hi there! Your OTP to register on missionpcs is : ' + str(otp)
-    try:
-        send_sms(body, number)
+    if settings.IS_DEVELOPMENT == False:
+        otp = randint(111111,999999)
+        body = 'Hi there! Your OTP to register on missionpcs is : ' + str(otp)
+        try:
+            send_sms(body, number)
+            return JsonResponse({'SENT': otp})
+        except Exception as e:
+            return JsonResponse({'NUMBER NOT VALID' : str(e)})
+    else:
+        otp = "000000"
         return JsonResponse({'SENT': otp})
-    except Exception as e:
-        return JsonResponse({'NUMBER NOT VALID' : str(e)})
+    
+    
 
 
 def send_sms(body, number):
@@ -353,7 +361,10 @@ def send_sms(body, number):
 
 def index(request):
     if request.user.id == None:
-        return my_render_to_response(request, "index.html")
+        courses = Course.objects.all()
+        subjects = LearningModule.objects.all()
+        ctx = {'courses': ['ankit', 'portal', 'geeks', 'computer', 'ANPSC', 'APPSC', 'APSC', 'BPSC', 'CPSC', 'GPSC'], 'subjects': subjects}
+        return my_render_to_response(request, "index.html", context=ctx)
     else:
         return my_redirect('/exam/login/?next=/letsprepare/show_modules/')
 

@@ -82,9 +82,9 @@ WSGI_APPLICATION = 'online_test.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'new',
-        'USER': 'vishaal',
-        'PASSWORD': 'password',
+        'NAME': 'postgres',#'shivam',
+        'USER': 'postgres',
+        'PASSWORD': '12345678',#'shivam20',
         'HOST': 'localhost',
         'PORT': '5432',
     }
@@ -156,7 +156,7 @@ PRODUCTION_URL = 'your_project_url'
 
 # Set this variable to <False> once the project is in production.
 # If this variable is kept <True> in production, email will not be verified.
-IS_DEVELOPMENT = False
+IS_DEVELOPMENT = True
 
 sid = 'XXXXXXXXXXXXXXXXXXXXXXXXX'
 token = 'XXXXXXXXXXXXXXXXXXXXXXXXX'
