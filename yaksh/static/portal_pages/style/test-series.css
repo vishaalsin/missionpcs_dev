@@ -1,113 +1,139 @@
-body {
-    background-color: rgb(255, 255, 255);
-    font-family: Arial, Helvetica, sans-serif;
+.test-series .card {
+    background-color: rgb(72,89,110);
+    color: #ffffff;
+    border-radius: 20px;
+    margin: 0.5rem;
 }
 
-header {
-    position: -webkit-sticky;
-    position: sticky;
-    top: 0;
-    z-index: 10;
+.test-series .progress {
+    background-color: rgba(255, 255, 255, 0.2);
+    margin: 1rem 0;
+    border-radius: 50px;
 }
 
-.navbar {
-    background-image: linear-gradient(to right, rgb(0, 153, 255), rgb(0, 4, 255));
-    box-shadow: 0 0 11px rgba(33, 33, 33, 0.2);
-    z-index: 1;
-    margin-bottom: 0px;
+.test-series .progress-bar {
+    background-color: rgb(193,220,239);
 }
 
-nav a {
-    color: white !important;
-    text-decoration: none !important;
+.test-series .card-body {
+    padding: 1.5rem;
 }
 
-nav button {
+.test-series .light-text {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.test-series .card .sub-card {
+    background-color: rgba(255, 255, 255, 0.7);
+    width: 100%;
+    margin: 1rem 0;
+    border-radius: 8px;
+    padding: 1rem;
+    color: rgb(28, 35, 43);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.test-series .sub-card .date {
+    padding: 5px 10px;
+    font-weight: 600;
     color: white;
-    font-weight: 900;
-    background-image: linear-gradient( to right, rgb(139, 255, 7), rgb(20, 236, 0));
+    background-color: rgb(72,89,110);
+    font-size: 13px;
+    border-radius: 4px;
 }
 
-#test-series .container {
-    width: 80%;
-}
-
-.container-head {
+.test-series .card .sub-card small{
+    border-radius: 50px;
+    border: 1px solid #cccccc;
     color: white;
-    background-image: linear-gradient(to right, rgb(0, 153, 255), rgb(0, 4, 255));
-    border-radius: 5px;
-    padding: 10px;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    background-color: rgb(72,89,110);
+    padding: 2px 7px;
+    display: flex;
+    align-items: center;
 }
 
-.container-head button {
-    background-image: linear-gradient( to right, rgb(139, 255, 7), rgb(20, 236, 0));
+.test-series .card-btn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.container .card {
-    margin-top: 10px;
-    margin-bottom: 10px;
-    border-radius: 15px;
+.test-series .btn-1 {
+    color: rgb(52,52,52);
+    background-color: #ffffff;
+    display: inline-block;
+    margin-right: 20px;
+    padding: 0.4rem 1rem;
+    border: none;
+    cursor: pointer;
+    border-radius: 50px;
+    font-weight: 600;
 }
 
-.card .sub-card {
-    width: 70%;
-    border-radius: 15px;
+.test-series .btn-1:disabled {
+    color: rgb(52,52,52);
+    background-color: #ffffffb6;
+    display: inline-block;
+    margin-right: 20px;
+    padding: 0.4rem 1rem;
+    cursor: default;
+    border-radius: 50px;
+    font-weight: 600;
 }
 
-small img {
-    width: 10px;
-    height: 10px;
-}
-
-.card .btn:hover {
-    box-shadow: 0 0 11px rgba(0, 0, 0, 0.938);
-}
-
-.card .btn-1 {
-    background-image: linear-gradient( to right, rgb(139, 255, 7), rgb(20, 236, 0));
-    margin: 10px;
-    color: white;
-}
-
-.card .btn-2 {
-    background-image: linear-gradient(to right, rgb(0, 153, 255), rgb(0, 4, 255));
-    margin: 10px;
-    color: white;
-}
-
-.modal .sub-card {
-    width: 100%
-}
-
-.modal .sub-card a {
+.test-series .btn-1:hover {
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
     text-decoration: none;
-    color: black;
 }
 
-.modal .sub-card:hover {
-    box-shadow: 0 0 11px rgba(0, 0, 0, 0.938);
-    background-color: whitesmoke;
+.test-series .modal .modal-content {
+    box-shadow: 0 3px 9px 0 rgba(0, 0, 0, 0.4);
+    background-color: rgb(72,89,110);
 }
 
-footer {
-    display: none;
-    background-image: linear-gradient(to right, rgb(0, 153, 255), rgb(0, 4, 255));
-    height: 300px;
-    padding-top: 50px;
-    color: white;
-    margin-top: 10px;
+.test-series .modal .close {
+    color: #ffffff;
 }
 
-@media only screen and (max-width: 1200px) {
-    #test-series .container {
-        width: 90%;
-    }
-    .card .sub-card {
-        width: 100%;
-    }
-    .test-info {
-        display: none;
-    }
+.test-series .modal-body, .test-series .modal-header {
+    padding: 1.5rem;
+}
+
+.test-series .completed-test, .test-series .upcoming-test {
+    background-color: rgb(44, 54, 66);
+    padding: 0.3rem;
+    border-radius: 9px;
+    margin-bottom: 1rem;
+}
+
+.test-series .test-body {
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 9px;
+    padding: 0.5rem;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.5);
+}
+
+.test-series .mock-test {
+    display: flex;
+    align-items: center;
+    border-radius: 60px;
+    margin: 3px;
+    text-decoration: none !important;
+    justify-content: space-between;
+    color: #111111;
+    padding: 0.5rem 2rem;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+    background-color: #ffffff;
+}
+
+.test-series .mock-test h6 {
+    margin: 0;
+}
+
+.test-series .mock-test:hover {
+    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.5);
+    background-color: rgb(234, 239, 245);
 }

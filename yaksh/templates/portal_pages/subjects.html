@@ -1,293 +1,62 @@
-{% extends 'portal_pages/base.html' %}
+{% extends 'portal_pages/base2.html' %}
 {% load static %}
 {% block cssfile %}
-    <link rel="stylesheet" href=" {% static 'portal_pages/style/subjects.css' %}" />
+    <link rel="stylesheet" href="{% static 'portal_pages/style/subjects.css' %}" />
 {% endblock %}
+
 {% block content %}
-<section class="jumbotron" id="available-subjects">
-    <div class="container">
-        <div class="head">
-            <center>
-                <h2>AVAILABLE SUBJECTS</h2>
-            </center>
-            <hr>
-        </div>
-        {% if messages %}
-            {% for message in messages %}
-            <div class="alert alert-dismissible alert-{{ message.tags }}">
-                <button type="button" class="close" data-dismiss="alert">
-                    <i class="fa fa-close"></i>
-                </button>
-                <strong>{{ message }}</strong>
-            </div>
-            <br>
-            {% endfor %}
+    <section id="available-subjects" class="subjects">
+        <div class="container-lg">
+            <h3 class="sub-head">&diamond; Available Subjects &diamond;</h3>
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-dismissible alert-{{ message.tags }}">
+                        <button type="button" class="close" data-dismiss="alert">
+                            <i class="fa fa-close"></i>
+                        </button>
+                        <strong>{{ message }}</strong>
+                    </div>
+                    <br>
+                {% endfor %}
             {% endif %}
             {% if not modules %}
-            <center>
-                <div class="col-md-8 alert alert-warning" role="alert">
-                    No Modules to display
-                </div>
-            </center>
+                <center>
+                    <div class="col-md-8 alert alert-warning" role="alert">
+                        No Modules to display
+                    </div>
+                </center>
             {% endif %}
-        <div class="card-box d-flex flex-wrap justify-content-between">
-            
-            
-            {% for module in modules %}
-            <div class="card">
-                <img src=" {% static 'portal_pages/images/history.jpg' %}" class="card-img-top" alt="Modern History">
-                <div class="card-body">
-                    <h5 class="card-title">{{ module.name }}</h5>
-                    <p class="card-text">Available Test: {{ module.has_quizzes }}/{{ module.total_quizzes }}</p>
-                    <p class="card-text"><small class="text-muted"><h6>Syllabus:</h6>
-                        -Prehistoric culture in india <br>
-                        -Indus Civilization <br>
-                        -Vedic Society <br>
-                        -Buddism and Jainism <br>
-                        - <a class="badge badge-secondary" type="button" data-toggle="modal" data-target="#medieval-history"> View More</a> <br>
-                    </small></p>
-                    <button class="btn btn-1"> Set Test Series </button>
-                    <!-- ############### Modal view for the Subject #################### -->
-                    <div class="modal fade" id="medieval-history" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalCenterTitle">Medieval History</h5>
-
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                                </button>
-                                </div>
-                                <div class="modal-body">
-                                    <img src=" {% static 'portal_pages/images/history.jpg' %}" class="modal-image" alt="history img">
-
-                                    <p>
-                                        <h5><b>Syllabus:</b></h5>
-                                    </p>
-                                    <p>-Prehistoric cultures in India <br> -Indus Civilization. Origins- the different phases- society, economy, and culture- Contacts with other cultures- factors lead to the decline. <br> -Geographical distribution
-                                        and characteristics of pastoral and farming society. <br> -Vedic society-Vedic texts- change from Rigvedic to later Vedic phases.<br> -Vedic society Religion- Upanishad thought-Political and social organization,
-                                        the evolution of the Varna system and monarchy.<br> -Formation of the State and urbanization, from the Mahajanapadas to the Nandas.<br> -Buddhism and Jainism- Factors for the spread of Buddhism.<br> -The
-                                        Mauryan Empire- Chandragupta and Megasthenes.<br> -Asoka and his inscriptions, his dhamma, culture, administration, and art<br> -Society of Post-Mauryan India, BC 200- AD 300- Evolution of Jatis.<br> -The
-                                        Satavahanas and formation of the state in the Peninsula.<br> -Sangam texts and society.<br> -Indo-Greeks, Sakas, Parthians, Kushans, Kanishka-Contacts with the outer world.<br> -Different Religion- Bhagavatism,
-                                        Saivism, Mahayana Buddhism and Hinayana, Jainism and Culture and art.<br> -The Guptas and their descendants.<br> -Literature science, Arts, Economy, and society -Modification in the political organization
-                                        of empire.</p>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-primary">
-                                        Available Tests <span class="badge badge-light">2 / 26</span>
-                                        </button>
-                                    <button type="button" class="btn btn-primary">Set Test Series</button>
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <a href="/letsprepare/exam/?id={{module.id}}" class="btn btn-2"> Tests </a>
-                </div>
-            </div>
-            {% endfor %}
-
-            
-            {% comment %} <!-- ############### Subject 1 ############# -->
-            <div class="card">
-                <img src=" {% static 'portal_pages/images/history.jpg' %}" class="card-img-top" alt="Modern History">
-                <div class="card-body">
-                    <h5 class="card-title">Medieval History</h5>
-                    <p class="card-text">Available Test: 2/26</p>
-                    <p class="card-text"><small class="text-muted"><h6>Syllabus:</h6>
-                        -Prehistoric culture in india <br>
-                        -Indus Civilization <br>
-                        -Vedic Society <br>
-                        -Buddism and Jainism <br>
-                        - <a class="badge badge-secondary" type="button" data-toggle="modal" data-target="#medieval-history"> View More</a> <br>
-                    </small></p>
-                    <button class="btn btn-1"> Set Test Series </button>
-                    <!-- ############### Modal view for the Subject #################### -->
-                    <div class="modal fade" id="medieval-history" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalCenterTitle">Medieval History</h5>
-
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                                </button>
-                                </div>
-                                <div class="modal-body">
-                                    <img src=" {% static 'portal_pages/images/history.jpg' %}" class="modal-image" alt="history img">
-
-                                    <p>
-                                        <h5><b>Syllabus:</b></h5>
-                                    </p>
-                                    <p>-Prehistoric cultures in India <br> -Indus Civilization. Origins- the different phases- society, economy, and culture- Contacts with other cultures- factors lead to the decline. <br> -Geographical distribution
-                                        and characteristics of pastoral and farming society. <br> -Vedic society-Vedic texts- change from Rigvedic to later Vedic phases.<br> -Vedic society Religion- Upanishad thought-Political and social organization,
-                                        the evolution of the Varna system and monarchy.<br> -Formation of the State and urbanization, from the Mahajanapadas to the Nandas.<br> -Buddhism and Jainism- Factors for the spread of Buddhism.<br> -The
-                                        Mauryan Empire- Chandragupta and Megasthenes.<br> -Asoka and his inscriptions, his dhamma, culture, administration, and art<br> -Society of Post-Mauryan India, BC 200- AD 300- Evolution of Jatis.<br> -The
-                                        Satavahanas and formation of the state in the Peninsula.<br> -Sangam texts and society.<br> -Indo-Greeks, Sakas, Parthians, Kushans, Kanishka-Contacts with the outer world.<br> -Different Religion- Bhagavatism,
-                                        Saivism, Mahayana Buddhism and Hinayana, Jainism and Culture and art.<br> -The Guptas and their descendants.<br> -Literature science, Arts, Economy, and society -Modification in the political organization
-                                        of empire.</p>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-primary">
-                                        Available Tests <span class="badge badge-light">2 / 26</span>
-                                        </button>
-                                    <button type="button" class="btn btn-primary">Set Test Series</button>
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <button class="btn btn-2"> Tests </button>
-                </div>
-            </div>
-            <!-- ############### Subject 2 ############# -->
-            <div class="card">
-                <img src=" {% static 'portal_pages/images/moder_history.jpg' %}" class="card-img-top" alt="Modern History">
-                <div class="card-body">
-                    <h5 class="card-title">Modern History</h5>
-                    <p class="card-text">Available Test: 2/26</p>
-                    <p class="card-text"><small class="text-muted"><h6>Syllabus:</h6>
-                        -Prehistoric culture in india <br>
-                        -Indus Civilization <br>
-                        -Vedic Society <br>
-                        -Buddism and Jainism <br>
-                        -<a class="badge badge-secondary" type="button" data-toggle="modal" data-target="#modern-history"> View More</a>  <br>
-                    </small></p>
-                    <button class="btn btn-1"> Set Test Series </button>
-                    <!-- ############### Modal view for the Subject #################### -->
-                    <div class="modal fade" id="modern-history" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalCenterTitle">Modern History</h5>
-
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                                </button>
-                                </div>
-                                <div class="modal-body">
-                                    <img src=" {% static 'portal_pages/images/moder_history.jpg' %}" class="modal-image" alt="history img">
-
-                                    <p>
-                                        <h5><b>Syllabus:</b></h5>
-                                    </p>
-                                    <p>-Prehistoric cultures in India <br> -Indus Civilization. Origins- the different phases- society, economy, and culture- Contacts with other cultures- factors lead to the decline. <br> -Geographical distribution
-                                        and characteristics of pastoral and farming society. <br> -Vedic society-Vedic texts- change from Rigvedic to later Vedic phases.<br> -Vedic society Religion- Upanishad thought-Political and social organization,
-                                        the evolution of the Varna system and monarchy.<br> -Formation of the State and urbanization, from the Mahajanapadas to the Nandas.<br> -Buddhism and Jainism- Factors for the spread of Buddhism.<br> -The
-                                        Mauryan Empire- Chandragupta and Megasthenes.<br> -Asoka and his inscriptions, his dhamma, culture, administration, and art<br> -Society of Post-Mauryan India, BC 200- AD 300- Evolution of Jatis.<br> -The
-                                        Satavahanas and formation of the state in the Peninsula.<br> -Sangam texts and society.<br> -Indo-Greeks, Sakas, Parthians, Kushans, Kanishka-Contacts with the outer world.<br> -Different Religion- Bhagavatism,
-                                        Saivism, Mahayana Buddhism and Hinayana, Jainism and Culture and art.<br> -The Guptas and their descendants.<br> -Literature science, Arts, Economy, and society -Modification in the political organization
-                                        of empire.</p>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-primary">
-                                        Available Tests <span class="badge badge-light">2 / 26</span>
-                                        </button>
-                                    <button type="button" class="btn btn-primary">Set Test Series</button>
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <button class="btn btn-2"> Tests </button>
-                </div>
-            </div>
-            <!-- ############### Subject 3 ############# -->
-            <div class="card">
-                <img src=" {% static 'portal_pages/images/ancient_history.jpg' %}" class="card-img-top" alt="Modern History">
-                <div class="card-body">
-                    <h5 class="card-title">Ancient History</h5>
-                    <p class="card-text">Available Test: 2/26</p>
-                    <p class="card-text"><small class="text-muted"><h6>Syllabus:</h6>
-                        -Prehistoric culture in india <br>
-                        -Indus Civilization <br>
-                        -Vedic Society <br>
-                        -Buddism and Jainism <br>
-                        -<a class="badge badge-secondary" type="button" data-toggle="modal" data-target="#ancient-history"> View More</a> <br>
-                    </small></p>
-                    <button class="btn btn-1">Set Test Series </button>
-                    <!-- ############### Modal view for the Subject #################### -->
-                    <div class="modal fade" id="ancient-history" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalCenterTitle">Ancient History</h5>
-
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                                </button>
-                                </div>
-                                <div class="modal-body">
-                                    <img src=" {% static 'portal_pages/' %} {% static 'portal_pages/images/ancient_history.jpg' %}" class="modal-image" alt="history img">
-
-                                    <p>
-                                        <h5><b>Syllabus:</b></h5>
-                                    </p>
-                                    <p>-Prehistoric cultures in India <br> -Indus Civilization. Origins- the different phases- society, economy, and culture- Contacts with other cultures- factors lead to the decline. <br> -Geographical distribution
-                                        and characteristics of pastoral and farming society. <br> -Vedic society-Vedic texts- change from Rigvedic to later Vedic phases.<br> -Vedic society Religion- Upanishad thought-Political and social organization,
-                                        the evolution of the Varna system and monarchy.<br> -Formation of the State and urbanization, from the Mahajanapadas to the Nandas.<br> -Buddhism and Jainism- Factors for the spread of Buddhism.<br> -The
-                                        Mauryan Empire- Chandragupta and Megasthenes.<br> -Asoka and his inscriptions, his dhamma, culture, administration, and art<br> -Society of Post-Mauryan India, BC 200- AD 300- Evolution of Jatis.<br> -The
-                                        Satavahanas and formation of the state in the Peninsula.<br> -Sangam texts and society.<br> -Indo-Greeks, Sakas, Parthians, Kushans, Kanishka-Contacts with the outer world.<br> -Different Religion- Bhagavatism,
-                                        Saivism, Mahayana Buddhism and Hinayana, Jainism and Culture and art.<br> -The Guptas and their descendants.<br> -Literature science, Arts, Economy, and society -Modification in the political organization
-                                        of empire.</p>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-primary">
-                                        Available Tests <span class="badge badge-light">2 / 26</span>
-                                        </button>
-                                    <button type="button" class="btn btn-primary">Set Test Series</button>
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <button class="btn btn-2"> Tests </button>
-                </div>
-            </div> {% endcomment %}
-        </div>
-    </div>
-</section>
-<section class="jumbotron" id="upcoming-subjects">
-            <div class="container">
-                <div class="head">
-                    <center>
-                        <h2>UPCOMING SUBJECTS</h2>
-                    </center>
-                    <hr>
-                </div>
-                <div class="card-box d-flex flex-wrap justify-content-between">
-                    <!-- ############### Subject 1 ############# -->
+            <div class="row">
+                <!-- ############### Subject 1 ############# -->
+                {% for module in modules %}
+                <div class="col-md-4">
                     <div class="card">
                         <img src="{% static 'portal_pages/images/history.jpg' %}" class="card-img-top" alt="Modern History">
                         <div class="card-body">
-                            <h5 class="card-title">Medieval History</h5>
-                            <p class="card-text">Available Test: 2/26</p>
-                            <p class="card-text"><small class="text-muted"><h6>Syllabus:</h6>
+                            <h4 class="card-title">{{ module.name }}</h4>
+                            <p class="card-text available-test">Available Test: {{ module.has_quizzes }}/{{ module.total_quizzes }}</p>
+                            <p class="card-text">
+                                <small class="text-muted"><h6>Syllabus:</h6>
                                 -Prehistoric culture in india <br>
                                 -Indus Civilization <br>
                                 -Vedic Society <br>
                                 -Buddism and Jainism <br>
-                                -<a class="badge badge-secondary" type="button" data-toggle="modal" data-target="#medieval-history"> View More</a> <br>
                             </small></p>
-                            <button class="btn btn-1"> Set Test Series </button>
+                            <a class="btn btn-primary btn-block text-white btn-sm" type="button" data-toggle="modal" data-target="#medieval-history"> View More</a>
                             <!-- ############### Modal view for the Subject #################### -->
                             <div class="modal fade" id="medieval-history" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalCenterTitle">Medieval History</h5>
-
+                                            <h5 class="modal-title" id="exampleModalCenterTitle">{{ module.name }}</h5>
+    
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                       </button>
                                         </div>
                                         <div class="modal-body">
                                             <img src="{% static 'portal_pages/images/history.jpg' %}" class="modal-image" alt="history img">
-
+    
                                             <p>
                                                 <h5><b>Syllabus:</b></h5>
                                             </p>
@@ -300,179 +69,327 @@
                                                 of empire.</p>
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-primary" disabled>
-                                                Available Tests <span class="badge badge-light">2 / 26</span>
+                                            <button type="button" class="btn btn-primary">
+                                                Available Tests <span class="badge badge-light">{{ module.has_quizzes }} / {{ module.total_quizzes }}</span>
                                               </button>
-                                            <button type="button" class="btn btn-primary" disabled>Set Test Series</button>
+                                            <button type="button" class="btn btn-primary">Set Test Series</button>
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-
+    
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <button class="btn btn-2" disabled> Tests </button>
                         </div>
-                    </div>
-                    <!-- ############### Subject 2 ############# -->
-                    <div class="card">
-                        <img src="{% static 'portal_pages/images/moder_history.jpg' %}" class="card-img-top" alt="Modern History">
-                        <div class="card-body">
-                            <h5 class="card-title">Modern History</h5>
-                            <p class="card-text">Available Test: 2/26</p>
-                            <p class="card-text"><small class="text-muted"><h6>Syllabus:</h6>
-                                -Prehistoric culture in india <br>
-                                -Indus Civilization <br>
-                                -Vedic Society <br>
-                                -Buddism and Jainism <br>
-                                -<a class="badge badge-secondary" type="button" data-toggle="modal" data-target="#modern-history"> View More</a> <br>
-                            </small></p>
-                            <button class="btn btn-1"> Set Test Series </button>
-                            <!-- ############### Modal view for the Subject #################### -->
-                            <div class="modal fade" id="modern-history" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalCenterTitle">Modern History</h5>
-
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                      </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <img src="{% static 'portal_pages/images/moder_history.jpg' %}" class="modal-image" alt="history img">
-
-                                            <p>
-                                                <h5><b>Syllabus:</b></h5>
-                                            </p>
-                                            <p>-Prehistoric cultures in India <br> -Indus Civilization. Origins- the different phases- society, economy, and culture- Contacts with other cultures- factors lead to the decline. <br> -Geographical distribution
-                                                and characteristics of pastoral and farming society. <br> -Vedic society-Vedic texts- change from Rigvedic to later Vedic phases.<br> -Vedic society Religion- Upanishad thought-Political and social organization,
-                                                the evolution of the Varna system and monarchy.<br> -Formation of the State and urbanization, from the Mahajanapadas to the Nandas.<br> -Buddhism and Jainism- Factors for the spread of Buddhism.<br> -The
-                                                Mauryan Empire- Chandragupta and Megasthenes.<br> -Asoka and his inscriptions, his dhamma, culture, administration, and art<br> -Society of Post-Mauryan India, BC 200- AD 300- Evolution of Jatis.<br> -The
-                                                Satavahanas and formation of the state in the Peninsula.<br> -Sangam texts and society.<br> -Indo-Greeks, Sakas, Parthians, Kushans, Kanishka-Contacts with the outer world.<br> -Different Religion- Bhagavatism,
-                                                Saivism, Mahayana Buddhism and Hinayana, Jainism and Culture and art.<br> -The Guptas and their descendants.<br> -Literature science, Arts, Economy, and society -Modification in the political organization
-                                                of empire.</p>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-primary" disabled>
-                                                Available Tests <span class="badge badge-light">2 / 26</span>
-                                              </button>
-                                            <button type="button" class="btn btn-primary" disabled>Set Test Series</button>
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <button class="btn btn-2" disabled> Tests </button>
-                        </div>
-                    </div>
-                    <!-- ############### Subject 3 ############# -->
-                    <div class="card">
-                        <img src="{% static 'portal_pages/images/ancient_history.jpg' %}" class="card-img-top" alt="Modern History">
-                        <div class="card-body">
-                            <h5 class="card-title">Ancient History</h5>
-                            <p class="card-text">Available Test: 2/26</p>
-                            <p class="card-text"><small class="text-muted"><h6>Syllabus:</h6>
-                                -Prehistoric culture in india <br>
-                                -Indus Civilization <br>
-                                -Vedic Society <br>
-                                -Buddism and Jainism <br>
-                                -<a class="badge badge-secondary" type="button" data-toggle="modal" data-target="#ancient-history"> View More</a> <br>
-                            </small></p>
-                            <button class="btn btn-1">Set Test Series </button>
-                            <!-- ############### Modal view for the Subject #################### -->
-                            <div class="modal fade" id="ancient-history" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalCenterTitle">Ancient History</h5>
-
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                      </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <img src="{% static 'portal_pages/images/ancient_history.jpg' %}" class="modal-image" alt="history img">
-
-                                            <p>
-                                                <h5><b>Syllabus:</b></h5>
-                                            </p>
-                                            <p>-Prehistoric cultures in India <br> -Indus Civilization. Origins- the different phases- society, economy, and culture- Contacts with other cultures- factors lead to the decline. <br> -Geographical distribution
-                                                and characteristics of pastoral and farming society. <br> -Vedic society-Vedic texts- change from Rigvedic to later Vedic phases.<br> -Vedic society Religion- Upanishad thought-Political and social organization,
-                                                the evolution of the Varna system and monarchy.<br> -Formation of the State and urbanization, from the Mahajanapadas to the Nandas.<br> -Buddhism and Jainism- Factors for the spread of Buddhism.<br> -The
-                                                Mauryan Empire- Chandragupta and Megasthenes.<br> -Asoka and his inscriptions, his dhamma, culture, administration, and art<br> -Society of Post-Mauryan India, BC 200- AD 300- Evolution of Jatis.<br> -The
-                                                Satavahanas and formation of the state in the Peninsula.<br> -Sangam texts and society.<br> -Indo-Greeks, Sakas, Parthians, Kushans, Kanishka-Contacts with the outer world.<br> -Different Religion- Bhagavatism,
-                                                Saivism, Mahayana Buddhism and Hinayana, Jainism and Culture and art.<br> -The Guptas and their descendants.<br> -Literature science, Arts, Economy, and society -Modification in the political organization
-                                                of empire.</p>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-primary" disabled>
-                                                Available Tests <span class="badge badge-light">2 / 26</span>
-                                              </button>
-                                            <button type="button" class="btn btn-primary" disabled>Set Test Series</button>
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <button class="btn btn-2" disabled> Tests </button>
-                        </div>
-                    </div>
-                    <!-- ############### Subject 4 ############# -->
-                    <div class="card">
-                        <img src="{% static 'portal_pages/images/politics.jpg' %}" class="card-img-top" alt="Modern History">
-                        <div class="card-body">
-                            <h5 class="card-title">Politics</h5>
-                            <p class="card-text">Available Test: 2/26</p>
-                            <p class="card-text"><small class="text-muted"><h6>Syllabus:</h6>
-                                -Prehistoric culture in india <br>
-                                -Indus Civilization <br>
-                                -Vedic Society <br>
-                                -Buddism and Jainism <br>
-                                -<a class="badge badge-secondary" type="button" data-toggle="modal" data-target="#politics"> View More</a> <br>
-                            </small></p>
-                            <button class="btn btn-1"> Set Test Series </button>
-                            <!-- ############### Modal view for the Subject #################### -->
-                            <div class="modal fade" id="politics" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalCenterTitle">Politics</h5>
-
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                      </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <img src="{% static 'portal_pages/images/politics.jpg' %}" class="modal-image" alt="history img">
-
-                                            <p>
-                                                <h5><b>Syllabus:</b></h5>
-                                            </p>
-                                            <p>-Prehistoric cultures in India <br> -Indus Civilization. Origins- the different phases- society, economy, and culture- Contacts with other cultures- factors lead to the decline. <br> -Geographical distribution
-                                                and characteristics of pastoral and farming society. <br> -Vedic society-Vedic texts- change from Rigvedic to later Vedic phases.<br> -Vedic society Religion- Upanishad thought-Political and social organization,
-                                                the evolution of the Varna system and monarchy.<br> -Formation of the State and urbanization, from the Mahajanapadas to the Nandas.<br> -Buddhism and Jainism- Factors for the spread of Buddhism.<br> -The
-                                                Mauryan Empire- Chandragupta and Megasthenes.<br> -Asoka and his inscriptions, his dhamma, culture, administration, and art<br> -Society of Post-Mauryan India, BC 200- AD 300- Evolution of Jatis.<br> -The
-                                                Satavahanas and formation of the state in the Peninsula.<br> -Sangam texts and society.<br> -Indo-Greeks, Sakas, Parthians, Kushans, Kanishka-Contacts with the outer world.<br> -Different Religion- Bhagavatism,
-                                                Saivism, Mahayana Buddhism and Hinayana, Jainism and Culture and art.<br> -The Guptas and their descendants.<br> -Literature science, Arts, Economy, and society -Modification in the political organization
-                                                of empire.</p>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-primary" disabled>
-                                                Available Tests <span class="badge badge-light">2 / 26</span>
-                                              </button>
-                                            <button type="button" class="btn btn-primary" disabled>Set Test Series</button>
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <button class="btn btn-2" disabled> Tests </button>
+                        <div class="btn-btm">
+                            <button class="btn-1"> Set Test Series </button>
+                            <a href="/letsprepare/exam/?id={{module.id}}" class="btn-2"> Tests </a>
                         </div>
                     </div>
                 </div>
+                {% endfor %}
             </div>
-        </section>
+        </div>
+    </section>
+    <section id="upcoming-subjects" class="subjects">
+        <div class="container">
+            <h3 class="sub-head">&diamond; Upcoming Subjects &diamond;</h3>
+            <div class="row">
+                <!-- ############### Subject 1 ############# -->
+                <div class="col-md-4">
+                    <div class="card">
+                        <img src="{% static 'portal_pages/images/history.jpg' %}" class="card-img-top" alt="Modern History">
+                        <div class="card-body">
+                            <h4 class="card-title">Medieval History</h4>
+                            <p class="card-text available-test">Available Test: 2/26</p>
+                            <p class="card-text">
+                                <small class="text-muted"><h6>Syllabus:</h6>
+                                -Prehistoric culture in india <br>
+                                -Indus Civilization <br>
+                                -Vedic Society <br>
+                                -Buddism and Jainism <br>
+                            </small></p>
+                            <a class="btn btn-primary btn-block text-white btn-sm" type="button" data-toggle="modal" data-target="#medieval-history"> View More</a>
+                            <!-- ############### Modal view for the Subject #################### -->
+                            <div class="modal fade" id="medieval-history" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalCenterTitle">Medieval History</h5>
+    
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                      </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <img src="{% static 'portal_pages/images/history.jpg' %}" class="modal-image" alt="history img">
+    
+                                            <p>
+                                                <h5><b>Syllabus:</b></h5>
+                                            </p>
+                                            <p>-Prehistoric cultures in India <br> -Indus Civilization. Origins- the different phases- society, economy, and culture- Contacts with other cultures- factors lead to the decline. <br> -Geographical distribution
+                                                and characteristics of pastoral and farming society. <br> -Vedic society-Vedic texts- change from Rigvedic to later Vedic phases.<br> -Vedic society Religion- Upanishad thought-Political and social organization,
+                                                the evolution of the Varna system and monarchy.<br> -Formation of the State and urbanization, from the Mahajanapadas to the Nandas.<br> -Buddhism and Jainism- Factors for the spread of Buddhism.<br> -The
+                                                Mauryan Empire- Chandragupta and Megasthenes.<br> -Asoka and his inscriptions, his dhamma, culture, administration, and art<br> -Society of Post-Mauryan India, BC 200- AD 300- Evolution of Jatis.<br> -The
+                                                Satavahanas and formation of the state in the Peninsula.<br> -Sangam texts and society.<br> -Indo-Greeks, Sakas, Parthians, Kushans, Kanishka-Contacts with the outer world.<br> -Different Religion- Bhagavatism,
+                                                Saivism, Mahayana Buddhism and Hinayana, Jainism and Culture and art.<br> -The Guptas and their descendants.<br> -Literature science, Arts, Economy, and society -Modification in the political organization
+                                                of empire.</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-primary">
+                                                Available Tests <span class="badge badge-light">2 / 26</span>
+                                              </button>
+                                            <button type="button" class="btn btn-primary">Set Test Series</button>
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+    
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="btn-btm">
+                            <button class="btn-1"> Set Test Series </button>
+                            <button class="btn-2"> Tests </button>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- ############### Subject 2 ############# -->
+                <div class="col-md-4">
+                    <div class="card">
+                        <img src="{% static 'portal_pages/images/history.jpg' %}" class="card-img-top" alt="Modern History">
+                        <div class="card-body">
+                            <h4 class="card-title">Medieval History</h4>
+                            <p class="card-text available-test">Available Test: 2/26</p>
+                            <p class="card-text">
+                                <small class="text-muted"><h6>Syllabus:</h6>
+                                -Prehistoric culture in india <br>
+                                -Indus Civilization <br>
+                                -Vedic Society <br>
+                                -Buddism and Jainism <br>
+                            </small></p>
+                            <a class="btn btn-primary btn-block text-white btn-sm" type="button" data-toggle="modal" data-target="#medieval-history"> View More</a>
+                            <!-- ############### Modal view for the Subject #################### -->
+                            <div class="modal fade" id="medieval-history" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalCenterTitle">Medieval History</h5>
+    
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                      </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <img src="{% static 'portal_pages/images/history.jpg' %}" class="modal-image" alt="history img">
+    
+                                            <p>
+                                                <h5><b>Syllabus:</b></h5>
+                                            </p>
+                                            <p>-Prehistoric cultures in India <br> -Indus Civilization. Origins- the different phases- society, economy, and culture- Contacts with other cultures- factors lead to the decline. <br> -Geographical distribution
+                                                and characteristics of pastoral and farming society. <br> -Vedic society-Vedic texts- change from Rigvedic to later Vedic phases.<br> -Vedic society Religion- Upanishad thought-Political and social organization,
+                                                the evolution of the Varna system and monarchy.<br> -Formation of the State and urbanization, from the Mahajanapadas to the Nandas.<br> -Buddhism and Jainism- Factors for the spread of Buddhism.<br> -The
+                                                Mauryan Empire- Chandragupta and Megasthenes.<br> -Asoka and his inscriptions, his dhamma, culture, administration, and art<br> -Society of Post-Mauryan India, BC 200- AD 300- Evolution of Jatis.<br> -The
+                                                Satavahanas and formation of the state in the Peninsula.<br> -Sangam texts and society.<br> -Indo-Greeks, Sakas, Parthians, Kushans, Kanishka-Contacts with the outer world.<br> -Different Religion- Bhagavatism,
+                                                Saivism, Mahayana Buddhism and Hinayana, Jainism and Culture and art.<br> -The Guptas and their descendants.<br> -Literature science, Arts, Economy, and society -Modification in the political organization
+                                                of empire.</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-primary">
+                                                Available Tests <span class="badge badge-light">2 / 26</span>
+                                              </button>
+                                            <button type="button" class="btn btn-primary">Set Test Series</button>
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+    
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="btn-btm">
+                            <button class="btn-1"> Set Test Series </button>
+                            <button class="btn-2"> Tests </button>
+                        </div>
+                    </div>
+    
+                </div>
+                <!-- ############### Subject 3 ############# -->
+                <div class="col-md-4">
+                    <div class="card">
+                        <img src="{% static 'portal_pages/images/history.jpg' %}" class="card-img-top" alt="Modern History">
+                        <div class="card-body">
+                            <h4 class="card-title">Medieval History</h4>
+                            <p class="card-text available-test">Available Test: 2/26</p>
+                            <p class="card-text">
+                                <small class="text-muted"><h6>Syllabus:</h6>
+                                -Prehistoric culture in india <br>
+                                -Indus Civilization <br>
+                                -Vedic Society <br>
+                                -Buddism and Jainism <br>
+                            </small></p>
+                            <a class="btn btn-primary btn-block text-white btn-sm" type="button" data-toggle="modal" data-target="#medieval-history"> View More</a>
+                            <!-- ############### Modal view for the Subject #################### -->
+                            <div class="modal fade" id="medieval-history" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalCenterTitle">Medieval History</h5>
+    
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                      </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <img src="{% static 'portal_pages/images/history.jpg' %}" class="modal-image" alt="history img">
+    
+                                            <p>
+                                                <h5><b>Syllabus:</b></h5>
+                                            </p>
+                                            <p>-Prehistoric cultures in India <br> -Indus Civilization. Origins- the different phases- society, economy, and culture- Contacts with other cultures- factors lead to the decline. <br> -Geographical distribution
+                                                and characteristics of pastoral and farming society. <br> -Vedic society-Vedic texts- change from Rigvedic to later Vedic phases.<br> -Vedic society Religion- Upanishad thought-Political and social organization,
+                                                the evolution of the Varna system and monarchy.<br> -Formation of the State and urbanization, from the Mahajanapadas to the Nandas.<br> -Buddhism and Jainism- Factors for the spread of Buddhism.<br> -The
+                                                Mauryan Empire- Chandragupta and Megasthenes.<br> -Asoka and his inscriptions, his dhamma, culture, administration, and art<br> -Society of Post-Mauryan India, BC 200- AD 300- Evolution of Jatis.<br> -The
+                                                Satavahanas and formation of the state in the Peninsula.<br> -Sangam texts and society.<br> -Indo-Greeks, Sakas, Parthians, Kushans, Kanishka-Contacts with the outer world.<br> -Different Religion- Bhagavatism,
+                                                Saivism, Mahayana Buddhism and Hinayana, Jainism and Culture and art.<br> -The Guptas and their descendants.<br> -Literature science, Arts, Economy, and society -Modification in the political organization
+                                                of empire.</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-primary">
+                                                Available Tests <span class="badge badge-light">2 / 26</span>
+                                              </button>
+                                            <button type="button" class="btn btn-primary">Set Test Series</button>
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+    
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="btn-btm">
+                            <button class="btn-1"> Set Test Series </button>
+                            <button class="btn-2"> Tests </button>
+                        </div>
+                    </div>
+    
+                </div>
+                <!-- ############### Subject 4 ############# -->
+                <div class="col-md-4">
+                    <div class="card">
+                        <img src="{% static 'portal_pages/images/history.jpg' %}" class="card-img-top" alt="Modern History">
+                        <div class="card-body">
+                            <h4 class="card-title">Medieval History</h4>
+                            <p class="card-text available-test">Available Test: 2/26</p>
+                            <p class="card-text">
+                                <small class="text-muted"><h6>Syllabus:</h6>
+                                -Prehistoric culture in india <br>
+                                -Indus Civilization <br>
+                                -Vedic Society <br>
+                                -Buddism and Jainism <br>
+                            </small></p>
+                            <a class="btn btn-primary btn-block text-white btn-sm" type="button" data-toggle="modal" data-target="#medieval-history"> View More</a>
+                            <!-- ############### Modal view for the Subject #################### -->
+                            <div class="modal fade" id="medieval-history" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalCenterTitle">Medieval History</h5>
+    
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                      </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <img src="{% static 'portal_pages/images/history.jpg' %}" class="modal-image" alt="history img">
+    
+                                            <p>
+                                                <h5><b>Syllabus:</b></h5>
+                                            </p>
+                                            <p>-Prehistoric cultures in India <br> -Indus Civilization. Origins- the different phases- society, economy, and culture- Contacts with other cultures- factors lead to the decline. <br> -Geographical distribution
+                                                and characteristics of pastoral and farming society. <br> -Vedic society-Vedic texts- change from Rigvedic to later Vedic phases.<br> -Vedic society Religion- Upanishad thought-Political and social organization,
+                                                the evolution of the Varna system and monarchy.<br> -Formation of the State and urbanization, from the Mahajanapadas to the Nandas.<br> -Buddhism and Jainism- Factors for the spread of Buddhism.<br> -The
+                                                Mauryan Empire- Chandragupta and Megasthenes.<br> -Asoka and his inscriptions, his dhamma, culture, administration, and art<br> -Society of Post-Mauryan India, BC 200- AD 300- Evolution of Jatis.<br> -The
+                                                Satavahanas and formation of the state in the Peninsula.<br> -Sangam texts and society.<br> -Indo-Greeks, Sakas, Parthians, Kushans, Kanishka-Contacts with the outer world.<br> -Different Religion- Bhagavatism,
+                                                Saivism, Mahayana Buddhism and Hinayana, Jainism and Culture and art.<br> -The Guptas and their descendants.<br> -Literature science, Arts, Economy, and society -Modification in the political organization
+                                                of empire.</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-primary">
+                                                Available Tests <span class="badge badge-light">2 / 26</span>
+                                              </button>
+                                            <button type="button" class="btn btn-primary">Set Test Series</button>
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+    
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="btn-btm">
+                            <button class="btn-1"> Set Test Series </button>
+                            <button class="btn-2"> Tests </button>
+                        </div>
+                    </div>
+    
+                </div>
+                <!-- ############### Subject 4 ############# -->
+                <div class="col-md-4">
+                    <div class="card">
+                        <img src="{% static 'portal_pages/images/history.jpg' %}" class="card-img-top" alt="Modern History">
+                        <div class="card-body">
+                            <h4 class="card-title">Medieval History</h4>
+                            <p class="card-text available-test">Available Test: 2/26</p>
+                            <p class="card-text">
+                                <small class="text-muted"><h6>Syllabus:</h6>
+                                -Prehistoric culture in india <br>
+                                -Indus Civilization <br>
+                                -Vedic Society <br>
+                                -Buddism and Jainism <br>
+                            </small></p>
+                            <a class="btn btn-primary btn-block text-white btn-sm" type="button" data-toggle="modal" data-target="#medieval-history"> View More</a>
+                            <!-- ############### Modal view for the Subject #################### -->
+                            <div class="modal fade" id="medieval-history" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalCenterTitle">Medieval History</h5>
+    
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                      </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <img src="{% static 'portal_pages/images/history.jpg' %}" class="modal-image" alt="history img">
+    
+                                            <p>
+                                                <h5><b>Syllabus:</b></h5>
+                                            </p>
+                                            <p>-Prehistoric cultures in India <br> -Indus Civilization. Origins- the different phases- society, economy, and culture- Contacts with other cultures- factors lead to the decline. <br> -Geographical distribution
+                                                and characteristics of pastoral and farming society. <br> -Vedic society-Vedic texts- change from Rigvedic to later Vedic phases.<br> -Vedic society Religion- Upanishad thought-Political and social organization,
+                                                the evolution of the Varna system and monarchy.<br> -Formation of the State and urbanization, from the Mahajanapadas to the Nandas.<br> -Buddhism and Jainism- Factors for the spread of Buddhism.<br> -The
+                                                Mauryan Empire- Chandragupta and Megasthenes.<br> -Asoka and his inscriptions, his dhamma, culture, administration, and art<br> -Society of Post-Mauryan India, BC 200- AD 300- Evolution of Jatis.<br> -The
+                                                Satavahanas and formation of the state in the Peninsula.<br> -Sangam texts and society.<br> -Indo-Greeks, Sakas, Parthians, Kushans, Kanishka-Contacts with the outer world.<br> -Different Religion- Bhagavatism,
+                                                Saivism, Mahayana Buddhism and Hinayana, Jainism and Culture and art.<br> -The Guptas and their descendants.<br> -Literature science, Arts, Economy, and society -Modification in the political organization
+                                                of empire.</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-primary">
+                                                Available Tests <span class="badge badge-light">2 / 26</span>
+                                              </button>
+                                            <button type="button" class="btn btn-primary">Set Test Series</button>
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+    
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="btn-btm">
+                            <button class="btn-1"> Set Test Series </button>
+                            <button class="btn-2"> Tests </button>
+                        </div>
+                    </div>
+    
+                </div>
+            </div>
+        </div>
+    </section>
 {% endblock %}

@@ -1,107 +1,62 @@
-body {
-    background-color: rgb(255, 255, 255);
-    font-family: Arial, Helvetica, sans-serif;
+#select-exam {
+    min-height: 60vh;
+}
+body{
+    background-color: white;
 }
 
-.navbar {
-    background-image: linear-gradient(to right, rgb(0, 153, 255), rgb(0, 4, 255));
-    z-index: 1;
-}
 
-#select-exam .container {
-    width: 700px;
-    margin-left: auto;
-    margin-right: auto;
-    padding-top: 0px;
-    padding-left: 0px;
-    padding-right: 0px;
-    padding-bottom: 0px;
-    border-radius: 10px;
-    overflow-y: auto;
-    background-image: linear-gradient(to right, rgb(0, 153, 255), rgb(0, 4, 255));
-}
-
-@media only screen and (max-width: 768px) {
-    #select-exam .container {
-        width: 80%;
-    }
-    .card-header h3 {
-        font-size: larger;
-    }
-}
-
-#select-exam .container .exam-bottom {
-    position: sticky;
-    bottom: 0;
-    background-image: linear-gradient(to right, rgb(0, 153, 255), rgb(0, 4, 255));
-}
-
-.head {
-    margin-top: 0px;
-    background-image: linear-gradient(to right, rgb(0, 153, 255), rgb(0, 4, 255));
-}
-
-.head h3 {
+.exams label {
+    display: block;
     text-align: center;
-    font-weight: 1000;
-    color: rgb(139, 255, 7);
 }
 
-.box {
-    width: 95%;
-    margin-left: auto;
-    margin-right: auto;
+
+.exams .exam-box {
+    max-width: 300px;
     text-align: center;
-    margin: 1px 2px;
-    padding-top: 2px;
-    padding-bottom: 2px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
+    margin: 5px auto;
+    padding: 0.5rem 2rem;
+    border-radius: 1px;
     position: relative;
 }
 
-.box input {
+.exams .exam-box input {
     opacity: 0;
 }
 
-.box label {
+.exams .exam-box label {
     position: absolute;
-    border: 1px solid #ccc;
     width: 100%;
-    padding-top: 2px;
-    padding-bottom: 2px;
+    padding: 0.5rem 2rem;
     transition: 0.2s ease-out;
+    box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2);
+    cursor: pointer;
     top: 0;
     left: 0;
-    border-radius: 10px;
+    border-radius: 1px;
 }
 
-.box:hover {
+
+.exams .exam-box:hover {
     box-shadow: 0 0 11px rgba(33, 33, 33, 0.2);
 }
 
-.box input:checked+label {
-    background-color: rgb(0, 180, 60);
+.exams .exam-box input:checked+label {
+    background-color: rgb(26, 158, 26);
     color: #fff;
-    border-color: rgb(0, 180, 60);
+    border-color: rgb(26, 158, 26);
 }
 
-button {
-    color: black !important;
-    text-decoration: none;
-}
-
-.exams {
+.exams .exams {
     overflow-y: auto;
 }
 
-.exams .card {
+.exam-box > label {
+    background-color: white;
+    font-weight: bold;
+}
+.exams .exams .card {
     margin-top: 5px;
     margin-bottom: 5px;
-}
-
-.select-exam-btn {
-    color: white;
-    font-weight: 900;
-    background-image: linear-gradient( to right, rgb(139, 255, 7), rgb(20, 236, 0));
 }

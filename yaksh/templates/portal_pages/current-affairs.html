@@ -1,132 +1,132 @@
-{% extends 'portal_pages/base.html' %}
+{% extends 'portal_pages/base2.html' %}
 {% load static %}
 {% block cssfile %}
     <link rel="stylesheet" href=" {% static 'portal_pages/style/current-affairs.css' %}" />
 {% endblock %}
-
-
-
 {% block content %}
-    <main role="main">
-        <section id="current-affairs">
-            <div class="head d-flex align-items-center justify-content-between p-3 mt-3 rounded shadow-lg">
-                <div>
-                    <h2 class="mb-0 "><b>Current Affairs</b></h2>
-                </div>
-                <div class="filter">
-                    <h2><a href="javascript:void(0)" class="icon" onclick="toggleCategory()">&#9776;</a></h2>
+    <div class="container-xl">
+        <div class="row argmt">
+            
+            <div class="col-lg-9 mt-4">
+                <div class="affairs">
+                    <div class="card mt-2 mb-3">
+                        <div class="row p-4">
+                            <div class="col-md-4">
+                                <div class="card-img-left">
+                                    <img src="{% static 'portal_pages/images/drone.png' %}" class="card-img-left w-100" alt="news-1">
+                                    <h6 class="post-date" id="date">Aug 19, 2020</h6>
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class=" ml-2 card-head">
+                                </div>
+                                <div class="card-body">
+                                    <h3 id="news-head">
+                                        <a href="#"> <b>Drone based Surveillance System introduced in Indian Railways</b> </a>
+                                    </h3>
+                                    <p class="card-text"><a href="#" class="badge badge-primary"><span class="fa fa-tag mr-2"></span>Economy & Banking Current Affairs</a></p>
+                                    <p class="card-text text-secondary">On August 18, 2020, the Ministry of Railways announced that the drone-based surveillance system is to be introduced for the purpose of railway security. Highlights The Railway Protection Force has so far procured drones
+                                        at a cost of Rs 32 lakhs. The drones are to be implemented in Central Railway, South Eastern Railway, Central Railway...
+                                        <h6><a href="#" class="readmore-btn">Read More</a></h6>
+                                    </p>
+        
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card mt-2 mb-3">
+                        <div class="row p-4">
+                            <div class="col-md-4">
+                                <div class="card-img-left">
+                                    <img src="{% static 'portal_pages/images/drone.png' %}" class="card-img-left w-100" alt="news-1">
+                                    <h6 class="post-date" id="date">Aug 20, 2020</h6>
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class=" ml-2 card-head">
+                                </div>
+                                <div class="card-body">
+                                    <h3 id="news-head">
+                                        <a href="#"> <b>Drone based Surveillance System introduced in Indian Railways</b> </a>
+                                    </h3>
+                                    <p class="card-text"><a href="#" class="badge badge-primary"><span class="fa fa-tag mr-2"></span>Economy & Banking Current Affairs</a></p>
+                                    <p class="card-text text-secondary">On August 18, 2020, the Ministry of Railways announced that the drone-based surveillance system is to be introduced for the purpose of railway security. Highlights The Railway Protection Force has so far procured drones
+                                        at a cost of Rs 32 lakhs. The drones are to be implemented in Central Railway, South Eastern Railway, Central Railway...
+                                        <h6><a href="#" class="readmore-btn">Read More</a></h6>
+                                    </p>
+        
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card mt-2 mb-3">
+                        <div class="row p-4">
+                            <div class="col-md-4">
+                                <div class="card-img-left">
+                                    <img src="{% static 'portal_pages/images/drone.png' %}" class="card-img-left w-100" alt="news-1">
+                                    <h6 class="post-date" id="date">Aug 21, 2020</h6>
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class=" ml-2 card-head">
+                                </div>
+                                <div class="card-body">
+                                    <h3 id="news-head">
+                                        <a href="#"> <b>Drone based Surveillance System introduced in Indian Railways</b> </a>
+                                    </h3>
+                                    <p class="card-text"><a href="#" class="badge badge-primary"><span class="fa fa-tag mr-2"></span>Economy & Banking Current Affairs</a></p>
+                                    <p class="card-text text-secondary">On August 18, 2020, the Ministry of Railways announced that the drone-based surveillance system is to be introduced for the purpose of railway security. Highlights The Railway Protection Force has so far procured drones
+                                        at a cost of Rs 32 lakhs. The drones are to be implemented in Central Railway, South Eastern Railway, Central Railway...
+                                        <h6><a href="#" class="readmore-btn">Read More</a></h6>
+                                    </p>
+        
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div id="Content" class="content d-flex flex-wrap justify-content-between">
+            <div class="col-lg-3">
                 <div class="category mt-2">
                     <div id="months">
-                        <div class="head"><b>Curren Affairs By Months</b></div>
-                        <div class="list-group">
-                            <a href="#" class="list-group-item list-group-item-action">Current Affairs- August 2020</a>
-                            <a href="#" class="list-group-item list-group-item-action">Current Affairs- July 2020</a>
-                            <a href="#" class="list-group-item list-group-item-action">Current Affairs- June 2020</a>
-                            <a href="#" class="list-group-item list-group-item-action">Current Affairs- May 2020</a>
-                            <a href="#" class="list-group-item list-group-item-action">Current Affairs- April 2020</a>
-                            <a href="#" class="list-group-item list-group-item-action">Current Affairs- March 2020</a>
-                            <a href="#" class="list-group-item list-group-item-action">Current Affairs- February 2020</a>
-                            <a href="#" class="list-group-item list-group-item-action">Current Affairs- January 2020</a>
-                            <a href="#" class="list-group-item list-group-item-action">Current Affairs- December 2019</a>
-                            <a href="#" class="list-group-item list-group-item-action">Current Affairs- November 2019</a>
+                        <div class="sub-head d-flex align-items-center justify-content-between"><b>Current Affairs By Months</b><a href="javascript:void(0)" class="icon toggle-icon">&#9776;</a></div>
+                        <div class="list">
+                            <a href="#" >Current Affairs- August 2020</a>
+                            <a href="#" >Current Affairs- July 2020</a>
+                            <a href="#" >Current Affairs- June 2020</a>
+                            <a href="#" >Current Affairs- May 2020</a>
+                            <a href="#" >Current Affairs- April 2020</a>
+                            <a href="#" >Current Affairs- March 2020</a>
+                            <a href="#" >Current Affairs- February 2020</a>
+                            <a href="#" >Current Affairs- January 2020</a>
+                            <a href="#" >Current Affairs- December 2019</a>
+                            <a href="#" >Current Affairs- November 2019</a>
                         </div>
                     </div>
                     <div id="news-category">
-                        <div class="head"><b>Category</b></div>
-                        <div class="list-group">
-                            <a href="#" class="list-group-item list-group-item-action">Persons in News</a>
-                            <a href="#" class="list-group-item list-group-item-action">Important Days and Events</a>
-                            <a href="#" class="list-group-item list-group-item-action">Defence current affairs</a>
-                            <a href="#" class="list-group-item list-group-item-action">Government Schemes in India</a>
-                            <a href="#" class="list-group-item list-group-item-action">International Current Affairs</a>
-                            <a href="#" class="list-group-item list-group-item-action">States Current Affairs</a>
-                            <a href="#" class="list-group-item list-group-item-action">Environmental Current Affairs</a>
-                            <a href="#" class="list-group-item list-group-item-action">Sports Current Affairs</a>
-                            <a href="#" class="list-group-item list-group-item-action">India Current Affairs</a>
-                            <a href="#" class="list-group-item list-group-item-action">Economic & Banking Current Affairs</a>
-                            <a href="#" class="list-group-item list-group-item-action">Legal Current Affairs</a>
-                            <a href="#" class="list-group-item list-group-item-action">Science & Tech Current Affairs</a>
-                            <a href="#" class="list-group-item list-group-item-action">Awards Current Affairs</a>
-                            <a href="#" class="list-group-item list-group-item-action">Art & Culture Current Affairs</a>
+                        <div class="sub-head d-flex align-items-center justify-content-between"><b>Category</b><a href="javascript:void(0)" class="icon toggle-icon">&#9776;</a></div>
+                        <div class="list">
+                            <a href="#" >Persons in News</a>
+                            <a href="#" >Important Days and Events</a>
+                            <a href="#" >Defence current affairs</a>
+                            <a href="#" >Government Schemes in India</a>
+                            <a href="#" >International Current Affairs</a>
+                            <a href="#" >States Current Affairs</a>
+                            <a href="#" >Environmental Current Affairs</a>
+                            <a href="#" >Sports Current Affairs</a>
+                            <a href="#" >India Current Affairs</a>
+                            <a href="#" >Economic & Banking Current Affairs</a>
+                            <a href="#" >Legal Current Affairs</a>
+                            <a href="#" >Science & Tech Current Affairs</a>
+                            <a href="#" >Awards Current Affairs</a>
+                            <a href="#" >Art & Culture Current Affairs</a>
                         </div>
                     </div>
-                </div>
-                <div class="affairs">
-                    <div class="card shadow-sm pt-2 mt-2 mb-3">
-                        <div class=" ml-2 card-head">
-                            <h6 id="date"><img src="{% static 'portal_pages/images/date-icon.png' %}" alt="Date"> August 19, 2020</h6>
-                            <h3 id="news-head">
-                                <a href="#"> <b>Drone based Surveillance System introduced in Indian Railways</b> </a>
-                            </h3>
-                            <p class="card-text"><small class="text-muted"><b>Category:</b><a href="#">Economy & Banking Current Affairs</a></small></p>
-                        </div>
-                        <div class="ml-2 row no-gutters">
-                            <div class="col-md-3 ">
-                                <img src="{% static 'portal_pages/images/news-1.jpg' %}" class="card-img" alt="news-1">
-                            </div>
-                            <div class="col-md-9">
-                                <div class="card-body">
-                                    <p class="card-text">On August 18, 2020, the Ministry of Railways announced that the drone-based surveillance system is to be introduced for the purpose of railway security. Highlights The Railway Protection Force has so far procured drones
-                                        at a cost of Rs 32 lakhs. The drones are to be implemented in Central Railway, South Eastern Railway, Central Railway...
-                                        <h6><a href="#">Read More</a></h6>
-                                    </p>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card shadow-sm pt-2 mt-2 mb-3">
-                        <div class=" ml-2 card-head">
-                            <h6 id="date"><img src="{% static 'portal_pages/images/date-icon.png' %}" alt="Date"> August 19, 2020</h6>
-                            <h3 id="news-head">
-                                <a href="#"> <b>Drone based Surveillance System introduced in Indian Railways</b> </a>
-                            </h3>
-                            <p class="card-text"><small class="text-muted"><b>Category:</b><a href="#">Economy & Banking Current Affairs</a></small></p>
-                        </div>
-                        <div class="ml-2 row no-gutters">
-                            <div class="col-md-3 ">
-                                <img src="{% static 'portal_pages/images/news-1.jpg' %}" class="card-img" alt="news-1">
-                            </div>
-                            <div class="col-md-9">
-                                <div class="card-body">
-                                    <p class="card-text">On August 18, 2020, the Ministry of Railways announced that the drone-based surveillance system is to be introduced for the purpose of railway security. Highlights The Railway Protection Force has so far procured drones
-                                        at a cost of Rs 32 lakhs. The drones are to be implemented in Central Railway, South Eastern Railway, Central Railway...
-                                        <h6><a href="#">Read More</a></h6>
-                                    </p>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card shadow-sm pt-2 mt-2 mb-3">
-                        <div class=" ml-2 card-head">
-                            <h6 id="date"><img src="{% static 'portal_pages/images/date-icon.png' %}" alt="Date"> August 19, 2020</h6>
-                            <h3 id="news-head">
-                                <a href="#"> <b>Drone based Surveillance System introduced in Indian Railways</b> </a>
-                            </h3>
-                            <p class="card-text"><small class="text-muted"><b>Category:</b><a href="#">Economy & Banking Current Affairs</a></small></p>
-                        </div>
-                        <div class="ml-2 row no-gutters">
-                            <div class="col-md-3 ">
-                                <img src="{% static 'portal_pages/images/news-1.jpg' %}" class="card-img" alt="news-1">
-                            </div>
-                            <div class="col-md-9">
-                                <div class="card-body">
-                                    <p class="card-text">On August 18, 2020, the Ministry of Railways announced that the drone-based surveillance system is to be introduced for the purpose of railway security. Highlights The Railway Protection Force has so far procured drones
-                                        at a cost of Rs 32 lakhs. The drones are to be implemented in Central Railway, South Eastern Railway, Central Railway...
-                                        <h6><a href="#">Read More</a></h6>
-                                    </p>
-
-                                </div>
-                            </div>
+                        <div class="col-lg-6 pl-0">
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
-    </main>
-
+        </div>
+    </div>
 {% endblock %}

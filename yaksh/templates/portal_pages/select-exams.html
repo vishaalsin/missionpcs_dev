@@ -1,97 +1,35 @@
-{% extends 'portal_pages/base.html' %}
+{% extends 'portal_pages/base2.html' %}
 {% load static %}
 {% block cssfile %}
     <link rel="stylesheet" href=" {% static 'portal_pages/style/select-exam.css' %}" />
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
-{% endblock %}
-
-{% block navbar %}
-<header>
-        <nav class="navbar navbar-dark bg-dark">
-            <!-- ####### Logo for Website ####### -->
-            <a class="navbar-brand" href="#">
-                <img src="{% static 'portal_pages/images/logo.png' %} " alt="Logo for mission pcs" />
-            </a>
-            <!-- ############# Toggle Menu for Test Series ############### -->
-            <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarsExample01" aria-controls="navbarsExample01" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-
-            <div class="navbar-collapse collapse" id="navbarsExample01">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a
-              >
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Link</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a
-              >
-            </li>
-            <li class="nav-item dropdown">
-              <a
-                class="nav-link dropdown-toggle"
-                href="#"
-                id="dropdown01"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-                >Dropdown</a
-              >
-              <div class="dropdown-menu" aria-labelledby="dropdown01">
-                <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <a class="dropdown-item" href="#">Something else here</a>
-            </div>
-            </li>
-            </ul>
-            <form class="form-inline my-2 my-md-0">
-                <input class="form-control" type="text" placeholder="Search" aria-label="Search" />
-            </form>
-            </div>
-        </nav>
-    </header>
-
 {% endblock %}
 
 {% block content %}
-
-    <main>
-        <!-- ########### Section for select your exam ########### -->
-        <section id="select-exam">
-            <div class="container mt-5">
-                <div class="head sticky-top pt-4 pb-4">
-                    <h3>Select Your Exam</h3>
-                </div>
-                <form action="" method="POST">
+<section id="select-exam">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 mt-3">
+                <h2>Select Your Exam</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+            </div>
+            <div class="col-md-6">
+                <form  action="" method="POST" class="exams">
                     {% csrf_token %}
-                    <div class="exams p-2">
-                        <div class="accordion" id="accordionExample">
-                            <!-- ######### Exam Category  -->
-
-                            {% for course in courses %}
-                            <div class="card">
-                                <div class="card-header">
-                                    <h3 class="box">
-
-                                        <input type="checkbox" name="{{ course }}" id="{{ course }}" value="{{ course.id }}" />
-                                        <label for="{{ course }}">{{ course }}</label>
-                                    </h3>
-                                </div>
-                            </div>
-                            {% endfor %}
-
-                        </div>
+                    <!-- ######### Exam Category 1 -->
+                    {% for course in courses %}
+                    <div class="exam-box">
+                        <input type="checkbox" name="{{ course }}" id="{{ course.id }}" />
+                        <label for="{{ course.id }}">{{ course }} Exams</label>
                     </div>
+                    {% endfor %}
                     <div class="exam-bottom p-3">
-                        <button type="submit" class="btn select-exam-btn btn-lg btn-block">
-                            Continue
-                        </button>
+                        <button class="btn btn-primary btn-block mx-auto" type="button" style="max-width: 300px;"> Continue</button>
                     </div>
                 </form>
             </div>
-        </section>
-    </main>
+        </div>
+    </div>
+</section>
+
+    
 {% endblock %}
