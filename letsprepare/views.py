@@ -67,7 +67,8 @@ def show_all_quizzes(request):
         'user': user,
         'question_papers': question_papers_data
     }
-    return render(request, 'yaksh/all_question_papers.html', context)
+    #return render(request, 'yaksh/all_question_papers.html', context)
+    return render(request, 'portal_pages/all_question_papers.html', context)
 
 def show_all_modules(request):
     user = request.user

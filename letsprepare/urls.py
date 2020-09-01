@@ -18,4 +18,5 @@ urlpatterns = [
     url(r'^prev-tests/$', TemplateView.as_view(template_name='portal_pages/prev-tests.html')),
     url(r'^detailed-news/$', TemplateView.as_view(template_name='portal_pages/detailed-news.html')),
     url(r'^current-affairs/$', TemplateView.as_view(template_name='portal_pages/current-affairs.html')),
+    url(r'^home/$', TemplateView.as_view(template_name='portal_pages/index.html')),
 ]
