@@ -36,14 +36,22 @@ class QuestionList(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+class AllCourseList(APIView):
+    """ List all courses without any credentials """
+    permission_classes = [permissions.AllowAny]
+
+    def get(self, request, format=None):
+        courses = Course.objects.all()
+        serializer = CourseSerializer(courses, many=True)
+        return Response(serializer.data)
+
 class CourseList(APIView):
-    """ List all courses """
+    """ List all courses for logined user """
 
     def get(self, request, format=None):
         courses = Course.objects.filter(students=request.user)
         serializer = CourseSerializer(courses, many=True)
         return Response(serializer.data)
-
 
 class StartQuiz(APIView):
     """ Retrieve Answerpaper. If does not exists then create one """
@@ -236,6 +244,15 @@ class AnswerValidator(APIView):
             answerpaper.update_marks(state='inprogress')
         return Response(result)
 
+class AllQuizList(APIView):
+    """ List all quizzes without authentication """
+
+    permission_classes = [permissions.AllowAny]
+    
+    def get(self, request, format=None):
+        quizzes = Quiz.objects.all()
+        serializer = QuizSerializer(quizzes, many=True)
+        return Response(serializer.data)
 
 class QuizList(APIView):
     """ List all quizzes or create a new quiz """
