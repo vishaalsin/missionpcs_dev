@@ -171,6 +171,7 @@ def user_register(request):
             request, 'yaksh/register.html', {'form': form}
         )
 
+
 def select_exam(request):
     courses = Course.objects.all()
     if request.method == 'POST':
@@ -178,7 +179,7 @@ def select_exam(request):
         # Receives all the id's of enrolled courses
         #print(enrolled_courses_ids)
         initiate_user(request.user, enrolled_courses_ids)
-        return my_redirect('/letsprepare/')
+        return my_redirect('/exam/dashboard/1/')
 
     context = {
         'courses': courses
@@ -186,6 +187,7 @@ def select_exam(request):
     return my_render_to_response(
         request, 'portal_pages/select-exams.html', context
     )
+
 
 def initiate_user(new_user, enrolled_courses_ids):
     for course_id in enrolled_courses_ids:
@@ -202,6 +204,92 @@ def initiate_user(new_user, enrolled_courses_ids):
             available_quizzes_serializer.save()
 
 
+@login_required
+def initiate_dashboard(request):
+    user = request.user
+    user_course_list = user.students.all()
+    course_id = user_course_list[0].id  # Stores the id of first course in the list
+    return dashboard(request, course_id)
+
+@login_required
+def dashboard(request, course_id):
+    user = request.user  # Gives the logged in user
+    user_course_list = user.students.all()  # Gives course list that user is enrolled in
+    course = Course.objects.get(id=course_id)  # Course for particular course id
+    modules = course.learning_module.all()  # Module for particular course
+    modules_data = []
+    quiz_data = []
+    try:
+        availableQuizzes = json.loads(json.dumps(AvailableQuizzesSerializer(AvailableQuizzes.objects.filter(user=user, successful = True), many=True).data))
+        availableQuizIds = [quiz['quiz'] for quiz in availableQuizzes]
+    except:
+        availableQuizIds = []
+    if course not in user_course_list:
+        raise Http404('This course does not belong to you')
+    for module in modules:
+        quizzes = module.get_quiz_units()
+        quizzes = sorted(quizzes, key=lambda item: int(item.quiz_code.split('_')[1]))
+        has_quizzes = 0
+        for quiz in quizzes:
+            if quiz.id in availableQuizIds or quiz.is_free:
+                quiz_data.append({
+                    'code': quiz.quiz_code,
+                    'name': quiz.description,
+                    'id': quiz.id,
+                    'module_id': module.id,
+                    'module_name' : module.description
+                })
+                has_quizzes += 1
+        modules_data.append({'name': module.description, 'id': module.id,
+                             'total_quizzes': len(quizzes), 'has_quizzes': has_quizzes})
+
+    context = {
+        'courses': user_course_list,
+        'modules': modules_data,
+        'quizzes': quiz_data,
+        'current_course': course
+    }
+    return my_render_to_response(request, 'portal_pages/index.html', context)
+
+
+@login_required
+def initiate_subjects(request):
+    user = request.user
+    user_course_list = user.students.all()
+    course_id = user_course_list[0].id
+    return subjects(request, course_id)
+
+
+@login_required
+def subjects(request, course_id):
+    user = request.user  # Gives the logged in user
+    user_course_list = user.students.all()  # Gives course list that user is enrolled in
+    course = Course.objects.get(id=course_id)
+    modules = course.learning_module.all()
+    modules_data = []
+    try:
+        availableQuizzes = json.loads(json.dumps(AvailableQuizzesSerializer(AvailableQuizzes.objects.filter(user=user, successful = True), many=True).data))
+        availableQuizIds = [quiz['quiz'] for quiz in availableQuizzes]
+    except:
+        availableQuizIds = []
+    for module in modules:
+        quizzes = module.get_quiz_units()
+        has_quizzes = 0
+        for quiz in quizzes:
+            if quiz.id in availableQuizIds or quiz.is_free:
+                has_quizzes += 1
+        modules_data.append({'name' : module.description, 'id' : module.id,
+                              'total_quizzes' : len(quizzes), 'has_quizzes' : has_quizzes })
+
+    context = {
+        'courses': user_course_list,
+        'modules': modules_data,
+        'current_course': course
+    }
+    return my_render_to_response(request, 'portal_pages/subjects.html', context)
+
+
+@login_required
 def user_logout(request):
     """Show a page to inform user that the quiz has been compeleted."""
     logout(request)

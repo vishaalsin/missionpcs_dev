@@ -38,6 +38,15 @@
     <!-- Learning Corner  -->
         <div class="container text-center p-4">
             <h3 class="sub-head">&diamond; Suggested Test Series &diamond;</h3>
+             <div class="dropdown">
+                  <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">{{ current_course }}
+                  <span class="caret"></span></button>
+                  <ul class="dropdown-menu">
+                    {% for course in courses %}
+                      <li><a class="exams-list" href="/exam/dashboard/{{course.id}}" data-catid="{{ course.id }}">{{ course }}</a></li>
+                      {% endfor %}
+                  </ul>
+             </div>
           <div class="row">
               <div class="col-md-4">
                   <div class="card lets-start">
@@ -49,7 +58,7 @@
                                   <img src=" {% static 'portal_pages/images/test_icon_2.png' %} " alt="Previous Paper Icons" />
                                   <h5 class="card-title">Previous Year Papers</h5>
                               </a>
-                              <a href="#" class="card-body">
+                              <a href="/exam/subjects/{{ current_course.id }}" class="card-body">
                                   <img src=" {% static 'portal_pages/images/subject_icon.png' %}" alt="Subjects icon" />
                                   <h5 class="card-title">Subjects</h5>
                               </a>
@@ -70,11 +79,15 @@
               </div>
               <div class="col-md-8">
                   <div class="free-tests">
-                      <div class="card">
+                      {% for quiz in quizzes %}
+                        <div class="card">
                           <span>Free</span>
                           <div class="card-body">
                               <div>
-                                  <p class="card-text">Programming and Data Structure: Mock Test.</p>
+                                  <div class="d-flex justify-content-around">
+                                      <p class="card-text"><b>{{ quiz.code }}</b></p>
+                                  <p class="card-text">{{ quiz.name }}</p>
+                                  </div>
                                   <small>
                                   <i class="fa fa-question mr-1"></i> 10
                                   Questions
@@ -83,88 +96,13 @@
                                   16 Marks</small>
                                   <small><i class="fa fa-clock-o mr-1"></i>30 Minutes</small>
                               </div>
-                              <div class="badge badge-primary px-3 py-1">GATE CS</div>
+                              <div class="badge badge-primary px-3 py-1">{{ quiz.module_name }}</div>
                           </div>
-                          <a href="#" class="start-test-btn float-right">
+                          <a href="/exam/start/{{quiz.id}}/{{quiz.module_id}}/{{course_id}}/" class="start-test-btn float-right">
                               Start Test <i class="fa fa-caret-right"></i>
                           </a>
                       </div>
-                      <div class="card">
-                          <span>Free</span>
-                          <div class="card-body">
-                              <div>
-                                  <p class="card-text">Programming and Data Structure: Mock Test.</p>
-                                  <small>
-                                  <i class="fa fa-question mr-1"></i> 10
-                                  Questions
-                                  </small>
-                                  <small><i class="fa fa-check mr-1"></i>
-                                  16 Marks</small>
-                                  <small><i class="fa fa-clock-o mr-1"></i>30 Minutes</small>
-                              </div>
-                              <div class="badge badge-primary px-3 py-1">GATE CS</div>
-                          </div>
-                          <a href="#" class="start-test-btn float-right">
-                              Start Test <i class="fa fa-caret-right"></i>
-                          </a>
-                      </div>
-                      <div class="card">
-                          <span>Free</span>
-                          <div class="card-body">
-                              <div>
-                                  <p class="card-text">Programming and Data Structure: Mock Test.</p>
-                                  <small>
-                                  <i class="fa fa-question mr-1"></i> 10
-                                  Questions
-                                  </small>
-                                  <small><i class="fa fa-check mr-1"></i>
-                                  16 Marks</small>
-                                  <small><i class="fa fa-clock-o mr-1"></i>30 Minutes</small>
-                              </div>
-                              <div class="badge badge-primary px-3 py-1">GATE CS</div>
-                          </div>
-                          <a href="#" class="start-test-btn float-right">
-                              Start Test <i class="fa fa-caret-right"></i>
-                          </a>
-                      </div>
-                      <div class="card">
-                          <span>Free</span>
-                          <div class="card-body">
-                              <div>
-                                  <p class="card-text">Programming and Data Structure: Mock Test.</p>
-                                  <small>
-                                  <i class="fa fa-question mr-1"></i> 10
-                                  Questions
-                                  </small>
-                                  <small><i class="fa fa-check mr-1"></i>
-                                  16 Marks</small>
-                                  <small><i class="fa fa-clock-o mr-1"></i>30 Minutes</small>
-                              </div>
-                              <div class="badge badge-primary px-3 py-1">GATE CS</div>
-                          </div>
-                          <a href="#" class="start-test-btn float-right">
-                              Start Test <i class="fa fa-caret-right"></i>
-                          </a>
-                      </div>
-                      <div class="card">
-                          <span>Free</span>
-                          <div class="card-body">
-                              <div>
-                                  <p class="card-text">Programming and Data Structure: Mock Test.</p>
-                                  <small>
-                                  <i class="fa fa-question mr-1"></i> 10
-                                  Questions
-                                  </small>
-                                  <small><i class="fa fa-check mr-1"></i>
-                                  16 Marks</small>
-                                  <small><i class="fa fa-clock-o mr-1"></i>30 Minutes</small>
-                              </div>
-                              <div class="badge badge-primary px-3 py-1">GATE CS</div>
-                          </div>
-                          <a href="#" class="start-test-btn float-right">
-                              Start Test <i class="fa fa-caret-right"></i>
-                          </a>
-                      </div>
+                      {% endfor %}
                   </div>
               </div>
           </div>
