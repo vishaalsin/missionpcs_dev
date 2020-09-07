@@ -1,0 +1,98 @@
+.lets-start {
+    border-radius: 9px;
+    box-shadow: 0 3px 9px 0 rgba(0, 0, 0, 0.2);
+    background-color: rgb(95,9,210);
+    padding: 1rem 2rem;
+    margin-top: 2rem;
+}
+
+.lets-start h4 {
+    color: #ffffff;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.lets-start .card-body {
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 6px;
+    color: rgb(72,89,110);
+    padding: 0.5rem;
+    padding-left: 1rem;
+    display: flex;
+    margin: 0.5rem 0;
+    align-items: center;
+    transition: 0.2s ease-in;
+    text-align: left;
+    justify-content: left;
+    box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.2);
+}
+
+.lets-start .card-body:hover {
+    transform: scale(1.05);
+    text-decoration: none;
+    box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.8);
+}
+
+.lets-start .card-body h5 {
+    margin: 0px;
+}
+
+.lets-start img {
+    width: 45px;
+    margin-right: 1rem;
+}
+
+.free-tests .card {
+    margin: 0.5rem 0;
+    padding-left: 4rem;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.2);
+    border: 1px solid #dddddd;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.free-tests span {
+    position: absolute;
+    transform: rotate(-45deg);
+    padding: 0.5rem 3rem;
+    top: 10px;
+    background-color: #28a745;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 600;
+    box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.2);
+    left: -30px;
+}
+
+.free-tests .card-body {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.free-tests .card-body small {
+    border: 1px solid #cccccc;
+    padding: 2px 6px;
+    margin-right: 10px;
+    border-radius: 2px;
+}
+
+.free-tests .start-test-btn {
+    float: right;
+    height: 100%;
+    padding: 0.5rem 1rem;
+    font-weight: 600;
+    font-size: 17px;
+    box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.2);
+    color: #ffffff;
+    text-decoration: none !important;
+    background-color: #28a745;
+}
+
+.free-tests .start-test-btn:hover {
+    box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.3);
+}

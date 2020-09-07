@@ -1,0 +1,460 @@
+{% extends 'portal_pages/base2.html' %}
+{% load static %}
+{% block cssfile %}
+    <link rel="stylesheet" href=" {% static 'portal_pages/style/test-series.css' %}" />
+{% endblock %}
+{% block content %}
+<section id="test-series" class="test-series">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">SSC Test Series</h5>
+                            <h6 class="card-subtitle mb-2 light-text">Completed Tests: 3 / 12</h6>
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                            <h6 class="card-subtitle mt-2 mb-2 light-text">Next Test</h6>
+                            <div class="card-foot d-flex flex-wrap justify-content-between">
+                                <div class="sub-card">
+                                    <h6>Mock Test - 4</h6>
+                                    <div class="test-info"><small>
+                                        <i class="fa fa-question-circle mr-1"></i> 10
+                                        Questions
+                                        </small>
+                                        <small><i class="fa fa-check mr-1"></i>
+                                        16 Marks</small>
+                                        <small><i class="fa fa-clock-o mr-1"></i>30 Minutes</small>
+                                    </div>
+                                    <div class="date">Test Date: 30 Aug</div>
+                                </div>
+                                <div class="card-btn">
+                                    <a href="#" class="btn-1">Performance</a>
+                                    <a href="#" class="btn-1" type="button" data-toggle="modal" data-target="#ssc-test-series">View Details</a>
+                                </div>
+                                    <!-- Model View for Test-Series -->
+                                    <div class="modal fade" id="ssc-test-series" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalCenterTitle">Test Series</h5>
+    
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <h5 class="card-title">SSC Test Series</h5>
+                                                    <h6 class="card-subtitle mb-2 light-text">Completed Tests: 3 / 12</h6>
+                                                    <div class="progress mb-2">
+                                                        <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                                    </div>
+                                                    <h6 class="card-subtitle mt-2 light-text">Topics Covered</h6>
+                                                    <ul>
+                                                        <li>General Intelligence and Reasoning</li>
+                                                        <li>General Awareness</li>
+                                                        <li>Quantitative Aptitude</li>
+                                                        <li>English Comprehension</li>
+                                                    </ul>
+    
+                                                    <div class="completed-test">
+                                                        <div class="head">
+                                                            <center>
+                                                                <h6 class="card-subtitle mt-2 light-text mb-3"><b>Completed Tests</b></h6>
+                                                            </center>
+                                                        </div>
+                                                        <div class="test-body">
+                                                            <a class="mock-test" href="#">
+                                                                <h6>Mock Test - 4</h6>
+                                                                <div class="badge badge-pill badge-success">Test Date: 30 Aug</div>
+                                                            </a>
+                                                            <a class="mock-test" href="#">
+                                                                <h6>Mock Test - 4</h6>
+                                                                <div class="badge badge-pill badge-success">Test Date: 30 Aug</div>
+                                                            </a>
+                                                            <a class="mock-test" href="#">
+                                                                <h6>Mock Test - 4</h6>
+                                                                <div class="badge badge-pill badge-success">Test Date: 30 Aug</div>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="upcoming-test">
+                                                        <div class="head">
+                                                            <center>
+                                                                <h6 class="card-subtitle mt-2 light-text mb-3"><b>Upcoming Tests</b></h6>
+                                                            </center>
+                                                        </div>
+                                                        <div class="test-body">
+                                                            <a class="mock-test" href="#">
+                                                                <h6>Mock Test - 4</h6>
+                                                                <div class="badge badge-pill badge-info">Test Date: 30 Aug</div>
+                                                            </a>
+                                                            <a class="mock-test" href="#">
+                                                                <h6>Mock Test - 5</h6>
+                                                                <div class="badge badge-pill badge-info">Test Date: 10 Sept</div>
+                                                            </a>
+                                                            <a class="mock-test" href="#">
+                                                                <h6>Mock Test - 6</h6>
+                                                                <div class="badge badge-pill badge-info">Test Date: 20 Sept</div>
+                                                            </a>
+                                                            <a class="mock-test" href="#">
+                                                                <h6>Mock Test - 7</h6>
+                                                                <div class="badge badge-pill badge-info">Test Date: 30 Sept</div>
+                                                            </a>
+                                                            <a class="mock-test" href="#">
+                                                                <h6>Mock Test - 8</h6>
+                                                                <div class="badge badge-pill badge-info">Test Date: 10 Oct</div>
+                                                            </a>
+                                                            <a class="mock-test" href="#">
+                                                                <h6>Mock Test - 9</h6>
+                                                                <div class="badge badge-pill badge-info">Test Date: 20 Oct</div>
+                                                            </a>
+                                                            <a class="mock-test" href="#">
+                                                                <h6>Mock Test - 10</h6>
+                                                                <div class="badge badge-pill badge-info">Test Date: 30 Oct</div>
+                                                            </a>
+                                                            <a class="mock-test" href="#">
+                                                                <h6>Mock Test - 11</h6>
+                                                                <div class="badge badge-pill badge-info">Test Date: 10 Nov</div>
+                                                            </a>
+                                                            <a class="mock-test" href="#">
+                                                                <h6>Mock Test - 12</h6>
+                                                                <div class="badge badge-pill badge-info">Test Date: 20 Nov</div>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <a href="#" class="btn-1">Performance</a>
+                                                    <button type="button" class="btn-1" disabled>Edit Test Series</button>
+                                                    <button type="button" class="btn-1" data-dismiss="modal">Close</button>
+    
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">SSC Test Series</h5>
+                                <h6 class="card-subtitle mb-2 light-text">Completed Tests: 3 / 12</h6>
+                                <div class="progress">
+                                    <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                                <h6 class="card-subtitle mt-2 mb-2 light-text">Next Test</h6>
+                                <div class="card-foot d-flex flex-wrap justify-content-between">
+                                    <div class="sub-card">
+                                        <h6>Mock Test - 4</h6>
+                                        <div class="test-info"><small>
+                                            <i class="fa fa-question-circle mr-1"></i> 10
+                                            Questions
+                                            </small>
+                                            <small><i class="fa fa-check mr-1"></i>
+                                            16 Marks</small>
+                                            <small><i class="fa fa-clock-o mr-1"></i>30 Minutes</small>
+                                        </div>
+                                        <div class="date">Test Date: 30 Aug</div>
+                                    </div>
+                                    <div class="card-btn">
+                                        <a href="#" class="btn-1">Performance</a>
+                                        <a href="#" class="btn-1" type="button" data-toggle="modal" data-target="#ssc-test-series">View Details</a>
+                                    </div>
+                                        <!-- Model View for Test-Series -->
+                                        <div class="modal fade" id="ssc-test-series" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalCenterTitle">Test Series</h5>
+        
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <h5 class="card-title">SSC Test Series</h5>
+                                                        <h6 class="card-subtitle mb-2 text-muted">Completed Tests: 3 / 12</h6>
+                                                        <div class="progress mb-2">
+                                                            <div class="progress-bar bg-primary" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                                        </div>
+                                                        <h6 class="card-subtitle mt-2 text-muted">Topics Covered</h6>
+                                                        <ul>
+                                                            <li>General Intelligence and Reasoning</li>
+                                                            <li>General Awareness</li>
+                                                            <li>Quantitative Aptitude</li>
+                                                            <li>English Comprehension</li>
+                                                        </ul>
+        
+                                                        <div class="completed-test">
+                                                            <div class="head">
+                                                                <center>
+                                                                    <h6 class="card-subtitle mt-2 text-muted"><b>Completed Tests</b></h6>
+                                                                </center>
+                                                            </div>
+                                                            <div class="body">
+                                                                <div class="sub-card">
+                                                                    <a class="mock-test p-2">
+                                                                        <h6>Mock Test - 1</h6>
+                                                                        <div class="badge badge-pill badge-success">Marks: 70 / 100</div>
+                                                                    </a>
+        
+                                                                </div>
+                                                                <div class="sub-card">
+                                                                    <a class="mock-test p-2" href="#">
+                                                                        <h6>Mock Test - 2</h6>
+                                                                        <div class="badge badge-pill badge-success">Marks: 70 / 100</div>
+                                                                    </a>
+                                                                </div>
+                                                                <div class="sub-card">
+                                                                    <a class="mock-test p-2" href="#">
+                                                                        <h6>Mock Test - 3</h6>
+                                                                        <div class="badge badge-pill badge-success">Marks: 70 / 100</div>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="upcoming-test">
+                                                            <div class="head">
+                                                                <center>
+                                                                    <h6 class="card-subtitle mt-2 text-muted"><b>Upcoming Tests</b></h6>
+                                                                </center>
+                                                            </div>
+                                                            <div class="body">
+                                                                <div class="sub-card">
+                                                                    <a class="mock-test p-2" href="#">
+                                                                        <h6>Mock Test - 4</h6>
+                                                                        <div class="badge badge-pill badge-info">Test Date: 30 Aug</div>
+                                                                    </a>
+        
+                                                                </div>
+                                                                <div class="sub-card">
+                                                                    <a class="mock-test p-2" href="#">
+                                                                        <h6>Mock Test - 5</h6>
+                                                                        <div class="badge badge-pill badge-info">Test Date: 10 Sept</div>
+                                                                    </a>
+                                                                </div>
+                                                                <div class="sub-card">
+                                                                    <a class="mock-test p-2" href="#">
+                                                                        <h6>Mock Test - 6</h6>
+                                                                        <div class="badge badge-pill badge-info">Test Date: 20 Sept</div>
+                                                                    </a>
+                                                                </div>
+                                                                <div class="sub-card">
+                                                                    <a class="mock-test p-2" href="#">
+                                                                        <h6>Mock Test - 7</h6>
+                                                                        <div class="badge badge-pill badge-info">Test Date: 30 Sept</div>
+                                                                    </a>
+                                                                </div>
+                                                                <div class="sub-card">
+                                                                    <a class="mock-test p-2" href="#">
+                                                                        <h6>Mock Test - 8</h6>
+                                                                        <div class="badge badge-pill badge-info">Test Date: 10 Oct</div>
+                                                                    </a>
+                                                                </div>
+                                                                <div class="sub-card">
+                                                                    <a class="mock-test p-2" href="#">
+                                                                        <h6>Mock Test - 9</h6>
+                                                                        <div class="badge badge-pill badge-info">Test Date: 20 Oct</div>
+                                                                    </a>
+                                                                </div>
+                                                                <div class="sub-card">
+                                                                    <a class="mock-test p-2" href="#">
+                                                                        <h6>Mock Test - 10</h6>
+                                                                        <div class="badge badge-pill badge-info">Test Date: 30 Oct</div>
+                                                                    </a>
+                                                                </div>
+                                                                <div class="sub-card">
+                                                                    <a class="mock-test p-2" href="#">
+                                                                        <h6>Mock Test - 11</h6>
+                                                                        <div class="badge badge-pill badge-info">Test Date: 10 Nov</div>
+                                                                    </a>
+                                                                </div>
+                                                                <div class="sub-card">
+                                                                    <a class="mock-test p-2" href="#">
+                                                                        <h6>Mock Test - 12</h6>
+                                                                        <div class="badge badge-pill badge-info">Test Date: 20 Nov</div>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <a href="#" class="btn btn-1">Performance</a>
+                                                        <button type="button" class="btn btn-primary" disabled>Edit Test Series</button>
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">SSC Test Series</h5>
+                                    <h6 class="card-subtitle mb-2 light-text">Completed Tests: 3 / 12</h6>
+                                    <div class="progress">
+                                        <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                    <h6 class="card-subtitle mt-2 mb-2 light-text">Next Test</h6>
+                                    <div class="card-foot d-flex flex-wrap justify-content-between">
+                                        <div class="sub-card">
+                                            <h6>Mock Test - 4</h6>
+                                            <div class="test-info"><small>
+                                                <i class="fa fa-question-circle mr-1"></i> 10
+                                                Questions
+                                                </small>
+                                                <small><i class="fa fa-check mr-1"></i>
+                                                16 Marks</small>
+                                                <small><i class="fa fa-clock-o mr-1"></i>30 Minutes</small>
+                                            </div>
+                                            <div class="date">Test Date: 30 Aug</div>
+                                        </div>
+                                        <div class="card-btn">
+                                            <a href="#" class="btn-1">Performance</a>
+                                            <a href="#" class="btn-1" type="button" data-toggle="modal" data-target="#ssc-test-series">View Details</a>
+                                        </div>
+                                            <!-- Model View for Test-Series -->
+                                            <div class="modal fade" id="ssc-test-series" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalCenterTitle">Test Series</h5>
+            
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <h5 class="card-title">SSC Test Series</h5>
+                                                            <h6 class="card-subtitle mb-2 text-muted">Completed Tests: 3 / 12</h6>
+                                                            <div class="progress mb-2">
+                                                                <div class="progress-bar bg-primary" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                                            </div>
+                                                            <h6 class="card-subtitle mt-2 text-muted">Topics Covered</h6>
+                                                            <ul>
+                                                                <li>General Intelligence and Reasoning</li>
+                                                                <li>General Awareness</li>
+                                                                <li>Quantitative Aptitude</li>
+                                                                <li>English Comprehension</li>
+                                                            </ul>
+            
+                                                            <div class="completed-test">
+                                                                <div class="head">
+                                                                    <center>
+                                                                        <h6 class="card-subtitle mt-2 text-muted"><b>Completed Tests</b></h6>
+                                                                    </center>
+                                                                </div>
+                                                                <div class="body">
+                                                                    <div class="sub-card">
+                                                                        <a class="mock-test p-2">
+                                                                            <h6>Mock Test - 1</h6>
+                                                                            <div class="badge badge-pill badge-success">Marks: 70 / 100</div>
+                                                                        </a>
+            
+                                                                    </div>
+                                                                    <div class="sub-card">
+                                                                        <a class="mock-test p-2" href="#">
+                                                                            <h6>Mock Test - 2</h6>
+                                                                            <div class="badge badge-pill badge-success">Marks: 70 / 100</div>
+                                                                        </a>
+                                                                    </div>
+                                                                    <div class="sub-card">
+                                                                        <a class="mock-test p-2" href="#">
+                                                                            <h6>Mock Test - 3</h6>
+                                                                            <div class="badge badge-pill badge-success">Marks: 70 / 100</div>
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="upcoming-test">
+                                                                <div class="head">
+                                                                    <center>
+                                                                        <h6 class="card-subtitle mt-2 text-muted"><b>Upcoming Tests</b></h6>
+                                                                    </center>
+                                                                </div>
+                                                                <div class="body">
+                                                                    <div class="sub-card">
+                                                                        <a class="mock-test p-2" href="#">
+                                                                            <h6>Mock Test - 4</h6>
+                                                                            <div class="badge badge-pill badge-info">Test Date: 30 Aug</div>
+                                                                        </a>
+            
+                                                                    </div>
+                                                                    <div class="sub-card">
+                                                                        <a class="mock-test p-2" href="#">
+                                                                            <h6>Mock Test - 5</h6>
+                                                                            <div class="badge badge-pill badge-info">Test Date: 10 Sept</div>
+                                                                        </a>
+                                                                    </div>
+                                                                    <div class="sub-card">
+                                                                        <a class="mock-test p-2" href="#">
+                                                                            <h6>Mock Test - 6</h6>
+                                                                            <div class="badge badge-pill badge-info">Test Date: 20 Sept</div>
+                                                                        </a>
+                                                                    </div>
+                                                                    <div class="sub-card">
+                                                                        <a class="mock-test p-2" href="#">
+                                                                            <h6>Mock Test - 7</h6>
+                                                                            <div class="badge badge-pill badge-info">Test Date: 30 Sept</div>
+                                                                        </a>
+                                                                    </div>
+                                                                    <div class="sub-card">
+                                                                        <a class="mock-test p-2" href="#">
+                                                                            <h6>Mock Test - 8</h6>
+                                                                            <div class="badge badge-pill badge-info">Test Date: 10 Oct</div>
+                                                                        </a>
+                                                                    </div>
+                                                                    <div class="sub-card">
+                                                                        <a class="mock-test p-2" href="#">
+                                                                            <h6>Mock Test - 9</h6>
+                                                                            <div class="badge badge-pill badge-info">Test Date: 20 Oct</div>
+                                                                        </a>
+                                                                    </div>
+                                                                    <div class="sub-card">
+                                                                        <a class="mock-test p-2" href="#">
+                                                                            <h6>Mock Test - 10</h6>
+                                                                            <div class="badge badge-pill badge-info">Test Date: 30 Oct</div>
+                                                                        </a>
+                                                                    </div>
+                                                                    <div class="sub-card">
+                                                                        <a class="mock-test p-2" href="#">
+                                                                            <h6>Mock Test - 11</h6>
+                                                                            <div class="badge badge-pill badge-info">Test Date: 10 Nov</div>
+                                                                        </a>
+                                                                    </div>
+                                                                    <div class="sub-card">
+                                                                        <a class="mock-test p-2" href="#">
+                                                                            <h6>Mock Test - 12</h6>
+                                                                            <div class="badge badge-pill badge-info">Test Date: 20 Nov</div>
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <a href="#" class="btn btn-1">Performance</a>
+                                                            <button type="button" class="btn btn-primary" disabled>Edit Test Series</button>
+                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

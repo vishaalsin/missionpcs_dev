@@ -1,0 +1,173 @@
+{% extends "base2.html" %}
+{% load static %}
+{% block script %}
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- displays site properly based on user's device -->
+
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="{% static 'homepage/style.css' %}">
+  <title>Mission PCS</title>
+
+</head>
+{% endblock %}
+
+{% block nav %}
+
+  <header>
+    <div class="navigation">
+      <a href="#" class="logo-header"><img src="{% static 'yaksh/images/lp2.png' %}" alt="fylo logo" class="logo-header-img"></a>
+      <nav>
+        <ul class="nav-items-list">
+          <li class="nav-item"><a href="/letsprepare/show_modules/">View Modules</a></li>
+          <li class="nav-item"><a href="/exam/login/?next=/letsprepare/show_modules/">Login / Register</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+{% endblock %}
+
+
+{% block content %}
+
+    <div class="main-container">
+      <section class="intro">
+        <div class="section-container">
+          <img src="{% static 'homepage/images/missionpcs.jpg' %}" alt="intro illustration" class="intro-illustration-img">
+          <h1> Accomplish "Mission PCS" with your personal AI guide</h1>
+          <a href="/letsprepare/show_modules/" class="cta cta-intro">TAKE A TOUR</a>
+        </div>
+      </section>
+
+      <section class="primary">
+        <div class="section-container">
+
+          <div class="primary-features">
+            <div class="features-container">
+
+              <div class="access-feature feature">
+                <div class="feature-image">
+                  <img src="{% static 'homepage/images/previous.png' %}" alt="access feature image" class="access-feature-img">
+                </div>
+                <div class="feature-details">
+                  <h3 class="access-feature-heading">Previous year questions</h3>
+                  <p class="access-feature-body">
+                    We cover previous 20-year questions of various state service examinations like UPPCS, BPSC, RPSC, MPPSC, JPSC etc.
+                  </p>
+                </div>
+              </div>
+
+              <div class="security-feature feature">
+                <div class="feature-image">
+                  <img src="{% static 'homepage/images/dart.png' %}" alt="security feature image" class="security-feature-img">
+                </div>
+                <div class="feature-details">
+                  <h3 class="security-feature-heading">Focused, topic-wise practise</h3>
+                  <p class="security-feature-body">
+                    Choose from comprehensively curated topic-based tests. You can now practise in accordance with the pace of your preparation.
+                  </p>
+                </div>
+              </div>
+
+              <div class="collaboration-feature feature">
+                <div class="feature-image">
+                  <img src="{% static 'homepage/images/ai.png' %}" alt="collaboration feature image" class="collaboration-feature-img">
+                </div>
+                <div class="feature-details">
+                  <h3 class="collaboration-feature-heading">AI-powered test series</h3>
+                  <p class="collaboration-feature-body">
+                    Experts and AI select most important questions and current affairs, based on previous year trends.
+                  </p>
+                </div>
+              </div>
+
+              <div class="files-feature feature">
+                <div class="feature-image">
+                  <img src="{% static 'homepage/images/analytics.png' %}" alt="files feature image" class="files-feature-img">
+                </div>
+                <div class="feature-details">
+                  <h3 class="files-feature-heading">Expert performance analytics</h3>
+                  <p class="files-feature-body">
+                   Track performance and indentify blind spots with expert-designed Performance Analytics Framework.
+                  </p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+                          <div class="card-body" style="background-color: #1C2531;">
+            <div class="primary-signup">
+            <div class="signup-container">
+              <div class="signup-text">
+                <center><h2>How it works:</h2>
+                <ul>
+                  <li><p>&bull; Sign-up with your contact details.</p></li>
+                  <li><p>&bull; Select subjects you wish to practise and take freely available tests.</p></li>
+                  <li><p>&bull; Go to 'Unlock tests' section, add desired tests to cart and checkout.</p></li>
+                  <li><p>&bull; Start practising and tracking your performance in 'Results' section.</p></li>
+                    </ul>
+                </center>
+              </div>
+            </div>
+          </div>
+          </div>
+
+
+          <div class="primary-signup">
+            <div class="signup-container">
+              <div class="signup-text">
+                <h2>Upcoming Features</h2>
+                <p>&bull; Option elimination feature to strengthen your guess-framework.</p>
+                <p>&bull; AI-powered current-affairs to help you prepare with most relevant content.</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+
+
+    </div>
+{% endblock %}
+{% block footer %}
+  <footer>
+    <img src="{% static 'yaksh/images/lp2.png' %}" alt="missionpcs" class="logo-footer">
+    <div class="footer-container grid">
+      
+      <div class="address-container">
+        <div class="location-container">
+          <img src="{% static 'homepage/images/icon-location.svg' %}" alt="phone icon" class="phone-icon">
+          <p>We are 100% online. Please keep visiting!!</p>
+        </div>
+        <ul class="contacts-container">
+          <li class="contacts-line-2">
+            <img src="{% static 'homepage/images/icon-email.svg' %}" alt="email icon" class="email-icon">
+            <p>missionpcs.help@gmail.com</p>
+          </li>
+        </ul>
+      </div>
+
+      <div class="links-container">
+        <ul class="links-list-line1">
+        </ul>
+        <ul class="links-list-line2">
+          <li><a href="/terms/">Terms and Privacy</a></li>
+        </ul>
+      </div>
+
+      <div class="social-container">
+        <ul class="social-nav">
+          <li class="social-list-item"><a href="#"><i class="fa fa-facebook"></i></a></li>
+          <li class="social-list-item"><a href="#"><i class="fa fa-twitter"></i></a></li>
+          <li class="social-list-item"><a href="#"><i class="fa fa-instagram"></i></a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  {% endblock %}

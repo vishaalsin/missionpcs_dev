@@ -1,0 +1,126 @@
+
+body {
+    background-color: #f8f9fa;
+}
+
+#tests {
+    margin-bottom: 2rem;
+}
+
+h3.sub-head {
+    font-weight: 600;
+    color: #0f2e1c;
+    text-align: center;
+    position: relative;
+    margin-bottom: 2rem;
+}
+
+h3.sub-head::before {
+    position: absolute;
+    content: '';
+    background-color: #bbbbbb;
+    height: 1px;
+    bottom: -8px;
+    width: 100%;
+    left: 0;
+}
+
+h3.sub-head::after {
+    position: absolute;
+    content: '';
+    background-color: #28a745;
+    border-radius: 60px;
+    outline: 4px solid white;
+    height: 4px;
+    bottom: -10px;
+    width: 30px;
+    left: calc(50% - 15px);
+}
+
+#tests .card {
+    border-radius: 5px;
+    margin: 1rem 0;
+    box-shadow: 0px 2px 9px 0 rgba(0, 0, 0, 0.2);
+    transition: 0.3s ease-in;
+}
+
+#tests .card:hover {
+    border-color: rgb(95, 167, 148);
+    box-shadow: 6px 4px 18px 0 rgba(0, 0, 0, 0.2);
+}
+
+#tests .card h4 {
+    font-weight: 600;
+    font-size: 20px;
+    color: #333333;
+}
+
+#tests .card p {
+    font-size: 15px;
+    color: #888888;
+    margin-bottom: 0.5rem;
+}
+
+#tests .test-details {
+    list-style: none;
+    font-size: 14px;
+    color: #666;
+    padding: 0 1rem;
+}
+
+#tests .card .performance {
+    padding: 0.5rem 1rem;
+    color: #313131;
+    font-weight: 600;
+    font-size: 14px;
+    border-radius: 2px;
+    background-color: #ececec;
+    transition: 0.2s ease-in;
+}
+
+#tests .card .performance:hover {
+    color: #ffffff;
+    text-decoration: none;
+    background-color: #6c757d;
+}
+#tests .card .start-btn {
+    background-color: rgb(2, 143, 105);
+    color: white;
+    padding: 0.5rem 1rem;
+    font-size: 14px;
+    border-radius: 2px;
+    font-weight: 600;
+    transition: 0.2s ease-in;
+}
+#tests .card .danger-btn {
+    background-color: #dc3545;
+    color: white;
+    padding: 0.5rem 1rem;
+    font-size: 14px;
+    border-radius: 2px;
+    font-weight: 600;
+    transition: 0.2s ease-in;
+}
+
+#tests .card .start-btn:hover {
+    color: #ffffff;
+    text-decoration: none;
+    background-color: rgb(39, 39, 39);
+}
+
+#tests .card .nav-button {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#tests .card .nav-button .attempts {
+    font-size: 14px;
+    color: rgb(2, 143, 105);
+    font-weight: 600;
+    text-align: center;
+
+}
+#take-test {
+    background-color: whitesmoke;
+}

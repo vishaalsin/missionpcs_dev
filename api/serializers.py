@@ -56,7 +56,7 @@ class LearningUnitSerializer(serializers.ModelSerializer):
 
 class LearningModuleSerializer(serializers.ModelSerializer):
 
-    learning_unit = LearningUnitSerializer(many=True)
+    # learning_unit = LearningUnitSerializer(many=True)
 
     class Meta:
         model = LearningModule
@@ -65,7 +65,7 @@ class LearningModuleSerializer(serializers.ModelSerializer):
 
 class CourseSerializer(serializers.ModelSerializer):
 
-    learning_module = LearningModuleSerializer(many=True)
+    # learning_module = LearningModuleSerializer(many=True)
 
     class Meta:
         model = Course

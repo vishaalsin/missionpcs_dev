@@ -82,9 +82,9 @@ WSGI_APPLICATION = 'online_test.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'shivam',
+        'NAME': 'postgres',#'shivam',
         'USER': 'postgres',
-        'PASSWORD': 'shivam20',
+        'PASSWORD': '12345678',#'shivam20',
         'HOST': 'localhost',
         'PORT': '5432',
     }
