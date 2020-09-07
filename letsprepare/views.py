@@ -1,4 +1,6 @@
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.models import User
 from django.http import JsonResponse
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
@@ -15,6 +17,10 @@ import plotly.graph_objs as go
 from twilio.rest import Client
 from random import randint
 from online_test import settings
+from django.utils import timezone
+from django.db import IntegrityError
+
+from yaksh.send_emails import generate_activation_key
 
 import razorpay
 
@@ -361,13 +367,88 @@ def send_sms(body, number):
 
 
 def index(request):
+    
+    
+    # """Take the credentials of the user and log the user in."""
+    # next_url = request.GET.get('next')
+    courses = Course.objects.all()
+    context = {'courses': ['ankit', 'portal', 'geeks', 'computer', 'ANPSC', 'APPSC', 'APSC', 'BPSC', 'CPSC', 'GPSC']}
+    if request.method == "POST":
+        if request.POST["sub"] == "Sign In":
+            username = request.POST["username"].lower()
+            password = request.POST["password"]
+            if len(username)==0 or len(password)==0:
+                context["error"]:"Please Fill all the Fields"
+                return my_render_to_response(request, 'index.html', context)
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return my_redirect('/letsprepare/home')
+            else:
+                context["username"] = username
+                context["error"]="Invalid username/password"
+            return my_render_to_response(request, 'index.html', context)
+        if request.POST["sub"] == "Sign Up":
+            username = request.POST["username"]
+            password = request.POST["password"]
+            email = request.POST["email"]
+            confirmation = request.POST["confirmation"]
+            firstname = request.POST["firstname"]
+            lastname = request.POST["lastname"]
+            country_code = request.POST["country_code"]
+            phone_number = request.POST["phone-number"]
+            
+            context["username"] = username
+            context["firstname"] = firstname
+            context["lastname"] = lastname
+            context["country_code"] = country_code
+            context["phone_number"] = phone_number
+            context["email"] = email
+            if password != confirmation:
+                context["regerror"] = "password doesn't match"
+                return my_render_to_response(request, "index.html", context)
+            # elif len(phone_number)!=10:
+            #     context["regerror"] = "Phone number should be atleast 10 digits"
+            #     return my_render_to_response(request, "index.html", context)
+            try:
+                new_user = User.objects.create_user(username, email, password)
+                new_user.first_name = firstname
+                new_user.last_name = lastname
+                new_user.save()
+            except IntegrityError:
+                context["regerror"] = "Username already taken."
+                return my_render_to_response(request, "index.html", context)
+            
+            new_profile = Profile(user=new_user)
+            new_profile.country_code = country_code
+            new_profile.phone_number = phone_number
+
+            if settings.IS_DEVELOPMENT:
+                new_profile.is_email_verified = True
+            else:
+                new_profile.is_email_verified = True
+                new_profile.activation_key = generate_activation_key(
+                    new_user.username)
+                new_profile.key_expiry_time = timezone.now() + timezone.timedelta(
+                    minutes=20)
+            new_profile.save()
+            new_user = authenticate(username=username, password=password)
+            login(request, new_user)
+            return my_redirect('/exam/select_exam')
+            # if user_email and key:
+            #     success, msg = send_user_mail(user_email, key)
+            #     context = {'activation_msg': msg}
+            #     return my_render_to_response(
+            #         request,
+            #         'yaksh/activation_status.html', context
+            #     )
+            #return index(request)
+
     if request.user.id == None:
-        courses = Course.objects.all()
-        subjects = LearningModule.objects.all()
-        ctx = {'courses': ['ankit', 'portal', 'geeks', 'computer', 'ANPSC', 'APPSC', 'APSC', 'BPSC', 'CPSC', 'GPSC'], 'subjects': subjects}
-        return my_render_to_response(request, "index.html", context=ctx)
+        return my_render_to_response(request, "index.html", context)
     else:
         return my_redirect('/exam/login/?next=/letsprepare/show_modules/')
+    
 
 @csrf_exempt
 def verify_payment(request):

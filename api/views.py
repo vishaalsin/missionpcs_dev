@@ -1,9 +1,9 @@
 from yaksh.models import (
-    Question, Quiz, QuestionPaper, QuestionSet, AnswerPaper, Course, Answer
+    Question, Quiz, QuestionPaper, QuestionSet, AnswerPaper, Course, Answer, LearningModule
 )
 from api.serializers import (
     QuestionSerializer, QuizSerializer, QuestionPaperSerializer,
-    AnswerPaperSerializer, CourseSerializer
+    AnswerPaperSerializer, CourseSerializer, LearningModuleSerializer
 )
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -244,30 +244,22 @@ class AnswerValidator(APIView):
             answerpaper.update_marks(state='inprogress')
         return Response(result)
 
-class AllQuizList(APIView):
-    """ List all quizzes without authentication """
+
+class QuizList(APIView):
+    """ List all quizzes  """
 
     permission_classes = [permissions.AllowAny]
-    
     def get(self, request, format=None):
         quizzes = Quiz.objects.all()
         serializer = QuizSerializer(quizzes, many=True)
         return Response(serializer.data)
-
-class QuizList(APIView):
-    """ List all quizzes or create a new quiz """
-
-    def get(self, request, format=None):
-        quizzes = Quiz.objects.filter(creator=request.user)
-        serializer = QuizSerializer(quizzes, many=True)
-        return Response(serializer.data)
-
-    def post(self, request, format=None):
-        serializer = QuizSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    # or create a new quiz
+    # def post(self, request, format=None):
+    #     serializer = QuizSerializer(data=request.data)
+    #     if serializer.is_valid():
+    #         serializer.save()
+    #         return Response(serializer.data, status=status.HTTP_201_CREATED)
+    #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class QuizDetail(APIView):
@@ -446,4 +438,13 @@ class QuitQuiz(APIView):
         answerpaper.status = 'completed'
         answerpaper.save()
         serializer = AnswerPaperSerializer(answerpaper)
+        return Response(serializer.data)
+
+class AllModuleList(APIView):
+    """ List all Modules without any credentials """
+    permission_classes = [permissions.AllowAny]
+
+    def get(self, request, format=None):
+        modules = LearningModule.objects.all()
+        serializer = LearningModuleSerializer(modules, many=True)
         return Response(serializer.data)
