@@ -13,7 +13,6 @@ urlpatterns = [
     url(r'start_quiz/(?P<course_id>[0-9]+)/(?P<quiz_id>[0-9]+)/$', views.StartQuiz.as_view(),
         name='start_quiz'),
     url(r'quizzes/$', views.QuizList.as_view(), name='quizzes'),
-    url(r'all_quizzes/$', views.AllQuizList.as_view(), name='all_quizzes'),
     url(r'quizzes/(?P<pk>[0-9]+)/$', views.QuizDetail.as_view(), name='quiz'),
     url(r'questionpapers/$', views.QuestionPaperList.as_view(),
         name='questionpapers'),
@@ -29,7 +28,8 @@ urlpatterns = [
         views.GetCourse.as_view(), name='get_course'),
     url(r'quit/(?P<answerpaper_id>\d+)/$', views.QuitQuiz.as_view(),
         name="quit_quiz"),
-    url(r'login/$', views.login, name='login')
+    url(r'login/$', views.login, name='login'),
+    url(r'get_subjects/$', views.AllModuleList.as_view(), name='get_subjects'),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
