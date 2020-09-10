@@ -695,12 +695,17 @@ class ProfileForm(forms.ModelForm):
 
     class Meta:
         model = Profile
-        fields = ['first_name', 'last_name']
+        fields = ['first_name', 'last_name', 'country_code', 'phone_number']
 
     first_name = forms.CharField(max_length=30, widget=forms.TextInput(
                     {'class': form_input_class, 'placeholder': "First Name"}))
     last_name = forms.CharField(max_length=30, widget=forms.TextInput(
                     {'class': form_input_class, 'placeholder': "Last Name"}))
+    country_code = forms.ChoiceField(choices=country_codes, initial="IN-91", required=True, widget=forms.Select(
+        attrs={"class": "form-control", 'placeholder': "country code"}))
+    phone_number = forms.CharField(max_length=10, widget=forms.TextInput(
+        {'class': form_input_class, 'placeholder': "Phone Number"}
+    ))
 
     def __init__(self, *args, **kwargs):
         if 'user' in kwargs:

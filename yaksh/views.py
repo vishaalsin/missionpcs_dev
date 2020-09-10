@@ -166,6 +166,7 @@ def user_register(request):
                 request, 'yaksh/register.html', {'form': form}
             )
     else:
+        user = request.user()
         form = UserRegisterForm()
         return my_render_to_response(
             request, 'yaksh/register.html', {'form': form}
@@ -208,7 +209,10 @@ def initiate_user(new_user, enrolled_courses_ids):
 def initiate_dashboard(request):
     user = request.user
     user_course_list = user.students.all()
-    course_id = user_course_list[0].id  # Stores the id of first course in the list
+    try:
+        course_id = user_course_list[0].id  # Stores the id of first course in the list
+    except:
+        return my_redirect('/exam/editprofile/')
     return dashboard(request, course_id)
 
 @login_required
@@ -2317,6 +2321,11 @@ def edit_profile(request):
             form_data.user.last_name = request.POST['last_name']
             form_data.user.save()
             form_data.save()
+            user_course_list = user.students.all()
+            try:
+                course_id = user_course_list[0].id  # Stores the id of first course in the list
+            except:
+                return my_redirect('/exam/select_exam/')
             return my_render_to_response(request, 'yaksh/profile_updated.html')
         else:
             context['form'] = form

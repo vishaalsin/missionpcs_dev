@@ -1259,7 +1259,7 @@ class Profile(models.Model):
     activation_key = models.CharField(max_length=255, blank=True, null=True)
     key_expiry_time = models.DateTimeField(blank=True, null=True)
     country_code = models.CharField(max_length=5, null=False, blank=False, unique=False)
-    phone_number = models.CharField(max_length=10, null=False, blank=False, unique=True)
+    phone_number = models.CharField(max_length=10, null=False, blank=False, unique=False)
 
     def get_user_dir(self):
         """Return the output directory for the user."""

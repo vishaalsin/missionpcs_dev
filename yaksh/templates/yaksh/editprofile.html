@@ -1,7 +1,19 @@
-{% extends template  %}
+{% extends "base3.html"  %}
+{% load static %}
 {% block title %} Edit Profile {% endblock %}
 {% block pagetitle %} My Profile {% endblock %}
-{% block main %}
+{% block head %}
+      <link rel="stylesheet" href="{% static 'yaksh/css/bootstrap.min.css' %}">
+      <link rel="stylesheet" href="{% static 'yaksh/css/custom.css' %}" type="text/css" />
+      <link rel="stylesheet" href="{% static 'yaksh/css/animate.min.css' %}" type="text/css" />
+      <link rel="stylesheet" href="{% static 'yaksh/css/font-awesome.css' %}" type="text/css" />
+      <link rel="stylesheet" href="{% static 'yaksh/css/ontop.css' %}" type="text/css" />
+      <script language="JavaScript" type="text/javascript" src="{% static 'yaksh/js/popper.min.js' %}"></script>
+      <script language="JavaScript" type="text/javascript" src="{% static 'yaksh/js/jquery-3.3.1.min.js' %}"></script>
+      <script language="JavaScript" type="text/javascript" src="{% static 'yaksh/js/bootstrap.min.js' %}"></script>
+      <script language="JavaScript" type="text/javascript" src="{% static 'yaksh/js/wow.min.js' %}"></script>
+{% endblock %}
+{% block content %}
 <div class="container">
     <br>
     <form action="{% url 'yaksh:edit_profile'%}" method="post" >
@@ -39,9 +51,20 @@
                         {% endfor %}
                         <br>
                         <br>
+                        <input type="checkbox" id="tnc" name="tnc_name">&nbsp;&nbsp;
+                        <label for="tnc">I agree to the <a href="/terms/">terms and conditions.</a></label><br>
                     </center>
-                    <button class="btn btn-success btn-lg" type="submit">Update</button>&nbsp;&nbsp;
-                    <a href="{% url 'yaksh:index' %}" class="btn btn-primary btn-lg">Cancel</a></center>
+                    <center>
+                        <button id="send-otp" class="btn btn-warning btn-lg" type="button">
+                            Get OTP
+                        </button>
+                        <button id="submit-form" class="btn btn-success btn-lg" type="submit" style="display:none;">
+                            Update
+                        </button>
+                        <a href="{% url 'yaksh:index' %}" class="btn btn-primary btn-lg">
+                            Cancel
+                        </a>
+                    </center>
                 </fieldset>
             </form>
         </div>
@@ -49,4 +72,60 @@
     </center>
     </form>
 </div>
-{% endblock main %}
+<script>
+    sendOtpBtn=document.querySelector('#send-otp');
+    loadEventListeners();
+    function loadEventListeners(){
+    sendOtpBtn.addEventListener('click', sendOtp);}
+    function sendOtp(e){
+    if(!$('#tnc').is(":checked")){
+    alert("Please agree to the terms and conditions.");
+    return;
+    }
+
+    country_code = $("#id_country_code").val()
+    phone_number = $("#id_phone_number").val()
+    student_number = "+".concat(country_code.split("-")[1]).concat(phone_number)
+
+    submitData = {'number' : student_number}
+
+    $.post("/letsprepare/send_otp/",
+  {
+    data: JSON.stringify(submitData)
+  },
+  function(data){
+    key = Object.keys(data)[0]
+    value = Object.values(data)[0]
+    if (key == "SENT"){
+
+    if ($.trim($("#send-otp").text()) == "Resend OTP"){
+      $("#send-otp").attr("style", "visibility: hidden")
+    }
+    if ($.trim($("#send-otp").text()) ==  "Get OTP"){
+      $("#send-otp").text("Resend OTP");
+    }
+
+        var i = 2;
+        while(i > 0) {
+            var otp = window. prompt("Please enter OTP sent to your mobile number: ");
+            if(value == otp) {
+               i = -1
+               $("#submit-form").click();
+            }
+            else {
+            alert("Incorrect OTP!!");
+                i = i-1;
+
+            if (i==0 && $("#send-otp").css("visibility")=="hidden"){
+            window.location.href = "/";
+            }
+        }
+    }}
+    else {
+    alert("Please enter a valid mobile number.");}
+  });
+
+}
+</script>
+
+{% endblock %}

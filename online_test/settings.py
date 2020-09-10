@@ -41,6 +41,9 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     # 'allauth',
     'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.facebook',
+    'allauth.socialaccount.providers.google',
     'yaksh',
     'taggit',
     'social_django',
@@ -53,6 +56,7 @@ INSTALLED_APPS = (
     'corsheaders',
     'rest_framework.authtoken',
     'letsprepare.apps.letsprepareConfig',
+    "sslserver",
     'crispy_forms',
 )
 
@@ -110,7 +114,7 @@ STATIC_URL = '/static/'
 
 LOGIN_URL = '/exam/login/'
 
-LOGIN_REDIRECT_URL = '/exam/'
+LOGIN_REDIRECT_URL = '/exam/dashboard/'
 
 SOCIAL_AUTH_LOGIN_ERROR_URL = '/exam/login/'
 
@@ -195,8 +199,8 @@ TEMPLATES = [
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = 'GOOGLE_KEY_PROVIDED'
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'GOOGLE_SECRET_PROVIDED'
 
-SOCIAL_AUTH_FACEBOOK_KEY = 'FACEBOOK_KEY_PROVIDED'
-SOCIAL_AUTH_FACEBOOK_SECRET = 'FACEBOOK_SECRET_PROVIDED'
+SOCIAL_AUTH_FACEBOOK_KEY = '1419785824893696'
+SOCIAL_AUTH_FACEBOOK_SECRET = '7cdc48bb35d9402f648ec90fca07e7a1'
 
 AUTHENTICATION_BACKENDS = (
     'social_core.backends.google.GoogleOAuth2',
