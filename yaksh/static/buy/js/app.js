@@ -39,6 +39,7 @@ function buycourse(e){
 
     if(e.target.classList.contains('quiz-on-sale')){
     const quiz_code = e.target.parentElement.parentElement.children[0].innerText.trim();
+    console.log(quiz_code)
     const quiz_price = e.target.parentElement.parentElement.children[2].innerText.trim().split(' ')[2];
     const quiz_id = parseInt(e.target.parentElement.parentElement.children[3].innerText.trim());
     const quiz_availibility = e.target.parentElement.parentElement.children[4].innerText.trim();

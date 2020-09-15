@@ -126,7 +126,8 @@ def show_all_on_sale(request):
         'user': user, 'modules': modules_data,
         'title': 'ALL  AVAILABLE  MODULES'
     }
-    return my_render_to_response(request, "yaksh/all_on_sale.html", context)
+    # return my_render_to_response(request, "yaksh/all_on_sale.html", context)
+    return my_render_to_response(request, "buy/all_on_sale.html", context)
 
 @csrf_exempt
 @login_required
@@ -377,13 +378,14 @@ def index(request):
         if request.POST["sub"] == "Sign In":
             username = request.POST["username"].lower()
             password = request.POST["password"]
+            path_next = request.POST["next"]
             if len(username)==0 or len(password)==0:
                 context["error"]:"Please Fill all the Fields"
                 return my_render_to_response(request, 'index.html', context)
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
-                return my_redirect('/letsprepare/home')
+                return my_redirect(path_next)
             else:
                 context["username"] = username
                 context["error"]="Invalid username/password"

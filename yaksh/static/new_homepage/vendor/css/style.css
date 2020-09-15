@@ -2,7 +2,7 @@ body {
     font-family: 'Quicksand', sans-serif;
     margin: 0;
     height: 100%;
-    background-color: #f8f9fa;
+    background-color: #eeeeee;
 }
 
 :root {
@@ -36,6 +36,11 @@ a {
 a:hover {
     text-decoration: none;
     color: var(--theme-main-dark--);
+}
+
+@font-face {
+    font-family: 'PlayfairDisplay';
+    src: url('../fonts/PlayfairDisplay-VariableFont_wght.ttf');
 }
 
 @font-face {
@@ -182,19 +187,24 @@ a:hover {
 .navbar .drop-down .dropdown-content {
     position: absolute;
     left: 0;
+    box-shadow: 0 6px 32px rgba(0, 0, 0, 0.3);
+    display: block;
+    visibility: hidden;
+    opacity: 0;
     min-width: 160px;
     border-radius: 1px;
     max-width: 200px;
     padding: 0;
+    transition: 0.4s;
     list-style-type: none;
-    display: none;
     background-color: #ffffff;
     z-index: 99;
     box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.17);
 }
 
 .navbar .drop-down:hover .dropdown-content {
-    display: block;
+    visibility: visible;
+    opacity: 1;
 }
 
 .navbar .drop-down .dropdown-content a {
@@ -220,9 +230,37 @@ a:hover {
     padding: 4px;
 }
 
+.navbar .drop-down .sub-dropdown {
+    position: relative;
+}
+
+.navbar .drop-down .sub-dropdown > a::after {
+  content: "\f054";
+  font-family: FontAwesome;
+  float: right;
+}
+
 .navbar .drop-down:hover span {
     transform: rotate(180deg);
     transition: 0.2s ease-in;
+}
+
+.navbar .sub-dropdown .sub-dropdown-content {
+    visibility: hidden;
+    left: calc(100% - 30px);
+    box-shadow: 0 6px 32px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    background: #ffffff;
+    padding: 0;
+    min-width: 180px;
+    top: 0;
+    position: absolute;
+}
+
+.navbar .sub-dropdown:hover .sub-dropdown-content {
+    visibility: visible;
+    left: 100%;
+    opacity: 1;
 }
 
 .navbar .search-bar {
@@ -608,6 +646,8 @@ h3.sub-head::after {
 #c-affairs .date-card:hover i {
     background-color: var(--theme-main-dark--);
 }
+
+#exam .nav-tabs {}
 
 #exam .nav-tabs .nav-link {
     margin-right: 0.3rem;

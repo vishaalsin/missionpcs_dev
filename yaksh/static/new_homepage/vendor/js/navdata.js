@@ -7,13 +7,46 @@ function load_navdata(){
     request.onload = () => {
         const response = JSON.parse(request.response);
         for(res in response){
+            // Exams drop down
+
             let courseli = document.createElement('li');
+            courseli.classList = "sub-dropdown";
             let courselink = document.createElement('a');
             courselink.href = "#a";
             courselink.textContent = response[res].name;
             courseli.appendChild(courselink);
+
+            // subdropdown subject in exams
+            let course_sub_drop_ul = document.createElement('ul');
+            course_sub_drop_ul.classList = "sub-dropdown-content";
+            course_sub_drop_a = document.createElement('a');
+            course_sub_drop_a.href="#";
+            course_sub_drop_a.textContent = "Subjects";
+            
+            course_sub_drop_ul.appendChild(course_sub_drop_a);
+            course_sub_drop_a = document.createElement('a');
+            course_sub_drop_a.href="#";
+            course_sub_drop_a.textContent = "Test Series";
+            course_sub_drop_ul.appendChild(course_sub_drop_a);
+            
+            course_sub_drop_a = document.createElement('a');
+            course_sub_drop_a.href="#";
+            course_sub_drop_a.textContent = "Previous Year Paper";
+            course_sub_drop_ul.appendChild(course_sub_drop_a);
+            
+            course_sub_drop_a = document.createElement('a');
+            course_sub_drop_a.href="#";
+            course_sub_drop_a.textContent = "Announcements";
+            course_sub_drop_ul.appendChild(course_sub_drop_a);
+            courseli.appendChild(course_sub_drop_ul);
+
+            // Sub Dropdown Test Series
+            
+
+
             document.getElementById('courses-drop').appendChild(courseli);
             
+            // subjects drop down
             courseli = document.createElement('li');
             courselink = document.createElement('a');
             courselink.href = "#b";
@@ -21,13 +54,15 @@ function load_navdata(){
             courseli.appendChild(courselink)
             document.querySelector('#subjects-drop').appendChild(courseli)
 
+            // Tests Drop down
             courseli = document.createElement('li');
             courselink = document.createElement('a');
             courselink.href = "#c";
             courselink.textContent = response[res].name
             courseli.appendChild(courselink)
             document.querySelector('#test-se-drop').appendChild(courseli)
-
+            
+            // Previous Year Drop down
             courseli = document.createElement('li');
             courselink = document.createElement('a');
             courselink.href = "#d";
