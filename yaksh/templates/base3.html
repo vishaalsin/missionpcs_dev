@@ -45,19 +45,19 @@
                 <li class="nav-item drop-down">
                     <a href="#" class="nav-link">Subjects<span class="fa fa-chevron-down"></span></a>
                     <ul id="subjects-drop" class="dropdown-content">
-                        
+
                     </ul>
                 </li>
                 <li class="nav-item drop-down">
                     <a href="#" class="nav-link">Test Series<span class="fa fa-chevron-down"></span></a>
                     <ul id="test-se-drop" class="dropdown-content">
-                        
+
                     </ul>
                 </li>
                 <li class="nav-item drop-down">
                     <a href="#" class="nav-link">Previous Year Paper<span class="fa fa-chevron-down"></span></a>
                     <ul id="prev-year-drop" class="dropdown-content">
-                        
+
                     </ul>
                 </li>
             </ul>
@@ -84,7 +84,7 @@
       {% if error %}
       <div class="alert alert-danger" role="alert">{{ error }}</div>
       {% endif %}
-      
+
       <form class="needs-validation" action="{% url 'letsprepare:index' %}" method="POST">
       {% csrf_token %}
       <input type="hidden" name="next" value="{{ request.path }}" />
