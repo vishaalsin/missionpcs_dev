@@ -5,9 +5,22 @@
         <!-- ######### NAVBAR ########## -->
         <div class="navbar d-flex flex-column flex-md-row align-items-center p-3 px-md-4 shadow-lg">
             <!-- ####### Logo for Website ####### -->
-            <a class="navbar-brand" href="#">
+            <div class="d-flex">
+                <a class="navbar-brand" href="#">
                 <img src="{% static 'portal_pages/images/logo.png' %}" alt="Logo for mission pcs" />
             </a>
+<!--  ############ Dropdown For Exams ##########          -->
+            <div class="dropdown">
+                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                        {{ current_course }}
+                    </button>
+                     <div class="dropdown-menu">
+                   {% for course in courses %}
+                        <a href="/exam/dashboard/{{course.id}}" class="dropdown-item btn btn-2"> {{ course }} </a>
+                    {% endfor %}
+                    </div>
+            </div>
+            </div>
             <nav class="my-2 my-md-0 mr-md-3 d-flex justify-content-center flex-wrap p-2">
                 <a class="p-2" href="#">Home</a>
                 <a class="p-2" href="#">Test Series</a>
@@ -23,4 +36,67 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     {% block cssfile %}
     {% endblock %}
+{% endblock %}
+
+{% block content %}
+    <main>
+        <section id="exams">
+
+
+    {% for module in modules %}
+            <div class="card">
+                <img src=" {% static 'portal_pages/images/history.jpg' %}" class="card-img-top" alt="Modern History">
+                <div class="card-body">
+                    <h5 class="card-title">{{ module.name }}</h5>
+                    <p class="card-text">Available Test: {{ module.has_quizzes }}/{{ module.total_quizzes }}</p>
+                    <p class="card-text"><small class="text-muted"><h6>Syllabus:</h6>
+                        -Prehistoric culture in india <br>
+                        -Indus Civilization <br>
+                        -Vedic Society <br>
+                        -Buddism and Jainism <br>
+                        - <a class="badge badge-secondary" type="button" data-toggle="modal" data-target="#medieval-history"> View More</a> <br>
+                    </small></p>
+                    <button class="btn btn-1"> Set Test Series </button>
+                    <!-- ############### Modal view for the Subject #################### -->
+                    <div class="modal fade" id="medieval-history" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalCenterTitle">Medieval History</h5>
+
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                                </div>
+                                <div class="modal-body">
+                                    <img src=" {% static 'portal_pages/images/history.jpg' %}" class="modal-image" alt="history img">
+
+                                    <p>
+                                        <h5><b>Syllabus:</b></h5>
+                                    </p>
+                                    <p>-Prehistoric cultures in India <br> -Indus Civilization. Origins- the different phases- society, economy, and culture- Contacts with other cultures- factors lead to the decline. <br> -Geographical distribution
+                                        and characteristics of pastoral and farming society. <br> -Vedic society-Vedic texts- change from Rigvedic to later Vedic phases.<br> -Vedic society Religion- Upanishad thought-Political and social organization,
+                                        the evolution of the Varna system and monarchy.<br> -Formation of the State and urbanization, from the Mahajanapadas to the Nandas.<br> -Buddhism and Jainism- Factors for the spread of Buddhism.<br> -The
+                                        Mauryan Empire- Chandragupta and Megasthenes.<br> -Asoka and his inscriptions, his dhamma, culture, administration, and art<br> -Society of Post-Mauryan India, BC 200- AD 300- Evolution of Jatis.<br> -The
+                                        Satavahanas and formation of the state in the Peninsula.<br> -Sangam texts and society.<br> -Indo-Greeks, Sakas, Parthians, Kushans, Kanishka-Contacts with the outer world.<br> -Different Religion- Bhagavatism,
+                                        Saivism, Mahayana Buddhism and Hinayana, Jainism and Culture and art.<br> -The Guptas and their descendants.<br> -Literature science, Arts, Economy, and society -Modification in the political organization
+                                        of empire.</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary">
+                                        Available Tests <span class="badge badge-light">2 / 26</span>
+                                        </button>
+                                    <button type="button" class="btn btn-primary">Set Test Series</button>
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="/letsprepare/exam/?id={{module.id}}" class="btn btn-2"> Tests </a>
+                </div>
+            </div>
+            {% endfor %}
+        </section>
+    </main>
 {% endblock %}
