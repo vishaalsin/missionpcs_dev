@@ -138,6 +138,8 @@ function removeCourse(e){
                 let del_quiz_code = bt.parentElement.parentElement.children[0].children[0].innerText.trim();
                 if(del_quiz_code == to_rem){
                     bt.disabled = false
+                    console.log("button inner html", bt.innerHTML)
+                    bt.innerHTML = "Add to Cart";
                 }
                 console.log(del_quiz_code)
             }
@@ -155,6 +157,7 @@ function clearCart(e){
     document.querySelectorAll("button").forEach((bt) => {
         if(bt.disabled){
             bt.disabled = false;
+            bt.innerHTML = "Add to Cart";
         }
     })
 }
