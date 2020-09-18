@@ -21,7 +21,7 @@ from django.utils import timezone
 from django.db import IntegrityError
 
 from yaksh.send_emails import generate_activation_key
-
+from datetime import datetime
 import razorpay
 
 if not settings.IS_DEVELOPMENT:
@@ -386,8 +386,20 @@ def index(request):
                 context["error"]:"Please Fill all the Fields"
                 return my_render_to_response(request, 'index.html', context)
             user = authenticate(request, username=username, password=password)
+
             if user is not None:
                 login(request, user)
+                # if not Last_visit.objects.filter(userr=user).exists():
+                #     x = Last_visit(userr=user)
+                #     x.save()
+                #
+                #
+                # else:
+                #     x = Last_visit.objects.filter(userr=user).get()
+                #     x.last_visit = datetime.now()
+                #     x.save()
+                # print(x.last_visit)
+
                 return my_redirect('/letsprepare/home')
             else:
                 context["username"] = username

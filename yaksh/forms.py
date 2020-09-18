@@ -399,6 +399,7 @@ class UserRegisterForm(forms.Form):
         new_profile.country_code = country_code
         new_profile.phone_number = phone_number
 
+
         if settings.IS_DEVELOPMENT:
             new_profile.is_email_verified = True
         else:
