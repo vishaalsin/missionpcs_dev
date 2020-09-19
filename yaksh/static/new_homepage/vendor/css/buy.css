@@ -1,0 +1,142 @@
+.modules .card {
+    border-radius: 0;
+    background-color: #ffffff;
+}
+
+.modules .card-header {
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: none;
+}
+
+.modules h4 {
+    font-weight: 600;
+    font-size: 20px;
+    text-transform: uppercase;
+}
+
+.modules .card span {
+    font-weight: 400;
+    color: #888888;
+    text-decoration: line-through;
+}
+
+.modules .price {
+    font-weight: 600;
+}
+
+.modules .card .buy-module {
+    box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.2);
+}
+
+.modules h5 {
+    font-weight: 600;
+    color: rgb(32, 32, 44);
+    text-transform: uppercase;
+}
+
+.modules .card .module-body {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.modules .card .check span {
+    width: 40px;
+    height: 40px;
+    background-color: #28B62C;
+    line-height: 40px;
+    text-decoration: none;
+    color: #ffffff;
+    text-align: center;
+    border-radius: 50%;
+    font-size: 28px;
+}
+
+.modules .card .add-to-cart button {
+    background-color: rgb(65, 68, 255);
+    display: inline-block;
+    transition: ease-in 0.2s;
+    color: #ffffff;
+    padding: 0.7rem 1rem;
+    border-radius: 4px;
+}
+
+.modules .card .add-to-cart button:hover {
+    background-color: rgb(51, 99, 255);
+    text-decoration: none;
+    box-shadow: 0 2px 8px 0 rgba(51, 99, 255, 0.452);
+
+}
+
+.modules .card .add-to-cart button:disabled, .modules .card .add-to-cart button:disabled:hover {
+    background-color: lightgray;
+    color: #888888;
+    box-shadow: none;
+}
+.cart-options {
+    display: none;
+  }
+
+  #shopping-cart {
+      background-color: #fff;
+      box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.3);
+      border-radius: 6px;
+      margin-bottom: 1rem;
+  }
+
+  #shopping-cart tr {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+  }
+
+  #shopping-cart tbody {
+      overflow: auto;
+  }
+
+  #shopping-cart .clear-cart-btn, #shopping-cart .checkout-btn {
+    background-color: #333;
+    color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.2);
+    display: block;
+    text-align: center;
+    padding: 0.5rem 1rem;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    transition: ease-in-out 0.2s;
+  }
+
+  #shopping-cart .checkout-btn {
+      background-color: #28a745;
+  }
+
+  #shopping-cart .clear-cart-btn:hover {
+      background-color: #ff283d;
+      text-decoration: none;
+      box-shadow: 0 3px 12px 0 #ff283e7a;
+  }
+
+  #shopping-cart .checkout-btn:hover {
+      background-color: #1fcf48;
+      text-decoration: none;
+      box-shadow: 0 3px 12px 0 #28a7457a;
+  }
+
+  #shopping-cart .remove {
+      color: #ff283d;
+
+  }
+
+table, th, td {
+    padding: 15px;
+}
+
+@media only screen and (max-width: 992px) {
+    .modules {
+        flex-direction: column-reverse;
+    }
+  }
