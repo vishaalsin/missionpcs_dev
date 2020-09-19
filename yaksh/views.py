@@ -3229,6 +3229,10 @@ def add_module(request, course_id=None, module_id=None):
                 module = module_form.save()
                 module.html_data = get_html_text(module.description)
                 module.save()
+                if module.apply_to_all_quiz == True:
+                    for quiz in module.get_quiz_units():
+                        quiz.discount = module.discount
+                        quiz.save()
                 course.learning_module.add(module.id)
                 messages.success(
                     request,

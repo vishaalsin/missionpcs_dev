@@ -42,6 +42,10 @@ from django.forms.models import model_to_dict
 from grades.models import GradingSystem
 from django.db.models import IntegerField, Model
 from django_mysql.models import ListTextField
+
+# required for discount in Quiz and model
+from django.core.validators import MinValueValidator, MaxValueValidator
+
 languages = (
         ("python", "Python"),
         ("bash", "Bash"),
@@ -506,6 +510,19 @@ class Quiz(models.Model):
 
     objects = QuizManager()
 
+    #discount on quiz in Percentage.(created by shivam)
+    # start
+    #default discount;
+    is_default_discount = models.BooleanField(default=True)
+
+    #default percentage discount;
+    discount = models.IntegerField(default=0,blank=True, validators=[
+            MaxValueValidator(100),
+            MinValueValidator(0)
+        ])
+    #end
+
+
     class Meta:
         verbose_name_plural = "Quizzes"
 
@@ -706,6 +723,19 @@ class LearningModule(models.Model):
     html_data = models.TextField(null=True, blank=True)
     active = models.BooleanField(default=True)
     is_trial = models.BooleanField(default=False)
+
+    # discount applied when default discount is applied.(created by shivam
+    #start
+    # default percentage discount;
+    discount = models.IntegerField(default=0, blank=True, validators=[
+        MaxValueValidator(100),
+        MinValueValidator(0)
+    ])
+
+    # should apply to all the quiz irrespective of the quiz.
+    apply_to_all_quiz = models.BooleanField(default=False)
+    #end
+
 
     def get_quiz_units(self):
         return [unit.quiz for unit in self.learning_unit.filter(
