@@ -294,7 +294,8 @@ def user_logout(request):
     """Show a page to inform user that the quiz has been compeleted."""
     logout(request)
     context = {'message': "You have been logged out successfully"}
-    return my_render_to_response(request, 'yaksh/complete.html', context)
+    return my_redirect('/letsprepare')
+    # return my_render_to_response(request, 'yaksh/complete.html', context)
 
 
 @login_required
