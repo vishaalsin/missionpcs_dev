@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from django.http import JsonResponse
 from django.shortcuts import render
-from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.csrf import csrf_exempt,csrf_protect
 from yaksh.decorators import has_profile
 from yaksh.models import QuestionPaper, AnswerPaper, Profile, Course
 from yaksh.models import LearningModule, Quiz
@@ -111,6 +111,7 @@ def show_all_on_sale(request):
         availableQuizIds = []
     for module in list(LearningModule.objects.all()):
         quizzes = module.get_quiz_units()
+
         quizzes = sorted(quizzes, key=lambda item: int(item.quiz_code.split('_')[1]))
         quiz_data = []
         for quiz in list(quizzes):
@@ -348,8 +349,9 @@ def report_error(request):
     except Exception as e:
         return JsonResponse({'error' : str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
-@csrf_exempt
+@csrf_protect
 def send_otp(request):
+
     data = json.loads(request.POST['data'])
     number = data['number']
     if settings.IS_DEVELOPMENT == False:

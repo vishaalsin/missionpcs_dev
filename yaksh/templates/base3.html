@@ -298,6 +298,17 @@
 {% endblock %}
   
   </body>
+  <script>
+  // for setting up ajax here.
+
+const csrftoken = jQuery("[name=csrfmiddlewaretoken]").val();
+
+function csrfSafeMethod(method) {
+    // these HTTP methods do not require CSRF protection
+    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+}
+
+  </script>
   {% if error %}
   <script>
   $(document).ready(function(){
@@ -353,12 +364,23 @@
     student_number = "+".concat(country_code.split("-")[1]).concat(phone_number)
 
     submitData = {'number' : student_number}
-
-    $.post("/letsprepare/send_otp/",
+<!--  console.log("point 4");-->
+  $.ajaxSetup({
+        beforeSend: function(xhr, settings) {
+            if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                xhr.setRequestHeader("X-CSRFToken", csrftoken);
+            }
+        }
+    });
+   $.post("/letsprepare/send_otp/",
   {
+
     data: JSON.stringify(submitData)
+
   },
+
   function(data){
+<!--  console.log("point 5");-->
     key = Object.keys(data)[0]
     value = Object.values(data)[0]
     if (key == "SENT"){
@@ -375,6 +397,7 @@
             var otp = window. prompt("Please enter OTP sent to your mobile number: ");
             if(value == otp) {
                i = -1
+
                $("#submit-form").click();
             }
             else {
@@ -384,6 +407,7 @@
             if (i==0 && $("#send-otp").css("visibility")=="hidden"){
             window.location.href = "/";
             }
+<!--            console.log("point 6");-->
         }
     }}
     else {
