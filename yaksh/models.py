@@ -630,6 +630,21 @@ class Quiz(models.Model):
                                quiz_name, sub_folder_name)
 
 
+###############################################################################
+# This model connects Quiz Model with Test_Series Model
+class Test(models.Model):
+    test = models.ForeignKey(Quiz, null=True, on_delete=models.CASCADE)
+    test_date = models.DateField(auto_now=False, auto_now_add=False, null=True)
+
+
+###############################################################################
+class Test_Series(models.Model):
+    test_series_name = models.CharField(max_length=255)
+    test_series_description = models.TextField(default=None, null=True, blank=True)
+    tests = models.ManyToManyField(Test, related_name="question_paper", null=True)
+
+
+
 ##########################################################################
 class LearningUnit(models.Model):
     """ Maintain order of lesson and quiz added in the course """

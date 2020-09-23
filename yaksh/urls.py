@@ -16,6 +16,8 @@ urlpatterns = [
     url(r'^dashboard/(?P<course_id>\d+)/$', views.dashboard, name='dashboard'),
     url(r'^subjects/$', views.initiate_subjects, name='initiate_subject'),
     url(r'^subjects/(?P<course_id>\d+)/$', views.subjects, name='subjects'),
+    url(r'^test-series/$', views.test_series, name='test_series'),
+    url(r'^create-series/$', views.create_series, name='create_series'),
     url(r'^quizzes/$', views.quizlist_user, name='quizlist_user'),
     url(r'^results/$', views.results_user),
     # url(r'^start/(?P<questionpaper_id>\d+)/$', views.lp_start, name="start_quiz"),

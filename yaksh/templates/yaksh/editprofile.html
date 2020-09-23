@@ -8,10 +8,8 @@
       <link rel="stylesheet" href="{% static 'yaksh/css/animate.min.css' %}" type="text/css" />
       <link rel="stylesheet" href="{% static 'yaksh/css/font-awesome.css' %}" type="text/css" />
       <link rel="stylesheet" href="{% static 'yaksh/css/ontop.css' %}" type="text/css" />
-      <script language="JavaScript" type="text/javascript" src="{% static 'yaksh/js/popper.min.js' %}"></script>
       <script language="JavaScript" type="text/javascript" src="{% static 'yaksh/js/jquery-3.3.1.min.js' %}"></script>
-      <script language="JavaScript" type="text/javascript" src="{% static 'yaksh/js/bootstrap.min.js' %}"></script>
-      <script language="JavaScript" type="text/javascript" src="{% static 'yaksh/js/wow.min.js' %}"></script>
+
 {% endblock %}
 {% block content %}
 <div class="container">
@@ -51,14 +49,14 @@
                         {% endfor %}
                         <br>
                         <br>
-                        <input type="checkbox" id="tnc" name="tnc_name">&nbsp;&nbsp;
+                        <input type="checkbox" id="tnc-1" name="tnc_name">&nbsp;&nbsp;
                         <label for="tnc">I agree to the <a href="/terms/">terms and conditions.</a></label><br>
                     </center>
                     <center>
-                        <button id="send-otp" class="btn btn-warning btn-lg" type="button">
+                        <button id="send-otp-1" class="btn btn-warning btn-lg" type="button">
                             Get OTP
                         </button>
-                        <button id="submit-form" class="btn btn-success btn-lg" type="submit" style="display:none;">
+                        <button id="submit-form-1" class="btn btn-success btn-lg" type="submit" style="display:none;">
                             Update
                         </button>
                         <a href="{% url 'yaksh:index' %}" class="btn btn-primary btn-lg">
@@ -72,13 +70,18 @@
     </center>
     </form>
 </div>
+
+{% endblock %}
+
+{% block script %}
+
 <script>
-    sendOtpBtn=document.querySelector('#send-otp');
+    sendOtpBtn=document.querySelector('#send-otp-1');
     loadEventListeners();
     function loadEventListeners(){
     sendOtpBtn.addEventListener('click', sendOtp);}
     function sendOtp(e){
-    if(!$('#tnc').is(":checked")){
+    if(!$('#tnc-1').is(":checked")){
     alert("Please agree to the terms and conditions.");
     return;
     }
@@ -98,11 +101,11 @@
     value = Object.values(data)[0]
     if (key == "SENT"){
 
-    if ($.trim($("#send-otp").text()) == "Resend OTP"){
-      $("#send-otp").attr("style", "visibility: hidden")
+    if ($.trim($("#send-otp-1").text()) == "Resend OTP"){
+      $("#send-otp-1").attr("style", "visibility: hidden")
     }
-    if ($.trim($("#send-otp").text()) ==  "Get OTP"){
-      $("#send-otp").text("Resend OTP");
+    if ($.trim($("#send-otp-1").text()) ==  "Get OTP"){
+      $("#send-otp-1").text("Resend OTP");
     }
 
         var i = 2;
@@ -110,13 +113,13 @@
             var otp = window. prompt("Please enter OTP sent to your mobile number: ");
             if(value == otp) {
                i = -1
-               $("#submit-form").click();
+               $("#submit-form-1").click();
             }
             else {
             alert("Incorrect OTP!!");
                 i = i-1;
 
-            if (i==0 && $("#send-otp").css("visibility")=="hidden"){
+            if (i==0 && $("#send-otp-1").css("visibility")=="hidden"){
             window.location.href = "/";
             }
         }
@@ -127,5 +130,4 @@
 
 }
 </script>
-
 {% endblock %}

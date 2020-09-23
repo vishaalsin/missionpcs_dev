@@ -1,4 +1,4 @@
-from yaksh.models import Question, Quiz, QuestionPaper, Profile
+from yaksh.models import Question, Quiz, QuestionPaper, Profile, Test, Test_Series
 from yaksh.models import (TestCase, StandardTestCase, StdIOBasedTestCase,
                           Course, AnswerPaper, CourseStatus, LearningModule,
                           Lesson, Post, Comment
@@ -54,6 +54,8 @@ admin.site.register(StandardTestCase)
 admin.site.register(StdIOBasedTestCase)
 admin.site.register(Course, CourseAdmin)
 admin.site.register(Quiz, QuizAdmin)
+admin.site.register(Test_Series)
+admin.site.register(Test)
 admin.site.register(QuestionPaper)
 admin.site.register(AnswerPaper, AnswerPaperAdmin)
 admin.site.register(CourseStatus, CourseStatusAdmin)

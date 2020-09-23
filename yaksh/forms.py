@@ -2,7 +2,7 @@ from django import forms
 
 from yaksh.models import (
     get_model_class, Profile, Quiz, Question, Course, QuestionPaper, Lesson,
-    LearningModule, TestCase, languages, question_types, Post, Comment
+    LearningModule, TestCase, languages, question_types, Post, Comment, Test_Series
 )
 from grades.models import GradingSystem
 from django.contrib.auth import authenticate
@@ -864,3 +864,17 @@ class CommentForm(forms.ModelForm):
                 }
             )
         }
+
+
+class TestSeriesForm(forms.ModelForm):
+    class Meta:
+        model = Test_Series
+        fields = ['test_series_name', 'test_series_description']
+#        fields = '__all__'
+
+
+class TestSeriesForm(forms.ModelForm):
+    class Meta:
+        model = Test_Series
+        fields = ['test_series_name', 'test_series_description']
+#        fields = '__all__'

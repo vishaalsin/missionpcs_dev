@@ -2,6 +2,7 @@
 {% load static %}
 {% block cssfile %}
     <link rel="stylesheet" href="{% static 'portal_pages/style/subjects.css' %}" />
+    <link rel="stylesheet" href='{% static "portal_pages/style/test-series.css" %}' />
 {% endblock %}
 
 {% block title %}All Modules{% endblock %}
@@ -69,6 +70,24 @@
                                                 Satavahanas and formation of the state in the Peninsula.<br> -Sangam texts and society.<br> -Indo-Greeks, Sakas, Parthians, Kushans, Kanishka-Contacts with the outer world.<br> -Different Religion- Bhagavatism,
                                                 Saivism, Mahayana Buddhism and Hinayana, Jainism and Culture and art.<br> -The Guptas and their descendants.<br> -Literature science, Arts, Economy, and society -Modification in the political organization
                                                 of empire.</p>
+                                            <p>
+                                                <h5><b>Model Quizzes:</b></h5>
+                                            </p>
+                                            {% for quiz in quizzes %}
+                                            <div class="sub-card">
+                                                <div class="d-flex align-items-center justify-content-between shadow-sm p-2">
+                                                    <div>
+                                                        <p class="card-text"><b>{{ quiz.code }}</b></p>
+                                                    </div>
+                                                    <div>
+                                                        <p class="card-text">{{ quiz.name }}</p>
+                                                    </div>
+                                                    <div class="badge badge-pill badge-success">
+                                                        <a style="color:white;" href="{% url 'yaksh:start_quiz' questionpaper_id=quiz.id module_id=module.id course_id=current_course.id %}"><h6>Take Test</h6></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {% endfor %}
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-primary">
@@ -135,6 +154,24 @@
                                                 Satavahanas and formation of the state in the Peninsula.<br> -Sangam texts and society.<br> -Indo-Greeks, Sakas, Parthians, Kushans, Kanishka-Contacts with the outer world.<br> -Different Religion- Bhagavatism,
                                                 Saivism, Mahayana Buddhism and Hinayana, Jainism and Culture and art.<br> -The Guptas and their descendants.<br> -Literature science, Arts, Economy, and society -Modification in the political organization
                                                 of empire.</p>
+                                            <p>
+                                                <h5><b>Model Quizzes:</b></h5>
+                                            </p>
+                                            {% for quiz in quizzes %}
+                                            <div class="sub-card">
+                                                <div class="d-flex align-items-center justify-content-between shadow-sm p-2">
+                                                    <div>
+                                                        <p class="card-text"><b>{{ quiz.code }}</b></p>
+                                                    </div>
+                                                    <div>
+                                                        <p class="card-text">{{ quiz.name }}</p>
+                                                    </div>
+                                                    <div class="badge badge-pill badge-success">
+                                                        <a style="color:white;" href="{% url 'yaksh:start_quiz' questionpaper_id=quiz.id module_id=module.id course_id=current_course.id %}"><h6>Take Test</h6></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {% endfor %}
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-primary">
