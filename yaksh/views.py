@@ -359,6 +359,11 @@ def create_series(request):
         if form.is_valid():
             form.save()
             return my_redirect('/exam/test-series/')
+    else:
+        form = TestSeriesForm(request.GET)
+        if form.is_valid():
+            form.save()
+            return my_redirect('/exam/test-series/')
     # context = {
     #     'form':form
     # }
