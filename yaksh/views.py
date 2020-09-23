@@ -298,7 +298,8 @@ def user_logout(request):
     """Show a page to inform user that the quiz has been compeleted."""
     logout(request)
     context = {'message': "You have been logged out successfully"}
-    return my_render_to_response(request, 'yaksh/complete.html', context)
+    return my_redirect('/letsprepare')
+    # return my_render_to_response(request, 'yaksh/complete.html', context)
 
 
 @login_required
@@ -3237,6 +3238,10 @@ def add_module(request, course_id=None, module_id=None):
                 module = module_form.save()
                 module.html_data = get_html_text(module.description)
                 module.save()
+                if module.apply_to_all_quiz == True:
+                    for quiz in module.get_quiz_units():
+                        quiz.discount = module.discount
+                        quiz.save()
                 course.learning_module.add(module.id)
                 messages.success(
                     request,

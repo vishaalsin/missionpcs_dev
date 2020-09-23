@@ -399,6 +399,7 @@ class UserRegisterForm(forms.Form):
         new_profile.country_code = country_code
         new_profile.phone_number = phone_number
 
+
         if settings.IS_DEVELOPMENT:
             new_profile.is_email_verified = True
         else:
@@ -516,6 +517,9 @@ class QuizForm(forms.ModelForm):
             </li></ul>
             <p>We hope you enjoy taking this exam !!!</p>
         """)
+        self.fields['discount'].widget.attrs.update(
+            {'class': form_input_class}
+        )
 
     class Meta:
         model = Quiz
@@ -798,10 +802,15 @@ class LearningModuleForm(forms.ModelForm):
         self.fields['description'].widget.attrs.update(
             {'class': form_input_class, 'placeholder': 'Module Description'}
         )
+        self.fields['discount'].widget.attrs.update(
+            {'class': form_input_class, 'placeholder': 'Discount','max':'100','min':'0','style':'width:20%;display:inline'}
+        )
+
+
 
     class Meta:
         model = LearningModule
-        fields = ['name', 'description', 'active']
+        fields = ['name', 'description', 'active','discount','apply_to_all_quiz']
 
 
 class TestcaseForm(forms.ModelForm):

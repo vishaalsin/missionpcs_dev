@@ -64,6 +64,7 @@ SITE_ID = 1
 
 MIDDLEWARE = (
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django_session_timeout.middleware.SessionTimeoutMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -261,3 +262,11 @@ REST_FRAMEWORK = {
 
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
+
+# logout time
+# AUTO_LOGOUT_DELAY = 1
+
+# Enter your time here below in seconds.
+SESSION_EXPIRE_SECONDS = 10 # in seconds enter your time
+SESSION_EXPIRE_AFTER_LAST_ACTIVITY = True
+SESSION_TIMEOUT_REDIRECT = ''
