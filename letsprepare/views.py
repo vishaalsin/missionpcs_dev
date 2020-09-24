@@ -24,7 +24,7 @@ from yaksh.send_emails import generate_activation_key
 from datetime import datetime
 import razorpay
 
-if not settings.IS_DEVELOPMENT:
+if settings.IS_DEVELOPMENT:
     key = settings.rzp_key_dev
     secret_key = settings.rzp_secret_key_dev
 else:

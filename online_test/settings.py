@@ -263,6 +263,6 @@ CORS_ALLOW_CREDENTIALS = True
 # AUTO_LOGOUT_DELAY = 1
 
 # Enter your time here below in seconds.
-SESSION_EXPIRE_SECONDS = 10 # in seconds enter your time
+SESSION_EXPIRE_SECONDS = 7200000 # in seconds enter your time
 SESSION_EXPIRE_AFTER_LAST_ACTIVITY = True
 SESSION_TIMEOUT_REDIRECT = ''
