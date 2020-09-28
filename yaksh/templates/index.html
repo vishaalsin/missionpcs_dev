@@ -158,7 +158,7 @@
         <ul class="nav nav-tabs" id="myTab" role="tablist">
         {% for course in courses %}
           <li class="nav-item">
-            <a class="nav-link {% if forloop.counter == 1 %}active{% endif %} {% if forloop.counter > 2 %}d-none {% endif %}{% if forloop.counter > 4 and forloop.counter < 6 %}d-sm-none {% endif %}{% if forloop.counter > 8 %}d-lg-block {% endif %}" id="{{ course }}-tab" data-toggle="tab" href="#{{ course }}" role="tab" aria-controls="anpsc" aria-selected="true">{{ course }}</a>
+            <a class="nav-link {% if forloop.counter == 1 %}active{% endif %} {% if forloop.counter > 2 %}d-none {% endif %}{% if forloop.counter > 4  %}d-sm-block {% endif %}{% if forloop.counter > 8 %}d-md-block {% endif %}" id="{{ course }}-tab" data-toggle="tab" href="#{{ course }}" role="tab" aria-controls="anpsc" aria-selected="true">{{ course }}</a>
           </li>
           {% if forloop.counter %}{% endif %}
         {% endfor %}

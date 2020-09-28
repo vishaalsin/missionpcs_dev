@@ -1,0 +1,49 @@
+{% extends "base3.html" %}
+{% load static %}
+{% block title %} Student Dashboard {% endblock %}
+{% block head %}
+<script src="{% static 'upgradev001/js/plotly-latest.min.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+
+<div class="container-md">
+    <h4 class="my-3 text-center">Percentage Scores (Correct/Total)</h4>
+   {% autoescape off %}
+  {{ plot_div }}
+  {% endautoescape %}
+    <h4 class="my-3 text-center">Accuracy Scores (Correct/Attempted)</h4>
+   {% autoescape off %}
+  {{ plot_div2 }}
+  {% endautoescape %}
+   <div class="card my-3">
+        <h4 class="card-header bg-white">
+            Tests Attempted
+        </h4>
+        <div class="card-body bg-light">
+            <br>
+            {% for qp in question_papers %}
+            <div class="accordian-{{module.id}}">
+                <div class="card">
+                    <div class="card-header bg-white shadow shadow-md p-3">
+                        <div class="row">
+                           <div class="col-md-4 mb-0">
+                                {{ qp.code }}
+                            </div>
+                           <div class="col-md-4">
+                                {{ qp.name }}
+                            </div>
+                            <div class="col-md-4 text-center align-self-center">
+                                <a href="/exam/view_answerpaper/{{qp.id}}/{{course_id}}" class="bg-success p-2 px-5 text-white" style="border-radius: 18px;">
+                                            <i class="fa fa-eye"></i>&nbsp;Analysis</a>
+                            </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}

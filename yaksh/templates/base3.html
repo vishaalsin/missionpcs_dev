@@ -22,12 +22,11 @@
 {% block navbar %}
   <nav class="navbar sticky-top navbar-expand-lg navbar-light">
     <div class="container-xl">
-      <a href="#" class="navbar-brand">
+      <a href="{% url 'yaksh:index' %}" class="navbar-brand">
         <img src=" {% static 'new_homepage/images/favicon.svg' %} " height="35" width="35">Mission PCS
       </a>
-      <div class="navbar-right ml-auto mr-2 d-lg-none">
+      <div class="navbar-right ml-auto mr-2 d-lg-none" id="mob-user">
         {% if user.is_authenticated %}
-        <a href="{% url 'yaksh:logout' %}" class="btn btn-secondary">Logout</a>
         {% else %}
         <button class="login-register border-0">Login/Register</button>
         {% endif %}
@@ -37,6 +36,17 @@
       </button>
         <div class="collapse navbar-collapse" id="navigation">
             <ul class="navbar-nav mx-auto">
+              {% if user.is_authenticated %}
+              <li class="nav-item">
+                <a href="{% url 'yaksh:index' %}" class="nav-link"><i class="fa fa-university" style="size: 18px"></i>&nbsp;Home</a>
+              </li>
+              <li class="nav-item">
+                <a href="{% url 'letsprepare:results' %}" class="nav-link"><i class="fa fa-bar-chart" style="size: 18px"></i>&nbsp;Results</a>
+              </li>
+              <li class="nav-item">
+                <a href="{% url 'letsprepare:buy' %}" class="nav-link"><i class="fa fa-unlock" style="size: 18px"></i>&nbsp;Unlock Tests</a>
+              </li>
+              {% else %}
                 <li class="nav-item drop-down">
                     <a href="#" class="nav-link">Exams<span class="fa fa-chevron-down"></span></a>
                     <ul id="courses-drop" class="dropdown-content">
@@ -61,18 +71,48 @@
                         
                     </ul>
                 </li>
+                {% endif %}
             </ul>
             <form class="search-bar mb-3 mb-lg-0">
                 <input type="text" placeholder="Search...">
                 <button type="submit" class="fa fa-search"></button>
             </form>
         </div>
-        <div class="navbar-right ml-auto mr-2 d-none d-lg-block">
-        {% if user.is_authenticated %}
+        <div class="navbar-right ml-auto mr-2 d-none d-lg-block" id="pc-user">
+          <ul class="navbar-nav ml-auto" id="drop-user">
+            {% if user.is_authenticated %}
+            <li class="nav-item dropdown my-lg-0" id="user_options" style="font-size: 1.2rem">
+                <a class="dropdown-toggle nav-link justify-content-center" id="user_dropdown" data-toggle="dropdown" href="#"><i class="fa fa-user-circle-o"></i>&nbsp;{{user.get_full_name|title}}
+                </a>
+                <div class="dropdown-menu dropdown-menu-right">
+                <a class="dropdown-item" href="{% url 'yaksh:edit_profile' %}">
+                    <i class="fa fa-user"></i>  My Profile
+                </a>
+                <div class="dropdown-divider"></div>
+                {% if user.profile.is_moderator %}
+                    <a class="dropdown-item" href="{% url 'yaksh:toggle_moderator' %}"><i class="fa fa-exchange"></i>
+                        Switch To Moderator
+                    </a>
+                    <div class="dropdown-divider"></div>
+                {% endif %}
+                <a class="dropdown-item" href="{% url 'password_change' %}">
+                    <i class="fa fa-key"></i> Change Password
+                </a>
+                <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" id="user_logout" href="{% url 'yaksh:logout' %}">
+                        <i class="fa fa-sign-out"></i> Logout
+                    </a>
+                </div>
+            </li>
+            {% else %}
+            <button class="login-register border-0">Login/Register</button>
+            {% endif %}
+        </ul>
+        <!-- {% if user.is_authenticated %}
         <a href="{% url 'yaksh:logout' %}" class="btn btn-secondary">Logout</a>
         {% else %}
         <button class="login-register border-0">Login/Register</button>
-        {% endif %}
+        {% endif %} -->
         </div>
     </div>
   </nav>

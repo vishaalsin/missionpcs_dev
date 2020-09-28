@@ -178,6 +178,7 @@ function checkoutCart(e){
 
 function assign_quizzes(quiz_ids, sum) {
     submitData = {'quizzes' : quiz_ids, 'amount' : sum}
+    console.log(JSON.stringify(submitData))
 
     $.post("/letsprepare/assign_quizzes/",
   {
@@ -188,6 +189,7 @@ function assign_quizzes(quiz_ids, sum) {
     const row= document.createElement('form');
     row.name='myForm';
     row.method='POST';
+    console.log(data, "status", status)
     row.action=data['url'];
 
     for (var key in data['paymentParams']) {

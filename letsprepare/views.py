@@ -217,9 +217,10 @@ def show_results(request):
             scrollZoom=False,
             staticPlot=True
         ), include_plotlyjs=False)
-    return my_render_to_response(request, "yaksh/results.html", context={'question_papers' : question_papers_data, 'plot_div': plot_div, 'plot_div2': plot_div2,
+    # return my_render_to_response(request, "yaksh/results.html", context={'question_papers' : question_papers_data, 'plot_div': plot_div, 'plot_div2': plot_div2,
+    #                                                                      'course_id' : list(Course.objects.all())[0].id})
+    return my_render_to_response(request, "upgradev001/results.html", context={'question_papers' : question_papers_data, 'plot_div': plot_div, 'plot_div2': plot_div2,
                                                                          'course_id' : list(Course.objects.all())[0].id})
-
 
 def get_accuracy_graph(question_papers_attempted, answerpapers):
     attempt_dict = {}

@@ -602,7 +602,7 @@ h3.sub-head::after {
     content: '';
     background-color: var(--theme-main--);
     border-radius: 60px;
-    outline: 4px solid white;
+    outline: 4px solid #eeeeee;
     height: 4px;
     bottom: -10px;
     width: 30px;
@@ -916,4 +916,25 @@ section {
         font-family: 'Quicksand', sans-serif;
         text-align: center;
     }
+}
+#user_dropdown{
+    min-width: 110px;
+}
+#user_dropdown::before{
+    width: 0px;
+}
+#user_dropdown:active, #user_dropdown:focus, #user_dropdown:hover{
+    color: var(--theme-main--);
+    border-color: green;
+}
+#user_options .dropdown-item:active{
+    background-color: green;
+}
+#user_dropdown {
+    border: 1px solid lightslategray;
+    height: 42px;
+    border-radius: 18px;
+}
+#user_dropdown:hover {
+    background-color: #f3f3f3;
 }

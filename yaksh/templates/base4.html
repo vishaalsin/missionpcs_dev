@@ -1,0 +1,74 @@
+{% load static %}
+<!doctype html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Prepare for PCS or State PSC exams like UPPCS, BPSC, RPSC, MPPSC and JPSC with your personal AI guide.{% endblock %}</title>
+  <script src="{% static 'new_homepage/vendor/js/jquery.min.js' %} "></script>
+  <link rel="stylesheet" href="{% static 'new_homepage/vendor/css/bootstrap.min.css' %}" type="text/css">
+  <script src="{% static 'new_homepage/vendor/js//bootstrap.min.js' %}"></script>
+  <link rel="stylesheet" href="{% static 'new_homepage/vendor/css/font-awesome.css' %}"type="text/css">
+  <link rel="shortcut icon" href="{% static 'new_homepage/images/favicon.svg' %}" type="image/x-icon"/>
+  <script src="{% static 'new_homepage/vendor/js/main.js' %}"></script>
+  <script src="{% static 'new_homepage/vendor/js/navdata.js' %}"></script>
+  <link rel="stylesheet" href="{% static 'new_homepage/vendor/css/style.css' %}" type="text/css">
+  <link rel="stylesheet" href="{% static 'yaksh/css/ontop.css' %}" type="text/css" />
+
+  {% block meta %}
+  <meta charset="utf-8">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  {% endblock %}
+
+  {% block css %}
+  {% endblock %}
+
+ 
+
+  {% block script %}
+  {% endblock %}
+  <style>
+  * {
+    -webkit-user-select: none; /* Chrome all / Safari all */
+    -moz-user-select: none;    /* Firefox all             */
+    -ms-user-select: none;     /* Internet Explorer  10+  */
+     user-select: none;        /* Likely future           */
+  }
+</style>
+</head>
+
+<body {% block onload %} {% endblock %}>
+
+  <div id="ontop">
+    <div id="state">
+      Checking...<img src="{% static 'yaksh/images/check_answer.gif' %}"/>
+    </div></div>
+
+    
+  
+  {% block nav %}
+  <nav class="navbar sticky-top navbar-expand-lg navbar-light">
+    <div class="pl-5">
+      <a href="{% url 'yaksh:index' %}" class="navbar-brand">
+        <img src=" {% static 'new_homepage/images/favicon.svg' %} " height="35" width="35">Mission PCS
+      </a>
+    </div>
+  </nav>
+  {% endblock %}
+
+     <div class="base-content mt-4">
+         <div class="header">
+             <h3><center>{% block pagetitle %}{% endblock pagetitle %}</center></h3>
+         </div>
+         <h4><center>{% block subtitle %}{% endblock %}</center></h4>
+         {% block content %}
+         {% endblock %}
+     </div>
+     
+
+  {% block footer %}
+  {% endblock %}
+
+</body>
+</html>
+

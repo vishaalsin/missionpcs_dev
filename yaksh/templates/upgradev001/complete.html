@@ -1,0 +1,74 @@
+{% extends "base4.html" %}
+{% load static %}
+
+{% block title %} Complete {% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'upgradev001/css/complete.css' %}" type="text/css" />
+{% endblock %}
+
+{% block content %}
+<br>
+{% if module_id and not paper.course.is_trial %}
+<center>
+    <div class="alert alert-info col-md-8 bg-info text-white border-bottom border-white">
+        <div class="row">
+            <div class="col-sm-2 col-3 text-right pl-0 pl-sm-2">
+                <i class="fa fa-info-circle" style="font-size: 61px;"></i>
+            </div>
+            <div class="col-sm-10 col-9 text-left pl-0">
+                <h3 class="mb-0">Note:</h3>
+                <p>Please Click on the Next button to submit the quiz. Please do not close the browser without clicking Next.</p>
+            </div>
+        </div>
+        <!-- <h1 class="text-left"><i class="fa fa-info-circle"></i> Info</h1>
+        Note:- Please Click on the Next button to submit the quiz. Please do not close the browser without clicking Next. -->
+    </div>
+</center>
+{% endif %}
+{% csrf_token %}
+    {% if paper.questions_answered.all or paper.questions_unanswered.all %}
+        <center>
+        <div class="col-md-8">
+            <h3>Submission Status</h3>
+            <table class="table table-bordered table-responsive-sm" >
+                <thead>
+                    <tr class="text-center sub-status">
+                        <th> Question</th>
+                        <th> Status </th>
+                        <th></th>
+                    </tr>
+                </thead>
+
+                {% for question in paper.questions.all %}
+                    <tbody class="bg-light">
+                        {% if question in paper.questions_answered.all %}
+                            <tr class="">
+                            <td> {{ question.summary }} </td>
+                            <td> Attempted </td>
+                            <td class="text-center"><i class="fa fa-check-circle text-success" style="font-size: 40px; font-weight: 900;"></i></td>
+                        {% else %}
+                            <tr class="" style="background-color: gainsboro;">
+                            <td> {{ question }} </td>
+                            <td>Not completed
+                            </td>
+                            <td class="text-center"><i class="fa fa-check-circle-o" style="font-size: 30px; color: #c58f8f;"></i></td>
+                        {% endif %}
+                        </tr>
+                    </tbody>
+                {% endfor %}
+            </table>
+        </div>
+        </center>
+    {% endif %}
+    <br><br>
+	<center class="container">
+        <h5>
+            <span class="alert alert-success">{{message}}</span>
+        </h5>
+    </center>
+    <center class="mb-4">
+        </br>
+    <a href="{% url 'letsprepare:index' %}" id="home" class="btn btn-primary btn-lg"> Home </a>
+    </center>
+{% endblock content %}
