@@ -681,11 +681,13 @@ def user_login(request):
     """Take the credentials of the user and log the user in."""
 
     user = request.user
-    context = {}
     if user.is_authenticated:
         return index(request)
 
     next_url = request.GET.get('next')
+
+    if next_url is None:
+        next_url = '/letsprepare/home'
 
     if request.method == "POST":
         form = UserLoginForm(request.POST)

@@ -95,7 +95,7 @@
       <div class="alert alert-danger" role="alert">{{ error }}</div>
       {% endif %}
 
-      <form class="needs-validation" action="{% url 'letsprepare:index' %}" method="POST">
+      <form class="needs-validation" action="{% url 'yaksh:login' %}" method="POST">
       {% csrf_token %}
       <input type="hidden" name="next" value="{{ request.path }}" />
         <div class="input-group mb-4">
