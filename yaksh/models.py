@@ -629,19 +629,24 @@ class Quiz(models.Model):
         write_templates_to_zip(zip_file, unit_file_path, quiz_data,
                                quiz_name, sub_folder_name)
 
-
-###############################################################################
-# This model connects Quiz Model with Test_Series Model
-class Test(models.Model):
-    test = models.ForeignKey(Quiz, null=True, on_delete=models.CASCADE)
-    test_date = models.DateField(auto_now=False, auto_now_add=False, null=True)
-
-
 ###############################################################################
 class Test_Series(models.Model):
     test_series_name = models.CharField(max_length=255)
     test_series_description = models.TextField(default=None, null=True, blank=True)
-    tests = models.ManyToManyField(Test, related_name="question_paper", null=True)
+
+
+
+###############################################################################
+# This model connects Quiz Model with Test_Series Model
+class Test(models.Model):
+    test_name = models.CharField(max_length=100, default='New Test')
+    test = models.ManyToManyField(Quiz)
+    test_series = models.ManyToManyField(Test_Series)
+    test_date = models.DateField(auto_now=False, auto_now_add=False, null=True)
+
+    def __str__(self):
+        return self.test.description
+
 
 
 

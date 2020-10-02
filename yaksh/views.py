@@ -49,7 +49,7 @@ from yaksh.forms import (
     QuestionFilterForm, CourseForm, ProfileForm,
     UploadFileForm, FileForm, QuestionPaperForm, LessonForm,
     LessonFileForm, LearningModuleForm, ExerciseForm, TestcaseForm,
-    SearchFilterForm, PostForm, CommentForm, TestSeriesForm
+    SearchFilterForm, PostForm, CommentForm, TestSeriesForm, TestForm
 )
 from yaksh.settings import SERVER_POOL_PORT, SERVER_HOST_NAME
 from .settings import URL_ROOT
@@ -322,9 +322,14 @@ def user_logout(request):
 def test_series(request):
     t_serieses = Test_Series.objects.all()
     form = TestSeriesForm()
+    form_t = TestForm()
+    quizzes = Quiz.objects.all()
     context = {
         't_serieses': t_serieses,
-        'form_1': form
+        'form_1': form,
+        'form': form_t,
+        'quizzes': quizzes
+
     }
     return my_render_to_response(request, 'portal_pages/test-series.html', context)
 
@@ -355,19 +360,30 @@ def test_series(request):
 def create_series(request):
     # form = TestSeriesForm()
     if request.method == 'POST':
-        form = TestSeriesForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return my_redirect('/exam/test-series/')
-    else:
-        form = TestSeriesForm(request.GET)
-        if form.is_valid():
-            form.save()
-            return my_redirect('/exam/test-series/')
-    # context = {
-    #     'form':form
-    # }
-    # return my_render_to_response(request, 'portal_pages/create_series.html', context)
+        test_name = request.POST.get('test-name')
+        quiz_id = request.POST.get('quizes')
+        quiz = Quiz.objects.get(id = quiz_id)
+        date = request.POST.get('date')
+        t_s_id = request.POST.get('test-series')
+        t_s = Test_Series.objects.get(id = t_s_id)
+        test = Test(test_name= test_name, test_date=date)
+        test.save()
+        test.test.add(quiz)
+        test.test_series.add(t_s)
+        return my_redirect('/exam/test-series/')
+
+
+
+def delete_test(request, test_id):
+    test = Test.objects.get(id = test_id)
+    test.delete()
+    return my_redirect('/exam/test-series/')
+
+
+def delete_series(request, series_id):
+    series = Test_Series.objects.get(id = series_id)
+    series.delete()
+    return my_redirect('/exam/test-series/')
 
 
 @login_required
