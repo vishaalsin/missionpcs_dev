@@ -5,6 +5,8 @@
 {% endblock %}
 
 {% block content %}
+
+
 <section id="select-exam">
     <div class="container">
         <div class="row">
@@ -18,18 +20,23 @@
                     <!-- ######### Exam Category 1 -->
                     {% for course in courses %}
                     <div class="exam-box">
-                        <input type="checkbox" name="{{ course }}" id="{{ course.id }}" />
+                        <input type="checkbox" name="{{ course }}" id="{{ course.id }}" value="{{ course.id }}"/>
                         <label for="{{ course.id }}">{{ course }} Exams</label>
                     </div>
                     {% endfor %}
                     <div class="exam-bottom p-3">
-                        <button class="btn btn-primary btn-block mx-auto" type="button" style="max-width: 300px;"> Continue</button>
+                        <button class="btn btn-primary btn-block mx-auto" type="submit" style="max-width: 300px;"> Continue</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 </section>
+
+
+
+
+
 
     
 {% endblock %}

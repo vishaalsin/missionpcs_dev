@@ -39,7 +39,7 @@ from yaksh.code_server import get_result as get_result_from_code_server
 from yaksh.models import (
     Answer, AnswerPaper, AssignmentUpload, Course, FileUpload, FloatTestCase,
     HookTestCase, IntegerTestCase, McqTestCase, Profile,
-    QuestionPaper, QuestionSet, Quiz, Question, StandardTestCase,
+    QuestionPaper, QuestionSet, Quiz, Test, Test_Series, Question, StandardTestCase,
     StdIOBasedTestCase, StringTestCase, TestCase, User,
     get_model_class, FIXTURES_DIR_PATH, MOD_GROUP_NAME, Lesson, LessonFile,
     LearningUnit, LearningModule, CourseStatus, question_types, Post, Comment, Strike
@@ -49,7 +49,7 @@ from yaksh.forms import (
     QuestionFilterForm, CourseForm, ProfileForm,
     UploadFileForm, FileForm, QuestionPaperForm, LessonForm,
     LessonFileForm, LearningModuleForm, ExerciseForm, TestcaseForm,
-    SearchFilterForm, PostForm, CommentForm
+    SearchFilterForm, PostForm, CommentForm, TestSeriesForm, TestForm
 )
 from yaksh.settings import SERVER_POOL_PORT, SERVER_HOST_NAME
 from .settings import URL_ROOT
@@ -166,10 +166,12 @@ def user_register(request):
                 request, 'yaksh/register.html', {'form': form}
             )
     else:
+        user = request.user()
         form = UserRegisterForm()
         return my_render_to_response(
             request, 'yaksh/register.html', {'form': form}
         )
+
 
 def select_exam(request):
     courses = Course.objects.all()
@@ -178,7 +180,7 @@ def select_exam(request):
         # Receives all the id's of enrolled courses
         #print(enrolled_courses_ids)
         initiate_user(request.user, enrolled_courses_ids)
-        return my_redirect('/letsprepare/')
+        return my_redirect('/exam/dashboard/1/')
 
     context = {
         'courses': courses
@@ -186,6 +188,7 @@ def select_exam(request):
     return my_render_to_response(
         request, 'portal_pages/select-exams.html', context
     )
+
 
 def initiate_user(new_user, enrolled_courses_ids):
     for course_id in enrolled_courses_ids:
@@ -202,12 +205,185 @@ def initiate_user(new_user, enrolled_courses_ids):
             available_quizzes_serializer.save()
 
 
+@login_required
+def initiate_dashboard(request):
+    user = request.user
+    user_course_list = user.students.all()
+    if len(user_course_list) == 0:
+        try:
+            profile = Profile.objects.get(user = user) # Checks if user his created his profile or not , If Not it gives error
+            return my_redirect('/letsprepare/select-exams/')
+        except:
+            return my_redirect('/exam/editprofile/')
+
+    else:
+        course_id = user_course_list[0].id  # Stores the id of first course in the list
+        return dashboard(request, course_id)
+
+
+
+@login_required
+def dashboard(request, course_id):
+    user = request.user  # Gives the logged in user
+    user_course_list = user.students.all()  # Gives course list that user is enrolled in
+    course = Course.objects.get(id=course_id)  # Course for particular course id
+    modules = course.learning_module.all()  # Module for particular course
+    modules_data = []
+    quiz_data = []
+    try:
+        availableQuizzes = json.loads(json.dumps(AvailableQuizzesSerializer(AvailableQuizzes.objects.filter(user=user, successful = True), many=True).data))
+        availableQuizIds = [quiz['quiz'] for quiz in availableQuizzes]
+    except:
+        availableQuizIds = []
+    if course not in user_course_list:
+        raise Http404('This course does not belong to you')
+    for module in modules:
+        quizzes = module.get_quiz_units()
+        quizzes = sorted(quizzes, key=lambda item: int(item.quiz_code.split('_')[1]))
+        has_quizzes = 0
+        for quiz in quizzes:
+            if quiz.id in availableQuizIds or quiz.is_free:
+                quiz_data.append({
+                    'code': quiz.quiz_code,
+                    'name': quiz.description,
+                    'id': quiz.id,
+                    'module_id': module.id,
+                    'module_name' : module.description
+                })
+                has_quizzes += 1
+        modules_data.append({'name': module.description, 'id': module.id,
+                             'total_quizzes': len(quizzes), 'has_quizzes': has_quizzes})
+
+    context = {
+        'courses': user_course_list,
+        'modules': modules_data,
+        'quizzes': quiz_data,
+        'current_course': course
+    }
+    return my_render_to_response(request, 'portal_pages/index.html', context)
+
+
+@login_required
+def initiate_subjects(request):
+    user = request.user
+    user_course_list = user.students.all()
+    course_id = user_course_list[0].id
+    return subjects(request, course_id)
+
+
+@login_required
+def subjects(request, course_id):
+    user = request.user  # Gives the logged in user
+    user_course_list = user.students.all()  # Gives course list that user is enrolled in
+    course = Course.objects.get(id=course_id)
+    modules = course.learning_module.all()
+    modules_data = []
+    quiz_data = []
+    try:
+        availableQuizzes = json.loads(json.dumps(AvailableQuizzesSerializer(AvailableQuizzes.objects.filter(user=user, successful = True), many=True).data))
+        availableQuizIds = [quiz['quiz'] for quiz in availableQuizzes]
+    except:
+        availableQuizIds = []
+    for module in modules:
+        quizzes = module.get_quiz_units()
+        quizzes = sorted(quizzes, key=lambda item: int(item.quiz_code.split('_')[1]))
+        has_quizzes = 0
+        for quiz in quizzes:
+            if quiz.id in availableQuizIds or quiz.is_free:
+                quiz_data.append({
+                    'code': quiz.quiz_code,
+                    'name': quiz.description,
+                    'id': quiz.id,
+                    'module_id': module.id,
+                    'module_name': module.description
+                })
+                has_quizzes += 1
+        modules_data.append({'name' : module.description, 'id' : module.id,
+                              'total_quizzes' : len(quizzes), 'has_quizzes' : has_quizzes })
+
+    context = {
+        'courses': user_course_list,
+        'modules': modules_data,
+        'quizzes': quiz_data,
+        'current_course': course
+    }
+    return my_render_to_response(request, 'portal_pages/subjects.html', context)
+
+
+@login_required
 def user_logout(request):
     """Show a page to inform user that the quiz has been compeleted."""
     logout(request)
     context = {'message': "You have been logged out successfully"}
     return my_redirect('/letsprepare')
     # return my_render_to_response(request, 'yaksh/complete.html', context)
+
+
+def test_series(request):
+    t_serieses = Test_Series.objects.all()
+    form = TestSeriesForm()
+    form_t = TestForm()
+    quizzes = Quiz.objects.all()
+    context = {
+        't_serieses': t_serieses,
+        'form_1': form,
+        'form': form_t,
+        'quizzes': quizzes
+
+    }
+    return my_render_to_response(request, 'portal_pages/test-series.html', context)
+
+
+def create_series(request):
+    # form = TestSeriesForm()
+    if request.method == 'POST':
+        form = TestSeriesForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return my_redirect('/exam/test-series/')
+    # context = {
+    #     'form':form
+    # }
+    # return my_render_to_response(request, 'portal_pages/create_series.html', context)
+
+
+def test_series(request):
+    t_serieses = Test_Series.objects.all()
+    form = TestSeriesForm()
+    context = {
+        't_serieses': t_serieses,
+        'form_1': form
+    }
+    return my_render_to_response(request, 'portal_pages/test-series.html', context)
+
+
+def create_series(request):
+    # form = TestSeriesForm()
+    if request.method == 'POST':
+        test_name = request.POST.get('test-name')
+        quiz_id = request.POST.get('quizes')
+        quiz = Quiz.objects.get(id = quiz_id)
+        date = request.POST.get('date')
+        t_s_id = request.POST.get('test-series')
+        t_s = Test_Series.objects.get(id = t_s_id)
+        test = Test(test_name= test_name, test_date=date)
+        test.save()
+        test.test.add(quiz)
+        test.test_series.add(t_s)
+        return my_redirect('/exam/test-series/')
+
+
+
+def delete_test(request, test_id):
+    test = Test.objects.get(id = test_id)
+    test.delete()
+    return my_redirect('/exam/test-series/')
+
+
+def delete_series(request, series_id):
+    series = Test_Series.objects.get(id = series_id)
+    series.delete()
+    return my_redirect('/exam/test-series/')
 
 
 @login_required
@@ -400,6 +576,9 @@ def add_quiz(request, course_id=None, module_id=None, quiz_id=None):
             unit, created = LearningUnit.objects.get_or_create(
                     type="quiz", quiz=added_quiz, order=order
                 )
+            got, created = Test.objects.get_or_create(
+                test=added_quiz
+            )
             if created:
                 module.learning_unit.add(unit.id)
             messages.success(request, "Quiz saved successfully")
@@ -502,11 +681,13 @@ def user_login(request):
     """Take the credentials of the user and log the user in."""
 
     user = request.user
-    context = {}
     if user.is_authenticated:
         return index(request)
 
     next_url = request.GET.get('next')
+
+    if next_url is None:
+        next_url = '/letsprepare/home'
 
     if request.method == "POST":
         form = UserLoginForm(request.POST)
@@ -2233,6 +2414,11 @@ def edit_profile(request):
             form_data.user.last_name = request.POST['last_name']
             form_data.user.save()
             form_data.save()
+            user_course_list = user.students.all()
+            try:
+                course_id = user_course_list[0].id  # Stores the id of first course in the list
+            except:
+                return my_redirect('/exam/select_exam/')
             return my_render_to_response(request, 'yaksh/profile_updated.html')
         else:
             context['form'] = form
@@ -3146,6 +3332,10 @@ def add_module(request, course_id=None, module_id=None):
                 module = module_form.save()
                 module.html_data = get_html_text(module.description)
                 module.save()
+                if module.apply_to_all_quiz == True:
+                    for quiz in module.get_quiz_units():
+                        quiz.discount = module.discount
+                        quiz.save()
                 course.learning_module.add(module.id)
                 messages.success(
                     request,

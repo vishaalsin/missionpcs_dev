@@ -42,7 +42,8 @@ from django.forms.models import model_to_dict
 from grades.models import GradingSystem
 from django.db.models import IntegerField, Model
 from django_mysql.models import ListTextField
-
+# required for discount in Quiz and model
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 languages = (
         ("python", "Python"),
@@ -508,6 +509,19 @@ class Quiz(models.Model):
 
     objects = QuizManager()
 
+    #discount on quiz in Percentage.(created by shivam)
+    # start
+    #default discount;
+    is_default_discount = models.BooleanField(default=True)
+
+    #default percentage discount;
+    discount = models.IntegerField(default=0,blank=True, validators=[
+            MaxValueValidator(100),
+            MinValueValidator(0)
+        ])
+    #end
+
+
     class Meta:
         verbose_name_plural = "Quizzes"
 
@@ -614,6 +628,26 @@ class Quiz(models.Model):
         write_templates_to_zip(zip_file, unit_file_path, quiz_data,
                                quiz_name, sub_folder_name)
 
+###############################################################################
+class Test_Series(models.Model):
+    test_series_name = models.CharField(max_length=255)
+    test_series_description = models.TextField(default=None, null=True, blank=True)
+
+
+
+###############################################################################
+# This model connects Quiz Model with Test_Series Model
+class Test(models.Model):
+    test_name = models.CharField(max_length=100, default='New Test')
+    test = models.ManyToManyField(Quiz)
+    test_series = models.ManyToManyField(Test_Series)
+    test_date = models.DateField(auto_now=False, auto_now_add=False, null=True)
+
+    def __str__(self):
+        return self.test.description
+
+
+
 
 ##########################################################################
 class LearningUnit(models.Model):
@@ -708,6 +742,19 @@ class LearningModule(models.Model):
     html_data = models.TextField(null=True, blank=True)
     active = models.BooleanField(default=True)
     is_trial = models.BooleanField(default=False)
+
+    # discount applied when default discount is applied.(created by shivam
+    #start
+    # default percentage discount;
+    discount = models.IntegerField(default=0, blank=True, validators=[
+        MaxValueValidator(100),
+        MinValueValidator(0)
+    ])
+
+    # should apply to all the quiz irrespective of the quiz.
+    apply_to_all_quiz = models.BooleanField(default=False)
+    #end
+
 
     def get_quiz_units(self):
         return [unit.quiz for unit in self.learning_unit.filter(
@@ -1261,7 +1308,7 @@ class Profile(models.Model):
     activation_key = models.CharField(max_length=255, blank=True, null=True)
     key_expiry_time = models.DateTimeField(blank=True, null=True)
     country_code = models.CharField(max_length=5, null=False, blank=False, unique=False)
-    phone_number = models.CharField(max_length=10, null=False, blank=False, unique=True)
+    phone_number = models.CharField(max_length=10, null=False, blank=False, unique=False)
 
     def get_user_dir(self):
         """Return the output directory for the user."""

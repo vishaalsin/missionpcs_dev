@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from django.http import JsonResponse
 from django.shortcuts import render
-from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.csrf import csrf_exempt,csrf_protect
 from yaksh.decorators import has_profile
 from yaksh.models import QuestionPaper, AnswerPaper, Profile, Course
 from yaksh.models import LearningModule, Quiz
@@ -21,10 +21,10 @@ from django.utils import timezone
 from django.db import IntegrityError
 
 from yaksh.send_emails import generate_activation_key
-
+from datetime import datetime
 import razorpay
 
-if not settings.IS_DEVELOPMENT:
+if settings.IS_DEVELOPMENT:
     key = settings.rzp_key_dev
     secret_key = settings.rzp_secret_key_dev
 else:
@@ -111,10 +111,20 @@ def show_all_on_sale(request):
         availableQuizIds = []
     for module in list(LearningModule.objects.all()):
         quizzes = module.get_quiz_units()
+
         quizzes = sorted(quizzes, key=lambda item: int(item.quiz_code.split('_')[1]))
         quiz_data = []
         for quiz in list(quizzes):
-            quiz_data.append({'name': quiz.description, 'code' : quiz.quiz_code, 'price' : quiz.price, 'org_price' : quiz.price *2, 'id':quiz.id})
+            # calculating discount
+            # start
+            discoun = 0
+            # if the discount has to be applied on the base of the module discount or want default discount.
+            if module.apply_to_all_quiz == True or quiz.is_default_discount == True:
+                discoun = module.discount
+            else:
+                discoun = quiz.discount
+            # end
+            quiz_data.append({'name': quiz.description, 'code' : quiz.quiz_code, 'price' : quiz.price*((100-discoun)/100), 'org_price' : quiz.price, 'id':quiz.id})
             if quiz.id in availableQuizIds or quiz.is_free:
                 quiz_data[-1]['available'] = True
             else:
@@ -341,8 +351,9 @@ def report_error(request):
     except Exception as e:
         return JsonResponse({'error' : str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
-@csrf_exempt
+@csrf_protect
 def send_otp(request):
+
     data = json.loads(request.POST['data'])
     number = data['number']
     if settings.IS_DEVELOPMENT == False:
@@ -356,10 +367,6 @@ def send_otp(request):
     else:
         otp = "000000"
         return JsonResponse({'SENT': otp})
-    
-    
-
-
 def send_sms(body, number):
     message = tw_client.messages.create(
         body = body,
@@ -384,6 +391,7 @@ def index(request):
                 context["error"]:"Please Fill all the Fields"
                 return my_render_to_response(request, 'index.html', context)
             user = authenticate(request, username=username, password=password)
+
             if user is not None:
                 login(request, user)
                 return my_redirect(path_next)
