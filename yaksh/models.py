@@ -42,6 +42,8 @@ from django.forms.models import model_to_dict
 from grades.models import GradingSystem
 from django.db.models import IntegerField, Model
 from django_mysql.models import ListTextField
+
+
 languages = (
         ("python", "Python"),
         ("bash", "Bash"),
@@ -2741,3 +2743,11 @@ class Comment(ForumBase):
     def __str__(self):
         return 'Comment by {0}: {1}'.format(self.creator.username,
                                             self.post_field.title)
+
+##############################################################################
+
+class CurrentAffairs(models.Model):
+    title = models.CharField(max_length=200)
+    summary = models.CharField(max_length=200)
+    news = models.TextField()
+    

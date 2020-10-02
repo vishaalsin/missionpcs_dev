@@ -54,6 +54,7 @@ INSTALLED_APPS = (
     'rest_framework.authtoken',
     'letsprepare.apps.letsprepareConfig',
     'crispy_forms',
+    'django_extensions',
 )
 
 SITE_ID = 1

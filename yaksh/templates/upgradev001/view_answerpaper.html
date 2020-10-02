@@ -191,11 +191,11 @@
                     {% endif %} <!-- End has_user_assignments -->
                   {% else %}
                   {% for ans in answers %}
-                  {% if ans.answer.correct %}
+                  <!-- {% if ans.answer.correct %}
                     <i class="fa fa-check" aria-hidden="true" style="color:#27B52D"></i>
                   {% else %}
                   <i class="fa fa-times" aria-hidden="true" style="color:red"></i>
-                  {% endif %}
+                  {% endif %} -->
                     <div id="accordian">
                       <div class="card">
 <!--                        {% if ans.answer.correct %}-->
@@ -222,7 +222,7 @@
 <!--                          </div>-->
 <!--                        {% endif %}-->
 <!--                        <div class="collapse hide" id="submitted_{{ans.answer.id}}" data-parent="#accordion">-->
-                          <div class="card-body">
+                          <div class="card-body bg-light">
                             {% with ans.error_list as err %}
                               {% for error in err %}
                                 {% if error.type == 'stdio' %}
@@ -286,7 +286,13 @@
                                     </tr>
                                   </table>
                                 {% else %}
-                                  <pre><code> {{error}} </code></pre>
+                                <p class="font-weight-bold">
+                                    {% if ans.answer.correct %}
+                                      <i class="fa fa-check mr-2" aria-hidden="true" style="color:#27B52D"></i>Your Answer is correct :
+                                    {% else %}
+                                    <i class="fa fa-times mr-2" aria-hidden="true" style="color:red"></i>Your Answer is Incorrect, correct answer is:
+                                    {% endif %}
+                                    </p>
                                 {% endif %}
                               {% endfor %}
                             {% endwith %}
