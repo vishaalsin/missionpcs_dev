@@ -2,7 +2,7 @@ from django import forms
 
 from yaksh.models import (
     get_model_class, Profile, Quiz, Question, Course, QuestionPaper, Lesson,
-    LearningModule, TestCase, languages, question_types, Post, Comment
+    LearningModule, TestCase, languages, question_types, Post, Comment, Test_Series, Test
 )
 from grades.models import GradingSystem
 from django.contrib.auth import authenticate
@@ -699,12 +699,17 @@ class ProfileForm(forms.ModelForm):
 
     class Meta:
         model = Profile
-        fields = ['first_name', 'last_name']
+        fields = ['first_name', 'last_name', 'country_code', 'phone_number']
 
     first_name = forms.CharField(max_length=30, widget=forms.TextInput(
                     {'class': form_input_class, 'placeholder': "First Name"}))
     last_name = forms.CharField(max_length=30, widget=forms.TextInput(
                     {'class': form_input_class, 'placeholder': "Last Name"}))
+    country_code = forms.ChoiceField(choices=country_codes, initial="IN-91", required=True, widget=forms.Select(
+        attrs={"class": "form-control", 'placeholder': "country code"}))
+    phone_number = forms.CharField(max_length=10, widget=forms.TextInput(
+        {'class': form_input_class, 'placeholder': "Phone Number"}
+    ))
 
     def __init__(self, *args, **kwargs):
         if 'user' in kwargs:
@@ -859,3 +864,15 @@ class CommentForm(forms.ModelForm):
                 }
             )
         }
+
+
+class TestSeriesForm(forms.ModelForm):
+    class Meta:
+        model = Test_Series
+        fields = ['test_series_name', 'test_series_description']
+#        fields = '__all__'
+
+class TestForm(forms.ModelForm):
+    class Meta:
+        model = Test
+        fields = '__all__'

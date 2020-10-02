@@ -629,6 +629,26 @@ class Quiz(models.Model):
         write_templates_to_zip(zip_file, unit_file_path, quiz_data,
                                quiz_name, sub_folder_name)
 
+###############################################################################
+class Test_Series(models.Model):
+    test_series_name = models.CharField(max_length=255)
+    test_series_description = models.TextField(default=None, null=True, blank=True)
+
+
+
+###############################################################################
+# This model connects Quiz Model with Test_Series Model
+class Test(models.Model):
+    test_name = models.CharField(max_length=100, default='New Test')
+    test = models.ManyToManyField(Quiz)
+    test_series = models.ManyToManyField(Test_Series)
+    test_date = models.DateField(auto_now=False, auto_now_add=False, null=True)
+
+    def __str__(self):
+        return self.test.description
+
+
+
 
 ##########################################################################
 class LearningUnit(models.Model):
@@ -1289,7 +1309,7 @@ class Profile(models.Model):
     activation_key = models.CharField(max_length=255, blank=True, null=True)
     key_expiry_time = models.DateTimeField(blank=True, null=True)
     country_code = models.CharField(max_length=5, null=False, blank=False, unique=False)
-    phone_number = models.CharField(max_length=10, null=False, blank=False, unique=True)
+    phone_number = models.CharField(max_length=10, null=False, blank=False, unique=False)
 
     def get_user_dir(self):
         """Return the output directory for the user."""
