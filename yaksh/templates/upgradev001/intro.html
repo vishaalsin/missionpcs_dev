@@ -1,0 +1,159 @@
+{% extends "base3.html" %}
+
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'upgradev001/css/intro.css' %}" type="text/css">
+{% endblock %}
+
+{% block title %} {{questionpaper.quiz.description}} {% endblock %}
+
+
+{% block content %}
+<section id="quiz" class="quiz mt-0">
+    <div class="container">
+        <h3 class="sub-head">&diamond; Ch 1 English &diamond;</h3>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h4>Test Details</h4>
+                        <div class="row mb-1">
+                            <div class="col-6"><b>Number of Questions</b> </div>
+                            <div class="col-6">25</div>
+                        </div>
+                        <div class="row mb-1">
+                            <div class="col-6"><b>Time Limit</b> </div>
+                            <div class="col-6">20 Minutes</div>
+                        </div>
+                        <div class="row mb-1">
+                            <div class="col-6"><b>Total score</b></div>
+                            <div class="col-6">25</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body">
+                        <h4>Instructions</h4>
+                        <p><span>(No negative marking)</span></p>
+                        <p><strong><span>Instructions:</span></strong></p>
+                        <p>Timer will start once you click the<span>&nbsp;<strong>&quot;Start&quot;</strong> button.</span></p>
+                        <p><span>Navigate between questions in &ldquo;<strong>Question Navigator</strong>&rdquo; section</span></p>
+                        <p><span>Click on &ldquo;<strong>attempt later&rdquo;&nbsp;</strong>to try the question later.</span></p>
+                        <p><span>On top right corner you can find timer. The test will be automatically submitted when the allotted time is over.&nbsp;</span></p>
+                        <p><span>If you finish before the time limit, click <strong>&quot;SUBMIT EXAM&quot;</strong> button. Scroll down on Submission status page and click on <strong>&ldquo;YES&rdquo;</strong> for final submission. Click on <strong>&ldquo;NO&rdquo;</strong> to go back to the test.</span></p>
+                        <p><span>View the test analysis and Solutions for the questions in &ldquo;<strong>Results&rdquo;&nbsp;</strong>section.&nbsp;</span></p>
+                        <p><br></p>
+                        <p><strong><u><span>NOTE</span></u></strong><span>: If you are on mobile phone, click three rows (&nbsp;</span><span style='font-size:16px;line-height:107%;font-family:"Arial",sans-serif;color:#222222;background:white;'>&equiv;&nbsp;</span><span style="font-size:17px;line-height:107%;">) on top right corner to access &ldquo;<strong>Results&rdquo;&nbsp;</strong>section.</span></p>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex align-items-center justify-content-between d-block w-100 mx-3">
+                {% if status != "moderator" %}
+                <a href="{% url 'yaksh:view_module' module.id course.id %}" class="back-btn" name="home">
+                    <i class="fa fa-step-backward mr-1" style="font-size: 18px;"></i>
+                    Back
+                </a>
+                {% else %}
+                <a href="{% url 'yaksh:index' %}" class="btn btn-secondary font-weight-bold btn-lg" name="home">
+                    <i class="fa fa-step-backward mr-1" style="font-size: 18px;"></i>
+                    Back
+                </a>
+                {% endif %}
+                {% if not questionpaper.quiz.is_expired %}
+                    <form action="{% url 'yaksh:start_quiz' attempt_num module.id questionpaper.id course.id %}" method="post" align="center">
+                    {% csrf_token %}
+                        <button class="start-btn border-0" type="submit" name="start">
+                        Start <i class="fa fa-play ml-2" style="font-size: 18px;"></i>
+                        </button>
+                    </form>
+                {% endif %}
+                <!-- <a href="#" class="back-btn"><i class="fa fa-step-backward mr-1" style="font-size: 18px;"></i> Back</a>
+                <a href="#" class="start-btn"> Start<i class="fa fa-play ml-2" style="font-size: 18px;"></i></a> -->
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+
+
+<!-- 
+<section id="quiz" class="quiz pt-0 bg-light my-0 pb-4">
+    <div class="container">
+        <h3 class="sub-head pt-4"><i class="fa fa-book"></i> Ch 1 English </h3>
+        <h1 class="text-center font-weight-bold text-uppercase mb-3 p-3"><i class="fa fa-book"></i> Ch 1 English</h1>
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h4>Test Details</h4>
+                        <div class="row">
+                            <div class="col-7">
+                            <ul>
+                                <li class="pb-2">Number of Questions</li>
+                                <li class="pb-2">Time Limit</li>
+                                <li class="pb-2">Total Score</li>
+                            </ul>
+                            </div>
+                            <div class="col-5">
+                                <ul>
+                                    <li class="pb-2">25</li>
+                                    <li class="pb-2">20 minutes</li>
+                                    <li class="pb-2">25</li>
+                                </ul>
+                            </div>
+                            <div class="col-6">
+                            {% if status != "moderator" %}
+                            <a href="{% url 'yaksh:view_module' module.id course.id %}" class="btn btn-secondary font-weight-bold btn-lg" name="home">
+                                <i class="fa fa-step-backward"></i>
+                                Back
+                            </a>
+                            {% else %}
+                            <a href="{% url 'yaksh:index' %}" class="btn btn-secondary font-weight-bold btn-lg" name="home">
+                                <i class="fa fa-step-backward"></i>
+                                Back
+                            </a>
+                            {% endif %}
+                            </div>
+                            <div class="col-6">
+                            {% if not questionpaper.quiz.is_expired %}
+                                <form action="{% url 'yaksh:start_quiz' attempt_num module.id questionpaper.id course.id %}" method="post" align="center">
+                                {% csrf_token %}
+                                    <button class="btn btn-success btn-lg font-weight-bold" type="submit" name="start">
+                                    Start <i class="fa fa-play"></i>
+                                    </button>
+                                </form>
+                            {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body">
+                        <h4>Instructions</h4>
+                        <div>
+                            <p><span>(No negative marking)</span></p>
+<p><strong><span>Instructions:</span></strong></p>
+<p>Timer will start once you click the<span>&nbsp;<strong>&quot;Start&quot;</strong> button.</span></p>
+<p><span>Navigate between questions in &ldquo;<strong>Question Navigator</strong>&rdquo; section</span></p>
+<p><span>Click on &ldquo;<strong>attempt later&rdquo;&nbsp;</strong>to try the question later.</span></p>
+<p><span>On top right corner you can find timer. The test will be automatically submitted when the allotted time is over.&nbsp;</span></p>
+<p><span>If you finish before the time limit, click <strong>&quot;SUBMIT EXAM&quot;</strong> button. Scroll down on Submission status page and click on <strong>&ldquo;YES&rdquo;</strong> for final submission. Click on <strong>&ldquo;NO&rdquo;</strong> to go back to the test.</span></p>
+<p><span>View the test analysis and Solutions for the questions in &ldquo;<strong>Results&rdquo;&nbsp;</strong>section.&nbsp;</span></p>
+<p><br></p>
+<p><strong><u><span>NOTE</span></u></strong><span>: If you are on mobile phone, click three rows (&nbsp;</span><span style='font-size:16px;line-height:107%;font-family:"Arial",sans-serif;color:#222222;background:white;'>&equiv;&nbsp;</span><span style="font-size:17px;line-height:107%;">) on top right corner to access &ldquo;<strong>Results&rdquo;&nbsp;</strong>section.</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section> -->
+{% endblock content %}

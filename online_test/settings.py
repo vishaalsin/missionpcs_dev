@@ -58,6 +58,7 @@ INSTALLED_APPS = (
     'letsprepare.apps.letsprepareConfig',
     "sslserver",
     'crispy_forms',
+    'django_extensions',
 )
 
 SITE_ID = 1

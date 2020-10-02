@@ -1,5 +1,13 @@
 document.addEventListener('DOMContentLoaded', () => {
-    load_navdata();
+    try{
+        load_navdata();
+    }
+    catch(err) {
+        console.log(err)
+    }
+    var x = window.matchMedia("(max-width: 991px)")
+    screencheck(x);
+    x.addListener(screencheck)
 })
 function load_navdata(){
     const request = new XMLHttpRequest();
@@ -94,3 +102,21 @@ function addtonav(dat){
     document.getElementById('subjects-drop').appendChild(dat);
     console.log(dat)
 }
+
+function screencheck(x) {
+    userdrop = document.querySelector("#drop-user");
+    if(x.matches){
+        user_option = document.querySelector("#user_options");
+        user_option.children[1].style.position ="absolute"
+        console.log("yes")
+        mob_user = document.querySelector("#mob-user");
+        console.log(mob_user, userdrop)
+        mob_user.appendChild(userdrop)
+
+    }
+    else{
+        pc_user = document.querySelector("#pc-user");
+        pc_user.appendChild(userdrop)
+    }
+}
+
