@@ -196,7 +196,7 @@ function assign_quizzes(quiz_ids, sum) {
         }
         document.body.appendChild(row);
         console.log(row)
-        // row.submit();
+         row.submit();
       });
     }
 
