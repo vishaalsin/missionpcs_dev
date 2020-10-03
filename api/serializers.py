@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from yaksh.models import (
     Question, Quiz, QuestionPaper, AnswerPaper, Course,
-    LearningModule, LearningUnit, Lesson
+    LearningModule, LearningUnit, Lesson, CurrentAffair, Update
 )
 
 
@@ -76,4 +76,16 @@ class CourseSerializer(serializers.ModelSerializer):
             'students',
             'grading_system',
             'view_grade',
+        )
+
+class CurrentAffairSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CurrentAffair
+        fields = '__all__'
+
+class UpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Update
+        exclude = (
+            'created_on',
         )

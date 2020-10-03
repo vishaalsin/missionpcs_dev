@@ -1,9 +1,9 @@
 from yaksh.models import (
-    Question, Quiz, QuestionPaper, QuestionSet, AnswerPaper, Course, Answer, LearningModule
+    Question, Quiz, QuestionPaper, QuestionSet, AnswerPaper, Course, Answer, LearningModule, CurrentAffair, Update
 )
 from api.serializers import (
     QuestionSerializer, QuizSerializer, QuestionPaperSerializer,
-    AnswerPaperSerializer, CourseSerializer, LearningModuleSerializer
+    AnswerPaperSerializer, CourseSerializer, LearningModuleSerializer, CurrentAffairSerializer, UpdateSerializer
 )
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -448,3 +448,33 @@ class AllModuleList(APIView):
         modules = LearningModule.objects.all()
         serializer = LearningModuleSerializer(modules, many=True)
         return Response(serializer.data)
+
+class CurrentAffairView(APIView):
+    permission_classes = [permissions.AllowAny]
+    def get(self, request, format=None):
+        ca = CurrentAffair.objects.all()
+        serializer = CurrentAffairSerializer(ca, many=True)
+        return Response(serializer.data)
+    
+    def post(self, request, format=None):
+        serializer = CurrentAffairSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class UpdateView(APIView):
+    
+    permission_classes = [permissions.AllowAny]
+    def get(self, request, format=None):
+        updt = Update.objects.order_by('-pubDate')
+        serializer = UpdateSerializer(updt, many=True)
+        return Response(serializer.data)
+    
+    def post(self, request, format=None):
+        serializer = UpdateSerializer(data=request.data)
+        print(serializer)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

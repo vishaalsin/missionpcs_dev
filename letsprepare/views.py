@@ -5,7 +5,7 @@ from django.http import JsonResponse
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from yaksh.decorators import has_profile
-from yaksh.models import QuestionPaper, AnswerPaper, Profile, Course
+from yaksh.models import QuestionPaper, AnswerPaper, Profile, Course, Update
 from yaksh.models import LearningModule, Quiz
 from yaksh.views import my_render_to_response, my_redirect
 from rest_framework import status
@@ -374,7 +374,9 @@ def index(request):
     # """Take the credentials of the user and log the user in."""
     # next_url = request.GET.get('next')
     courses = Course.objects.all()
-    context = {'courses': ['ankit', 'portal', 'geeks', 'computer', 'ANPSC', 'APPSC', 'APSC', 'BPSC', 'CPSC', 'GPSC']}
+    updates_result = Update.objects.order_by('-pubDate').filter(type='result')[:5]
+    update_announcements = Update.objects.order_by('-pubDate').filter(type='announcement')[:5]
+    context = {'courses': ['ankit', 'portal', 'geeks', 'computer', 'ANPSC', 'APPSC', 'APSC', 'BPSC', 'CPSC', 'GPSC'], 'updates_result': updates_result, 'update_announcements': update_announcements}
     if request.method == "POST":
         if request.POST["sub"] == "Sign In":
             username = request.POST["username"].lower()
