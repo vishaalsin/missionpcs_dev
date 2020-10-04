@@ -1,5 +1,6 @@
 from django.conf.urls import url
 from letsprepare import views
+from yaksh.views import select_exam, initiate_dashboard
 from django.views.generic import TemplateView
 
 urlpatterns = [
@@ -14,11 +15,11 @@ urlpatterns = [
     url(r'^verify_payment/$', views.verify_payment, name='get_payment'),
     url(r'^test-series/$', TemplateView.as_view(template_name='portal_pages/test-series.html')),
     url(r'^tests/$', TemplateView.as_view(template_name='portal_pages/tests.html')),
-    url(r'^select-exams/$', TemplateView.as_view(template_name='portal_pages/select-exams.html')),
+    url(r'^select-exams/$', select_exam, name='select-exam'),
     url(r'^prev-tests/$', TemplateView.as_view(template_name='portal_pages/prev-tests.html')),
     url(r'^detailed-news/$', TemplateView.as_view(template_name='portal_pages/detailed-news.html')),
     url(r'^current-affairs/$', TemplateView.as_view(template_name='portal_pages/current-affairs.html')),
-    url(r'^home/$', TemplateView.as_view(template_name='portal_pages/index.html')),
+    url(r'^home/$', initiate_dashboard, name="Home"),
     url(r'^buy2/$', TemplateView.as_view(template_name='buy/all_on_sale.html')),
     url(r'^detailed-news/(?P<ca_id>\d+)/$',
         views.detailed_news,

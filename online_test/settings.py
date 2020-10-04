@@ -41,6 +41,9 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     # 'allauth',
     'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.facebook',
+    'allauth.socialaccount.providers.google',
     'yaksh',
     'taggit',
     'social_django',
@@ -53,6 +56,7 @@ INSTALLED_APPS = (
     'corsheaders',
     'rest_framework.authtoken',
     'letsprepare.apps.letsprepareConfig',
+    "sslserver",
     'crispy_forms',
     'django_extensions',
 )
@@ -61,6 +65,7 @@ SITE_ID = 1
 
 MIDDLEWARE = (
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django_session_timeout.middleware.SessionTimeoutMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -83,9 +88,9 @@ WSGI_APPLICATION = 'online_test.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'postgres',#'shivam',
+        'NAME': 'New_Database',#'shivam',
         'USER': 'postgres',
-        'PASSWORD': '12345678',#'shivam20',
+        'PASSWORD': 'Postgres',#'shivam20',
         'HOST': 'localhost',
         'PORT': '5432',
     }
@@ -111,7 +116,7 @@ STATIC_URL = '/static/'
 
 LOGIN_URL = '/exam/login/'
 
-LOGIN_REDIRECT_URL = '/exam/'
+LOGIN_REDIRECT_URL = '/exam/dashboard/'
 
 SOCIAL_AUTH_LOGIN_ERROR_URL = '/exam/login/'
 
@@ -196,8 +201,8 @@ TEMPLATES = [
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = 'GOOGLE_KEY_PROVIDED'
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'GOOGLE_SECRET_PROVIDED'
 
-SOCIAL_AUTH_FACEBOOK_KEY = 'FACEBOOK_KEY_PROVIDED'
-SOCIAL_AUTH_FACEBOOK_SECRET = 'FACEBOOK_SECRET_PROVIDED'
+SOCIAL_AUTH_FACEBOOK_KEY = '1419785824893696'
+SOCIAL_AUTH_FACEBOOK_SECRET = '7cdc48bb35d9402f648ec90fca07e7a1'
 
 AUTHENTICATION_BACKENDS = (
     'social_core.backends.google.GoogleOAuth2',
@@ -258,3 +263,11 @@ REST_FRAMEWORK = {
 
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
+
+# logout time
+# AUTO_LOGOUT_DELAY = 1
+
+# Enter your time here below in seconds.
+SESSION_EXPIRE_SECONDS = 7200000 # in seconds enter your time
+SESSION_EXPIRE_AFTER_LAST_ACTIVITY = True
+SESSION_TIMEOUT_REDIRECT = ''

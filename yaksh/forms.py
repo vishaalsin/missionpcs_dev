@@ -2,7 +2,7 @@ from django import forms
 
 from yaksh.models import (
     get_model_class, Profile, Quiz, Question, Course, QuestionPaper, Lesson,
-    LearningModule, TestCase, languages, question_types, Post, Comment
+    LearningModule, TestCase, languages, question_types, Post, Comment, Test_Series, Test
 )
 from grades.models import GradingSystem
 from django.contrib.auth import authenticate
@@ -399,6 +399,7 @@ class UserRegisterForm(forms.Form):
         new_profile.country_code = country_code
         new_profile.phone_number = phone_number
 
+
         if settings.IS_DEVELOPMENT:
             new_profile.is_email_verified = True
         else:
@@ -516,6 +517,9 @@ class QuizForm(forms.ModelForm):
             </li></ul>
             <p>We hope you enjoy taking this exam !!!</p>
         """)
+        self.fields['discount'].widget.attrs.update(
+            {'class': form_input_class}
+        )
 
     class Meta:
         model = Quiz
@@ -695,12 +699,17 @@ class ProfileForm(forms.ModelForm):
 
     class Meta:
         model = Profile
-        fields = ['first_name', 'last_name']
+        fields = ['first_name', 'last_name', 'country_code', 'phone_number']
 
     first_name = forms.CharField(max_length=30, widget=forms.TextInput(
                     {'class': form_input_class, 'placeholder': "First Name"}))
     last_name = forms.CharField(max_length=30, widget=forms.TextInput(
                     {'class': form_input_class, 'placeholder': "Last Name"}))
+    country_code = forms.ChoiceField(choices=country_codes, initial="IN-91", required=True, widget=forms.Select(
+        attrs={"class": "form-control", 'placeholder': "country code"}))
+    phone_number = forms.CharField(max_length=10, widget=forms.TextInput(
+        {'class': form_input_class, 'placeholder': "Phone Number"}
+    ))
 
     def __init__(self, *args, **kwargs):
         if 'user' in kwargs:
@@ -793,10 +802,15 @@ class LearningModuleForm(forms.ModelForm):
         self.fields['description'].widget.attrs.update(
             {'class': form_input_class, 'placeholder': 'Module Description'}
         )
+        self.fields['discount'].widget.attrs.update(
+            {'class': form_input_class, 'placeholder': 'Discount','max':'100','min':'0','style':'width:20%;display:inline'}
+        )
+
+
 
     class Meta:
         model = LearningModule
-        fields = ['name', 'description', 'active']
+        fields = ['name', 'description', 'active','discount','apply_to_all_quiz']
 
 
 class TestcaseForm(forms.ModelForm):
@@ -850,3 +864,15 @@ class CommentForm(forms.ModelForm):
                 }
             )
         }
+
+
+class TestSeriesForm(forms.ModelForm):
+    class Meta:
+        model = Test_Series
+        fields = ['test_series_name', 'test_series_description']
+#        fields = '__all__'
+
+class TestForm(forms.ModelForm):
+    class Meta:
+        model = Test
+        fields = '__all__'
