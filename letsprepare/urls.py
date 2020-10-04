@@ -20,4 +20,7 @@ urlpatterns = [
     url(r'^current-affairs/$', TemplateView.as_view(template_name='portal_pages/current-affairs.html')),
     url(r'^home/$', TemplateView.as_view(template_name='portal_pages/index.html')),
     url(r'^buy2/$', TemplateView.as_view(template_name='buy/all_on_sale.html')),
+    url(r'^detailed-news/(?P<ca_id>\d+)/$',
+        views.detailed_news,
+        name='current_affair-detail'),
 ]

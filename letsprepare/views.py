@@ -5,7 +5,7 @@ from django.http import JsonResponse
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from yaksh.decorators import has_profile
-from yaksh.models import QuestionPaper, AnswerPaper, Profile, Course, Update
+from yaksh.models import QuestionPaper, AnswerPaper, Profile, Course, Update, CurrentAffair
 from yaksh.models import LearningModule, Quiz
 from yaksh.views import my_render_to_response, my_redirect
 from rest_framework import status
@@ -454,6 +454,10 @@ def index(request):
     else:
         return my_redirect('/exam/login/?next=/letsprepare/show_modules/')
     
+def detailed_news(request, ca_id):
+    ca = CurrentAffair.objects.get(id=ca_id)
+    context = {'ca': ca}
+    return my_render_to_response(request, "portal_pages/detailed-news.html", context)
 
 @csrf_exempt
 def verify_payment(request):

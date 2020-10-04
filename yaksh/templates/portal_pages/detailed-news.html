@@ -9,36 +9,14 @@
             <div class="col-lg-9">
                 <div class="news mb-3">
                     <div class="news-head">
-                        <h2><b>Drone based Surveillance System introduced in Indian Railways</b></h2>
-                        <span class="date"><i class="fa fa-calendar"></i>August 19, 2020</span>
+                        <h2><b>{{ ca.title }}</b></h2>
+                        <span class="date"><i class="fa fa-calendar"></i>{{ ca.pubDate }}</span>
                     </div>
                     <div class="news-content">
                         <img src="{% static 'portal_pages/images/drone.png' %}" alt="News-1" class="main-img">
                         <div>
 
-                            <p>On August 18, 2020, the Ministry of Railways announced that the drone-based surveillance system is to be introduced for the purpose of railway security.</p>
-                            <h4>Highlights</h4>
-                            <p>The Railway Protection Force has so far procured drones at a cost of Rs 32 lakhs. The drones are to be implemented in Central Railway, South Eastern Railway, Central Railway and South Western Railway.</p>
-                            <h4>About the Drones</h4>
-                            <p>In order to implement the surveillance, the Ministry has procured Ninja UAV (Unmanned Aerial Vehicle). The drones are capable of video streaming and real time tracking.</p>
-                            <h4>Drone Categories in India</h4>
-                            <p>The registration of drones of all categories are essential except for the nano category. The categories of drones in India are as follows</p>
-                            <ul>
-                                <li>Nano: Less than or equal to 250 grams</li>
-                                <li>Micro: between 250 grams and 2 kg</li>
-                                <li>Small: Between 2 kg and 25 kg</li>
-                                <li>Medium: Between 25 kg and 150 kg</li>
-                                <li>Large: Greater than 150 kg</li>
-                            </ul>
-                            <h4>Required Drone Equipment in India</h4>
-                            <p>India has specific requirement in regard to the type of feature a drone should have to fly in Indian skies. This excludes Nano category. The features are GPS, anti-collision light, return to home, ID plate, RFID, a flight controller
-                                with flight data logging capability.</p>
-                            <h4>National Drone Policy</h4>
-                            <p>The National Drone Policy of India came into effect on December 1, 2018. It is called the Drone Regulations 1.0. The policy clarifies when, where and how drones can be operated within India.</p>
-                            <h4>Digital Sky Portal</h4>
-                            <p>It is an online platform for the drones to register. It is a part of an enforcement system designated as No Permission No Takeoff. The Directorate General of Civil Aviation is the authority responsible for providing permission
-                                to fly drones in Indian skies. The permission is provided through a Unique Identification Number.</p>
-                            <p>The user has to pay fees of Rs 1000 to obtain the UNI or the Unmanned Aircraft Operator Permit.</p>
+                            <p>{{ ca.news }}</p>
 
                         </div>
                     </div>
