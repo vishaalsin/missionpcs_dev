@@ -42,7 +42,7 @@ from yaksh.models import (
     QuestionPaper, QuestionSet, Quiz, Test, Test_Series, Question, StandardTestCase,
     StdIOBasedTestCase, StringTestCase, TestCase, User,
     get_model_class, FIXTURES_DIR_PATH, MOD_GROUP_NAME, Lesson, LessonFile,
-    LearningUnit, LearningModule, CourseStatus, question_types, Post, Comment, Strike
+    LearningUnit, LearningModule, CourseStatus, question_types, Post, Comment, Strike, CurrentAffair
 )
 from yaksh.forms import (
     UserRegisterForm, UserLoginForm, QuizForm, QuestionForm,
@@ -227,6 +227,7 @@ def dashboard(request, course_id):
     user_course_list = user.students.all()  # Gives course list that user is enrolled in
     course = Course.objects.get(id=course_id)  # Course for particular course id
     modules = course.learning_module.all()  # Module for particular course
+    current_affairs = CurrentAffair.objects.order_by('-pubDate')[:3]
     modules_data = []
     quiz_data = []
     try:
@@ -257,7 +258,8 @@ def dashboard(request, course_id):
         'courses': user_course_list,
         'modules': modules_data,
         'quizzes': quiz_data,
-        'current_course': course
+        'current_course': course,
+        'current_affairs': current_affairs,
     }
     return my_render_to_response(request, 'portal_pages/index.html', context)
 

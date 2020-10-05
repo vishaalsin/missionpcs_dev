@@ -470,11 +470,25 @@ class UpdateView(APIView):
         updt = Update.objects.order_by('-pubDate')
         serializer = UpdateSerializer(updt, many=True)
         return Response(serializer.data)
+        # else:
+        #     updt = Update.objects.get(guid=guid)
+        #     serializer = UpdateSerializer(updt, many=True)
+        #     # if updt is not None:
+        #     #     return Response(serializer.errors, status=status.HTTP_404_NOT_FOUND)
+        #     return Response(serializer.data)
     
     def post(self, request, format=None):
         serializer = UpdateSerializer(data=request.data)
-        print(serializer)
+        
         if serializer.is_valid():
+            print(serializer.validated_data['guid'])
+            try:
+                guidcheck = Update.objects.get(guid = serializer.validated_data['guid'])
+            except Exception as e:
+                print(e)
+                guidcheck = None
+            if guidcheck is not None:
+                return Response(serializer.errors, status=status.HTTP_409_CONFLICT)
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

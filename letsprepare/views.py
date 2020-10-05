@@ -383,7 +383,8 @@ def index(request):
     courses = Course.objects.all()
     updates_result = Update.objects.order_by('-pubDate').filter(type='result')[:5]
     update_announcements = Update.objects.order_by('-pubDate').filter(type='announcement')[:5]
-    context = {'courses': ['ankit', 'portal', 'geeks', 'computer', 'ANPSC', 'APPSC', 'APSC', 'BPSC', 'CPSC', 'GPSC'], 'updates_result': updates_result, 'update_announcements': update_announcements}
+    admit_cards = Update.objects.order_by('-pubDate').filter(type='admit_card')[:5]
+    context = {'courses': ['ankit', 'portal', 'geeks', 'computer', 'ANPSC', 'APPSC', 'APSC', 'BPSC', 'CPSC', 'GPSC'], 'updates_result': updates_result, 'update_announcements': update_announcements, 'admit_cards': admit_cards}
     if request.method == "POST":
         if request.POST["sub"] == "Sign In":
             username = request.POST["username"].lower()
@@ -466,6 +467,11 @@ def detailed_news(request, ca_id):
     ca = CurrentAffair.objects.get(id=ca_id)
     context = {'ca': ca}
     return my_render_to_response(request, "portal_pages/detailed-news.html", context)
+
+def current_affairs_all(request):
+    ca = CurrentAffair.objects.all()
+    context = {'ca': ca}
+    return my_render_to_response(request, "portal_pages/current-affairs.html", context)
 
 @csrf_exempt
 def verify_payment(request):

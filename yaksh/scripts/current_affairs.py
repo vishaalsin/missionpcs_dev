@@ -134,6 +134,9 @@ ca_data = jsondata[jsondata['current_affairs'] == '1']
 for dat in ca_data['title = '].index:
     pdate = ca_data['date = '][dat]
     pdateobj = dt.datetime.strptime(pdate, '%d/%m/%Y')
+    
+    if re.search(r'\b(\w*letter\w*)\b', ca_data['title = '][dat], re.IGNORECASE) and re.search(r'\b(\w*editor\w*)\b', ca_data['title = '][dat], re.IGNORECASE):
+        continue
     req.post('http://127.0.0.1:8000/api/current_affairs/', json={'summary': ca_data['summary = '][dat], 'title': ca_data['title = '][dat], 'news': ca_data['total news'][dat], 'link': ca_data['link = '][dat], 'pubDate': pdateobj.isoformat() })
     print(ca_data['title = '][dat])
     # a = CurrentAffairs.objects.create(summary=ca_data['summary = '][dat], title=ca_data['title = '][dat], news=ca_data['newsclean'][dat])
