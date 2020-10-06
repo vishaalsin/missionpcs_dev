@@ -18,6 +18,8 @@ from django.utils import timezone
 from django.core.files import File
 import glob
 
+import datetime as dt
+
 try:
     from StringIO import StringIO as string_io
 except ImportError:
@@ -2793,8 +2795,26 @@ class Comment(ForumBase):
 
 ##############################################################################
 
-class CurrentAffairs(models.Model):
+class CurrentAffair(models.Model):
     title = models.CharField(max_length=200)
     summary = models.CharField(max_length=200)
     news = models.TextField()
-    
+    created_on = models.DateTimeField(default=dt.datetime.now)
+    link = models.TextField(blank=True)
+    pubDate = models.DateTimeField(default=dt.datetime.now)
+    def __str__(self):
+        return self.title
+
+##############################################################################
+
+class Update(models.Model):
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    headline = models.TextField()
+    description = models.TextField()
+    link = models.TextField()
+    type = models.TextField()
+    guid = models.TextField()
+    created_on = models.DateTimeField(auto_now_add=True)
+    pubDate = models.DateTimeField(default=dt.datetime.now)
+    def __str__(self):
+        return self.headline

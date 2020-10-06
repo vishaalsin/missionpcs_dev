@@ -312,41 +312,44 @@
       <section id="updates">
         <h3 class="sub-head">&diamond; Latest Updates &diamond;</h3>
         <div class="row">
-          <div class="col-sm-12 col-md-6 col-lg-4">
-            <div class="card mb-3">
+          <div class="col-sm-12 col-md-6 col-lg-4 mb-3">
+            <div class="card">
               <div class="card-body">
                 <h4>Results</h4>
+                {% for result in updates_result %}
+                <a href="{{ result.link }}"><p>{{ result.headline }}</p></a>
+                {% endfor %}
+                <!-- <a href="#"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p></a>
                 <a href="#"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p></a>
                 <a href="#"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p></a>
-                <a href="#"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p></a>
-                <a href="#"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p></a>
-                <a href="#"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p></a>
+                <a href="#"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p></a> -->
               </div>
               <a href="#" class="view-more">View More</a>
             </div>
           </div>
-          <div class="col-sm-12 col-md-6 col-lg-4">
-            <div class="card mb-3">
+          <div class="col-sm-12 col-md-6 col-lg-4 mb-3">
+            <div class="card">
               <div class="card-body">
-                <h4>Results</h4>
+                <h4>Admit Card</h4>
+                {% for admit_card in admit_cards %}
+                <a href="{{ admit_card.link }}"><p>{{ admit_card.headline }}</p></a>
+                {% endfor %}
+                
+                <!-- <a href="#"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p></a>
                 <a href="#"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p></a>
                 <a href="#"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p></a>
-                <a href="#"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p></a>
-                <a href="#"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p></a>
-                <a href="#"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p></a>
+                <a href="#"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p></a> -->
               </div>
               <a href="#" class="view-more">View More</a>
             </div>
           </div>
-          <div class="col-sm-12 col-md-6 col-lg-4">
-            <div class="card mb-3">
+          <div class="col-sm-12 col-md-6 col-lg-4 mb-3">
+            <div class="card">
               <div class="card-body">
-                <h4>Results</h4>
-                <a href="#"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p></a>
-                <a href="#"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p></a>
-                <a href="#"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p></a>
-                <a href="#"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p></a>
-                <a href="#"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p></a>
+                <h4>Announcements</h4>
+                {% for anncment in update_announcements %}
+                <a href="{{ anncment.link }}"><p>{{ anncment.headline }}</p></a>
+                {% endfor %}
               </div>
               <a href="#" class="view-more">View More</a>
             </div>

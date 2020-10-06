@@ -5,7 +5,7 @@ from django.http import JsonResponse
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt,csrf_protect
 from yaksh.decorators import has_profile
-from yaksh.models import QuestionPaper, AnswerPaper, Profile, Course
+from yaksh.models import QuestionPaper, AnswerPaper, Profile, Course, Update, CurrentAffair
 from yaksh.models import LearningModule, Quiz
 from yaksh.views import my_render_to_response, my_redirect
 from rest_framework import status
@@ -381,7 +381,10 @@ def index(request):
     # """Take the credentials of the user and log the user in."""
     # next_url = request.GET.get('next')
     courses = Course.objects.all()
-    context = {'courses': ['ankit', 'portal', 'geeks', 'computer', 'ANPSC', 'APPSC', 'APSC', 'BPSC', 'CPSC', 'GPSC']}
+    updates_result = Update.objects.order_by('-pubDate').filter(type='result')[:5]
+    update_announcements = Update.objects.order_by('-pubDate').filter(type='announcement')[:5]
+    admit_cards = Update.objects.order_by('-pubDate').filter(type='admit_card')[:5]
+    context = {'courses': ['ankit', 'portal', 'geeks', 'computer', 'ANPSC', 'APPSC', 'APSC', 'BPSC', 'CPSC', 'GPSC'], 'updates_result': updates_result, 'update_announcements': update_announcements, 'admit_cards': admit_cards}
     if request.method == "POST":
         if request.POST["sub"] == "Sign In":
             username = request.POST["username"].lower()
@@ -460,6 +463,15 @@ def index(request):
     else:
         return my_redirect('/exam/login/?next=/letsprepare/show_modules/')
     
+def detailed_news(request, ca_id):
+    ca = CurrentAffair.objects.get(id=ca_id)
+    context = {'ca': ca}
+    return my_render_to_response(request, "portal_pages/detailed-news.html", context)
+
+def current_affairs_all(request):
+    ca = CurrentAffair.objects.all()
+    context = {'ca': ca}
+    return my_render_to_response(request, "portal_pages/current-affairs.html", context)
 
 @csrf_exempt
 def verify_payment(request):

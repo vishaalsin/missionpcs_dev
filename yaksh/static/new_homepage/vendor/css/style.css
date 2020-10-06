@@ -842,6 +842,8 @@ h3.sub-head::after {
 #updates .card {
     border-radius: 0px;
     text-align: left;
+    height: 100%;
+    margin-bottom: 5px;
 }
 
 #updates h4 {

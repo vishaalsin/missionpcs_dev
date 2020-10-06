@@ -42,7 +42,7 @@ from yaksh.models import (
     QuestionPaper, QuestionSet, Quiz, Test, Test_Series, Question, StandardTestCase,
     StdIOBasedTestCase, StringTestCase, TestCase, User,
     get_model_class, FIXTURES_DIR_PATH, MOD_GROUP_NAME, Lesson, LessonFile,
-    LearningUnit, LearningModule, CourseStatus, question_types, Post, Comment, Strike
+    LearningUnit, LearningModule, CourseStatus, question_types, Post, Comment, Strike, CurrentAffair
 )
 from yaksh.forms import (
     UserRegisterForm, UserLoginForm, QuizForm, QuestionForm,
@@ -176,11 +176,12 @@ def user_register(request):
 def select_exam(request):
     courses = Course.objects.all()
     if request.method == 'POST':
+        # selected_course_ids = [int(j) for i in list(map(lambda x: request.POST.getlist(x.name), courses)) for j in i]
         enrolled_courses_ids = list(map(lambda x: request.POST.getlist(x.name), courses))
         # Receives all the id's of enrolled courses
         #print(enrolled_courses_ids)
         initiate_user(request.user, enrolled_courses_ids)
-        return my_redirect('/exam/dashboard/1/')
+        return my_redirect('/exam/dashboard/'+ [j for i in list(map(lambda x: request.POST.getlist(x.name), courses)) for j in i][0] + '/')
 
     context = {
         'courses': courses
@@ -209,6 +210,7 @@ def initiate_user(new_user, enrolled_courses_ids):
 def initiate_dashboard(request):
     user = request.user
     user_course_list = user.students.all()
+    # course_id = user_course_list[0].id  # Stores the id of first course in the list
     if len(user_course_list) == 0:
         try:
             profile = Profile.objects.get(user = user) # Checks if user his created his profile or not , If Not it gives error
@@ -220,14 +222,13 @@ def initiate_dashboard(request):
         course_id = user_course_list[0].id  # Stores the id of first course in the list
         return dashboard(request, course_id)
 
-
-
 @login_required
 def dashboard(request, course_id):
     user = request.user  # Gives the logged in user
     user_course_list = user.students.all()  # Gives course list that user is enrolled in
     course = Course.objects.get(id=course_id)  # Course for particular course id
     modules = course.learning_module.all()  # Module for particular course
+    current_affairs = CurrentAffair.objects.order_by('-pubDate')[:3]
     modules_data = []
     quiz_data = []
     try:
@@ -258,7 +259,8 @@ def dashboard(request, course_id):
         'courses': user_course_list,
         'modules': modules_data,
         'quizzes': quiz_data,
-        'current_course': course
+        'current_course': course,
+        'current_affairs': current_affairs,
     }
     return my_render_to_response(request, 'portal_pages/index.html', context)
 
@@ -315,8 +317,7 @@ def user_logout(request):
     """Show a page to inform user that the quiz has been compeleted."""
     logout(request)
     context = {'message': "You have been logged out successfully"}
-    return my_redirect('/letsprepare')
-    # return my_render_to_response(request, 'yaksh/complete.html', context)
+    return my_render_to_response(request, 'yaksh/complete.html', context)
 
 
 def test_series(request):
@@ -850,8 +851,7 @@ def start(request, questionpaper_id=None, attempt_num=None, course_id=None,
         }
         if is_moderator(user):
             context["status"] = "moderator"
-        # return my_render_to_response(request, 'yaksh/intro.html', context)
-        return my_render_to_response(request, 'upgradev001/intro.html', context)
+        return my_render_to_response(request, 'yaksh/intro.html', context)
     else:
         ip = request.META['REMOTE_ADDR']
         if not hasattr(user, 'profile'):
@@ -964,8 +964,7 @@ def show_question(request, question, paper, error_message=None,
     #     paper.answers.add(new_answer)
 
 
-    # return my_render_to_response(request, 'yaksh/question.html', context)
-    return my_render_to_response(request, 'upgradev001/question.html', context)
+    return my_render_to_response(request, 'yaksh/question.html', context)
 
 
 @login_required
@@ -1262,8 +1261,7 @@ def quit(request, reason=None, attempt_num=None, questionpaper_id=None,
                                     course_id=course_id)
     context = {'paper': paper, 'message': reason, 'course_id': course_id,
                'module_id': module_id}
-    # return my_render_to_response(request, 'yaksh/quit.html', context)
-    return my_render_to_response(request, 'upgradev001/quit.html', context)
+    return my_render_to_response(request, 'yaksh/quit.html', context)
 
 
 @login_required
@@ -1297,7 +1295,7 @@ def complete(request, reason=None, attempt_num=None, questionpaper_id=None,
                    'course_id': course_id, 'learning_unit': learning_unit}
         if is_moderator(user):
             context['user'] = "moderator"
-        return my_render_to_response(request, 'upgradev001/complete.html', context)
+        return my_render_to_response(request, 'yaksh/complete.html', context)
 
 
 @login_required
@@ -1842,9 +1840,10 @@ def create_modules(request):
             if form.is_valid():
                 try:
                     modules_with_questions_file = pd.read_csv(request.FILES['file'])
+                    existing_course = modules_with_questions_file['course'].values[0]
+                    existing_course = Course.objects.filter(name=existing_course)[0]
                     unique_rows_of_questions_excel_upload = modules_with_questions_file.drop_duplicates()
                     module_and_quiz_wise_grouped_questions = unique_rows_of_questions_excel_upload.groupby(['module_name',	'module_description',	'quiz_description',	'quiz_code',	'quiz_duration',	'price',	'is_free']).agg(list).reset_index()
-                    existing_course = list(Course.objects.all())[0]
                     for i, j in module_and_quiz_wise_grouped_questions.iterrows():
 
                         #Headers of excel file uploaded for a module
@@ -2633,10 +2632,8 @@ def view_answerpaper(request, questionpaper_id, course_id):
         data['papers'] = zip(figs_,papers)
         context = {'data': data, 'quiz': quiz, 'course_id': course.id,
                    "has_user_assignment": has_user_assignment}
-        # return my_render_to_response(
-        #     request, 'yaksh/view_answerpaper.html', context
         return my_render_to_response(
-            request, 'upgradev001/view_answerpaper.html', context
+            request, 'yaksh/view_answerpaper.html', context
         )
     else:
         return my_redirect('/exam/quizzes/')

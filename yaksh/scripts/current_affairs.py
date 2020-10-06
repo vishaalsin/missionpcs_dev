@@ -13,13 +13,18 @@ import string
 from spacy.lang.en.stop_words import STOP_WORDS
 from spacy.lang.en import English
 
+import requests as req
+
 import pandas as pd
 
 import json
 
 import re
 
-from django.conf import settings
+import datetime as dt
+from dateutil.parser import parse
+
+# from django.conf import settings
 
 
 nltk.download('stopwords')
@@ -30,13 +35,6 @@ punctuations = string.punctuation
 stop_words = STOP_WORDS
 # Load English tokenizer, tagger, parser, NER and word vectors
 parser = English()
-
-# model = joblib.load(os.path.join(settings.BASE_DIR, "current_affairs", "current_affairs_classification_joblib"))
-
-model = joblib.load("../../current_affairs/current_affairs_classification_joblib")
-
-# vectorizer = joblib.load(os.path.join(settings.BASE_DIR, "current_affairs", "bow_vectorizer_joblib"))
-vectorizer = joblib.load("../../current_affairs/bow_vectorizer_joblib")
 
 
 #utils functions
@@ -108,27 +106,40 @@ def spacy_tokenizer(sentence):
 
 
 
-if __name__ == "__main__":
+# if __name__ == "__main__":
     
-    df = []
-    # with open(os.path.join(settings.BASE_DIR, "current_affairs", "today.json")) as f:
+# model = joblib.load(os.path.join(settings.BASE_DIR, "current_affairs", "current_affairs_classification_joblib"))
+
+model = joblib.load("../../current_affairs/current_affairs_classification_joblib")
+
+# vectorizer = joblib.load(os.path.join(settings.BASE_DIR, "current_affairs", "bow_vectorizer_joblib"))
+vectorizer = joblib.load("../../current_affairs/bow_vectorizer_joblib")
+
+df = []
+# with open(os.path.join(settings.BASE_DIR, "current_affairs", "today.json")) as f:
+
+with open("../../current_affairs/today.json") as f:
+    data = json.load(f)
+    df.append(pd.DataFrame(data))
+jsondata = pd.concat(df)
+jsondata['news'] = jsondata['title = '] + '. ' + jsondata['total news']
+jsondata['news']
+jsondata['newsclean'] = jsondata['news'].apply(lambda x : clean_text(x))
+
+vecnews = vectorizer.transform(jsondata['newsclean'])
+jsondata['current_affairs'] = model.predict(vecnews)
+
+ca_data = jsondata[jsondata['current_affairs'] == '1']
+
+for dat in ca_data['title = '].index:
+    pdate = ca_data['date = '][dat]
+    pdateobj = dt.datetime.strptime(pdate, '%d/%m/%Y')
     
-    with open("../../current_affairs/today.json") as f:
-        data = json.load(f)
-        df.append(pd.DataFrame(data))
-    jsondata = pd.concat(df)
-    jsondata['news'] = jsondata['title = '] + '. ' + jsondata['total news']
-    jsondata['news']
-    jsondata['newsclean'] = jsondata['news'].apply(lambda x : clean_text(x))
+    if re.search(r'\b(\w*letter\w*)\b', ca_data['title = '][dat], re.IGNORECASE) and re.search(r'\b(\w*editor\w*)\b', ca_data['title = '][dat], re.IGNORECASE):
+        continue
+    req.post('http://127.0.0.1:8000/api/current_affairs/', json={'summary': ca_data['summary = '][dat], 'title': ca_data['title = '][dat], 'news': ca_data['total news'][dat], 'link': ca_data['link = '][dat], 'pubDate': pdateobj.isoformat() })
+    print(ca_data['title = '][dat])
+    # a = CurrentAffairs.objects.create(summary=ca_data['summary = '][dat], title=ca_data['title = '][dat], news=ca_data['newsclean'][dat])
+    # a.save()
 
-    vecnews = vectorizer.transform(jsondata['newsclean'])
-    jsondata['current_affairs'] = model.predict(vecnews)
-
-    ca_data = jsondata[jsondata['current_affairs'] == '1']
-
-    for dat in ca_data['title = '].index:
-        print(ca_data['title = '][dat])
-        # a = CurrentAffairs.objects.create(summary=ca_data['summary = '][dat], title=ca_data['title = '][dat], news=ca_data['newsclean'][dat])
-        # a.save()
-    
-    print("Current Affairs added")
+print("Current Affairs added")

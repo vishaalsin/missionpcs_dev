@@ -30,6 +30,8 @@ urlpatterns = [
         name="quit_quiz"),
     url(r'login/$', views.login, name='login'),
     url(r'get_subjects/$', views.AllModuleList.as_view(), name='get_subjects'),
+    url(r'current_affairs/$', views.CurrentAffairView.as_view(), name='current_affair'),
+    url(r'updates/$', views.UpdateView.as_view(), name='update_api'),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
