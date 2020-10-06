@@ -42,7 +42,7 @@ INSTALLED_APPS = (
     # 'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    'allauth.socialaccount.providers.facebook',
+    # 'allauth.socialaccount.providers.facebook',
     'allauth.socialaccount.providers.google',
     'yaksh',
     'taggit',
@@ -88,9 +88,9 @@ WSGI_APPLICATION = 'online_test.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'New_Database',#'shivam',
-        'USER': 'postgres',
-        'PASSWORD': 'Postgres',#'shivam20',
+        'NAME': 'new2',
+        'USER': 'vishaal',
+        'PASSWORD': 'password',
         'HOST': 'localhost',
         'PORT': '5432',
     }
@@ -206,16 +206,16 @@ SOCIAL_AUTH_FACEBOOK_SECRET = '7cdc48bb35d9402f648ec90fca07e7a1'
 
 AUTHENTICATION_BACKENDS = (
     'social_core.backends.google.GoogleOAuth2',
-    'social_core.backends.facebook.FacebookOAuth2',
+    # 'social_core.backends.facebook.FacebookOAuth2',
     'django.contrib.auth.backends.ModelBackend',
 )
 
 SOCIAL_AUTH_PIPELINE = AUTH_PIPELINE
 
-SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
-SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
-    'fields': 'id, name, email'
-}
+# SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
+# SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
+#     'fields': 'id, name, email'
+# }
 
 AUTH_PASSWORD_VALIDATORS = [
     {
