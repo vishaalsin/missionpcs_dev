@@ -176,11 +176,12 @@ def user_register(request):
 def select_exam(request):
     courses = Course.objects.all()
     if request.method == 'POST':
+        # selected_course_ids = [int(j) for i in list(map(lambda x: request.POST.getlist(x.name), courses)) for j in i]
         enrolled_courses_ids = list(map(lambda x: request.POST.getlist(x.name), courses))
         # Receives all the id's of enrolled courses
         #print(enrolled_courses_ids)
         initiate_user(request.user, enrolled_courses_ids)
-        return my_redirect('/exam/dashboard/1/')
+        return my_redirect('/exam/dashboard/'+ [j for i in list(map(lambda x: request.POST.getlist(x.name), courses)) for j in i][0] + '/')
 
     context = {
         'courses': courses
@@ -209,7 +210,7 @@ def initiate_user(new_user, enrolled_courses_ids):
 def initiate_dashboard(request):
     user = request.user
     user_course_list = user.students.all()
-    course_id = user_course_list[0].id  # Stores the id of first course in the list
+    # course_id = user_course_list[0].id  # Stores the id of first course in the list
     if len(user_course_list) == 0:
         try:
             profile = Profile.objects.get(user = user) # Checks if user his created his profile or not , If Not it gives error
@@ -1839,9 +1840,10 @@ def create_modules(request):
             if form.is_valid():
                 try:
                     modules_with_questions_file = pd.read_csv(request.FILES['file'])
+                    existing_course = modules_with_questions_file['course'].values[0]
+                    existing_course = Course.objects.filter(name=existing_course)[0]
                     unique_rows_of_questions_excel_upload = modules_with_questions_file.drop_duplicates()
                     module_and_quiz_wise_grouped_questions = unique_rows_of_questions_excel_upload.groupby(['module_name',	'module_description',	'quiz_description',	'quiz_code',	'quiz_duration',	'price',	'is_free']).agg(list).reset_index()
-                    existing_course = list(Course.objects.all())[0]
                     for i, j in module_and_quiz_wise_grouped_questions.iterrows():
 
                         #Headers of excel file uploaded for a module
