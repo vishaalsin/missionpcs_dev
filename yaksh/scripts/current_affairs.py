@@ -26,6 +26,20 @@ from dateutil.parser import parse
 
 # from django.conf import settings
 
+import argparse
+parser = argparse.ArgumentParser()
+parser.add_argument("server", help="Posts Current Affairs data to Development Server or Production Server. Type 'prod' for production and 'dev' for development")
+args = parser.parse_args()
+
+print(args.server)
+
+if args.server == "prod":
+    server_url="https://missionpcs.com/"
+elif args.server == "dev":
+    server_url="http://127.0.0.1:8000/"
+else:
+    print("Please use -h argument for help")
+    exit()
 
 nltk.download('stopwords')
 
@@ -137,8 +151,9 @@ for dat in ca_data['title = '].index:
     
     if re.search(r'\b(\w*letter\w*)\b', ca_data['title = '][dat], re.IGNORECASE) and re.search(r'\b(\w*editor\w*)\b', ca_data['title = '][dat], re.IGNORECASE):
         continue
-    req.post('http://127.0.0.1:8000/api/current_affairs/', json={'summary': ca_data['summary = '][dat], 'title': ca_data['title = '][dat], 'news': ca_data['total news'][dat], 'link': ca_data['link = '][dat], 'pubDate': pdateobj.isoformat() })
+    response = req.post(f'{server_url}api/current_affairs/', json={'summary': ca_data['summary = '][dat], 'title': ca_data['title = '][dat], 'news': ca_data['total news'][dat], 'link': ca_data['link = '][dat], 'pubDate': pdateobj.isoformat() }, headers={'Authorization': 'token 3c178fe457610e3d5ae03fc5d45d3abf6c035eca'})
     print(ca_data['title = '][dat])
+    print(response.status_code)
     # a = CurrentAffairs.objects.create(summary=ca_data['summary = '][dat], title=ca_data['title = '][dat], news=ca_data['newsclean'][dat])
     # a.save()
 

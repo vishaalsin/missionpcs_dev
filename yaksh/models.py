@@ -2818,3 +2818,11 @@ class Update(models.Model):
     pubDate = models.DateTimeField(default=dt.datetime.now)
     def __str__(self):
         return self.headline
+
+##############################################################################
+
+class AnonymousUser(models.Model):
+    user_ip = models.CharField(max_length=15)
+    interests = ListTextField(null=False, base_field=IntegerField(), size=20, )
+    def __str__(self):
+        return self.user_ip

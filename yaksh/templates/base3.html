@@ -32,9 +32,16 @@
 {% block navbar %}
   <nav class="navbar sticky-top navbar-expand-lg navbar-light">
     <div class="container-xl">
+      {% if current_course.id %}
+      <a href="{% url 'yaksh:dashboard' current_course.id %}" class="navbar-brand">
+        <img src=" {% static 'new_homepage/images/favicon.svg' %} " height="35" width="35">Mission PCS
+      </a>
+      {% else %}
       <a href="{% url 'yaksh:index' %}" class="navbar-brand">
         <img src=" {% static 'new_homepage/images/favicon.svg' %} " height="35" width="35">Mission PCS
       </a>
+      {% endif %}
+
       <div class="navbar-right ml-auto mr-2 d-lg-none" id="mob-user">
         {% if user.is_authenticated %}
         {% else %}
@@ -47,9 +54,15 @@
         <div class="collapse navbar-collapse" id="navigation">
             <ul class="navbar-nav mx-auto">
               {% if user.is_authenticated %}
-              <li class="nav-item">
-                <a href="{% url 'yaksh:index' %}" class="nav-link"><i class="fa fa-university" style="size: 18px"></i>&nbsp;Home</a>
-              </li>
+                {% if current_course.id %}
+                <li class="nav-item">
+                  <a href="{% url 'yaksh:dashboard' current_course.id %}" class="nav-link"><i class="fa fa-university" style="size: 18px"></i>&nbsp;Home</a>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                  <a href="{% url 'yaksh:index' %}" class="nav-link"><i class="fa fa-university" style="size: 18px"></i>&nbsp;Home</a>
+                </li>
+                {% endif %}
               <li class="nav-item">
                 <a href="{% url 'letsprepare:results' %}" class="nav-link"><i class="fa fa-bar-chart" style="size: 18px"></i>&nbsp;Results</a>
               </li>
@@ -136,7 +149,7 @@
       <div class="alert alert-danger" role="alert">{{ error }}</div>
       {% endif %}
 
-      <form class="needs-validation" action="{% url 'yaksh:login' %}" method="POST">
+      <form class="needs-validation" action="{% url 'letsprepare:index' %}" method="POST">
       {% csrf_token %}
       <input type="hidden" name="next" value="{{ request.path }}" />
         <div class="input-group mb-4">
@@ -170,7 +183,7 @@
       {% if regerror %}
       <div class="alert alert-danger" role="alert">{{ regerror }}</div>
       {% endif %}
-      <form class="needs-validation" action="" method="POST">
+      <form class="needs-validation" action="{% url 'letsprepare:index' %}" method="POST">
       {% csrf_token %}
       <input type="hidden" name="next" value="{{ request.path }}" />
         <div class="input-group mb-4">

@@ -940,3 +940,47 @@ section {
 #user_dropdown:hover {
     background-color: #f3f3f3;
 }
+
+.select-exam-modal .modal-dialog {
+    max-width: 300px;
+    margin: auto;
+    margin-top: 4rem;
+}
+
+.select-exam-modal .modal-content {
+    border-radius: 0;
+}
+
+.select-exam-modal .modal-body {
+    overflow-y: scroll;
+}
+
+.select-exam-modal .modal-header , .select-exam-modal .modal-footer {
+    padding: 0.5rem 1rem;
+}
+
+
+.select-exam-modal .modal-body ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.select-exam-modal .modal-body a {
+    background-color: #333333;
+    color: #ffffff;
+    margin-bottom: 4px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: 500;
+    display: block;
+    padding: 0.5rem 1rem;
+    text-align: center;
+    transition: 0.3s ;
+    
+}
+
+.select-exam-modal .modal-body a:hover {
+    text-decoration: none;
+    background-color: #28a745;
+}
