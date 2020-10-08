@@ -450,22 +450,32 @@ class AllModuleList(APIView):
         return Response(serializer.data)
 
 class CurrentAffairView(APIView):
-    permission_classes = [permissions.AllowAny]
     def get(self, request, format=None):
         ca = CurrentAffair.objects.all()
         serializer = CurrentAffairSerializer(ca, many=True)
         return Response(serializer.data)
     
     def post(self, request, format=None):
-        serializer = CurrentAffairSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        permitteduserid = []
+        permittedusername = ['test']
+        if request.user.is_superuser or (request.user.id in permitteduserid) or (request.user.username in permittedusername):
+            serializer = CurrentAffairSerializer(data=request.data)
+            if serializer.is_valid():
+                print(serializer.validated_data['link'])
+                try:
+                    linkcheck = CurrentAffair.objects.get(link = serializer.validated_data['link'])
+                except Exception as e:
+                    print(e)
+                    linkcheck = None
+                if linkcheck is not None:
+                    return Response(serializer.errors, status=status.HTTP_409_CONFLICT)
+                serializer.save()
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            return Response({"error": "Unauthorize access"}, status=status.HTTP_401_UNAUTHORIZED)
 
 class UpdateView(APIView):
-    
-    permission_classes = [permissions.AllowAny]
     def get(self, request, format=None):
         updt = Update.objects.order_by('-pubDate')
         serializer = UpdateSerializer(updt, many=True)
@@ -478,17 +488,21 @@ class UpdateView(APIView):
         #     return Response(serializer.data)
     
     def post(self, request, format=None):
-        serializer = UpdateSerializer(data=request.data)
-        
-        if serializer.is_valid():
-            print(serializer.validated_data['guid'])
-            try:
-                guidcheck = Update.objects.get(guid = serializer.validated_data['guid'])
-            except Exception as e:
-                print(e)
-                guidcheck = None
-            if guidcheck is not None:
-                return Response(serializer.errors, status=status.HTTP_409_CONFLICT)
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        permitteduserid = []
+        permittedusername = ['test']
+        if request.user.is_superuser or (request.user.id in permitteduserid) or (request.user.username in permittedusername):
+            serializer = UpdateSerializer(data=request.data)
+            if serializer.is_valid():
+                print(serializer.validated_data['guid'])
+                try:
+                    guidcheck = Update.objects.get(guid = serializer.validated_data['guid'])
+                except Exception as e:
+                    print(e)
+                    guidcheck = None
+                if guidcheck is not None:
+                    return Response(serializer.errors, status=status.HTTP_409_CONFLICT)
+                serializer.save()
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            return Response({"error": "Unauthorize access"}, status=status.HTTP_401_UNAUTHORIZED)

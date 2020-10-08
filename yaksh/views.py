@@ -133,9 +133,9 @@ def index(request, next_url=None):
     if user.is_authenticated:
         if is_moderator(user):
             return my_redirect('/exam/manage/' if not next_url else next_url)
-        return my_redirect("/letsprepare/show_modules/" if not next_url else next_url)
+        return my_redirect("/exam/dashboard/" if not next_url else next_url)
 
-    return my_redirect("/exam/login/")
+    return my_redirect("/letsprepare/")
 
 
 def user_register(request):
@@ -316,8 +316,7 @@ def subjects(request, course_id):
 def user_logout(request):
     """Show a page to inform user that the quiz has been compeleted."""
     logout(request)
-    context = {'message': "You have been logged out successfully"}
-    return my_render_to_response(request, 'yaksh/complete.html', context)
+    return index(request)
 
 
 def test_series(request):

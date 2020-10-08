@@ -384,7 +384,7 @@ def index(request):
     updates_result = Update.objects.order_by('-pubDate').filter(type='result')[:5]
     update_announcements = Update.objects.order_by('-pubDate').filter(type='announcement')[:5]
     admit_cards = Update.objects.order_by('-pubDate').filter(type='admit_card')[:5]
-    context = {'courses': ['ankit', 'portal', 'geeks', 'computer', 'ANPSC', 'APPSC', 'APSC', 'BPSC', 'CPSC', 'GPSC'], 'updates_result': updates_result, 'update_announcements': update_announcements, 'admit_cards': admit_cards}
+    context = {'courses': courses, 'updates_result': updates_result, 'update_announcements': update_announcements, 'admit_cards': admit_cards}
     if request.method == "POST":
         if request.POST["sub"] == "Sign In":
             username = request.POST["username"].lower()
@@ -401,7 +401,8 @@ def index(request):
             else:
                 context["username"] = username
                 context["error"]="Invalid username/password"
-            return my_render_to_response(request, 'index.html', context)
+            print("its here")
+            return my_render_to_response(request, 'index.html', context)    
         if request.POST["sub"] == "Sign Up":
             username = request.POST["username"]
             password = request.POST["password"]
