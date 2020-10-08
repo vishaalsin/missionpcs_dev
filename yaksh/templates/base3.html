@@ -32,7 +32,7 @@
 {% block navbar %}
   <nav class="navbar sticky-top navbar-expand-lg navbar-light">
     <div class="container-xl">
-      {% if user.is_authenticated and not user.profile.is_moderator %}
+      {% if current_course.id %}
       <a href="{% url 'yaksh:dashboard' current_course.id %}" class="navbar-brand">
         <img src=" {% static 'new_homepage/images/favicon.svg' %} " height="35" width="35">Mission PCS
       </a>
@@ -54,13 +54,13 @@
         <div class="collapse navbar-collapse" id="navigation">
             <ul class="navbar-nav mx-auto">
               {% if user.is_authenticated %}
-                {% if user.profile.is_moderator %}
+                {% if current_course.id %}
                 <li class="nav-item">
-                  <a href="{% url 'yaksh:index' %}" class="nav-link"><i class="fa fa-university" style="size: 18px"></i>&nbsp;Home</a>
+                  <a href="{% url 'yaksh:dashboard' current_course.id %}" class="nav-link"><i class="fa fa-university" style="size: 18px"></i>&nbsp;Home</a>
                 </li>
                 {% else %}
                 <li class="nav-item">
-                  <a href="{% url 'yaksh:dashboard' current_course.id %}" class="nav-link"><i class="fa fa-university" style="size: 18px"></i>&nbsp;Home</a>
+                  <a href="{% url 'yaksh:index' %}" class="nav-link"><i class="fa fa-university" style="size: 18px"></i>&nbsp;Home</a>
                 </li>
                 {% endif %}
               <li class="nav-item">
