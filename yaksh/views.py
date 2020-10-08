@@ -42,7 +42,7 @@ from yaksh.models import (
     QuestionPaper, QuestionSet, Quiz, Test, Test_Series, Question, StandardTestCase,
     StdIOBasedTestCase, StringTestCase, TestCase, User,
     get_model_class, FIXTURES_DIR_PATH, MOD_GROUP_NAME, Lesson, LessonFile,
-    LearningUnit, LearningModule, CourseStatus, question_types, Post, Comment, Strike, CurrentAffair
+    LearningUnit, LearningModule, CourseStatus, question_types, Post, Comment, Strike, CurrentAffair, AnonymousUser
 )
 from yaksh.forms import (
     UserRegisterForm, UserLoginForm, QuizForm, QuestionForm,
@@ -174,13 +174,23 @@ def user_register(request):
 
 
 def select_exam(request):
+    ip = request.META['REMOTE_ADDR']
+    anon_user = AnonymousUser.objects.filter(user_ip=ip)
+    if len(anon_user) > 0 :
+        return dashboard_anonymous(request, anon_user[0], course_id=None)
     courses = Course.objects.all()
     if request.method == 'POST':
+        user = request.user
         # selected_course_ids = [int(j) for i in list(map(lambda x: request.POST.getlist(x.name), courses)) for j in i]
         enrolled_courses_ids = list(map(lambda x: request.POST.getlist(x.name), courses))
         # Receives all the id's of enrolled courses
         #print(enrolled_courses_ids)
-        initiate_user(request.user, enrolled_courses_ids)
+        if user.is_authenticated:
+            initiate_user(request.user, enrolled_courses_ids)
+        else:
+            anon_user = AnonymousUser.objects.create(user_ip=ip, interests=[int(j) for i in enrolled_courses_ids for j in i])
+            return dashboard_anonymous(request, anon_user, course_id=None)
+
         return my_redirect('/exam/dashboard/'+ [j for i in list(map(lambda x: request.POST.getlist(x.name), courses)) for j in i][0] + '/')
 
     context = {
@@ -213,7 +223,7 @@ def initiate_dashboard(request):
     # course_id = user_course_list[0].id  # Stores the id of first course in the list
     if len(user_course_list) == 0:
         try:
-            profile = Profile.objects.get(user = user) # Checks if user his created his profile or not , If Not it gives error
+            Profile.objects.get(user = user) # Checks if user his created his profile or not , If Not it gives error
             return my_redirect('/letsprepare/select-exams/')
         except:
             return my_redirect('/exam/editprofile/')
@@ -222,9 +232,15 @@ def initiate_dashboard(request):
         course_id = user_course_list[0].id  # Stores the id of first course in the list
         return dashboard(request, course_id)
 
-@login_required
 def dashboard(request, course_id):
     user = request.user  # Gives the logged in user
+    if not user.is_authenticated:
+        ip = request.META['REMOTE_ADDR']
+        anon_user = AnonymousUser.objects.filter(user_ip=ip)
+        if len(anon_user) > 0:
+            return dashboard_anonymous(request, anon_user[0], course_id=course_id)
+        else:
+            return select_exam(request)
     user_course_list = user.students.all()  # Gives course list that user is enrolled in
     course = Course.objects.get(id=course_id)  # Course for particular course id
     modules = course.learning_module.all()  # Module for particular course
@@ -236,6 +252,13 @@ def dashboard(request, course_id):
         availableQuizIds = [quiz['quiz'] for quiz in availableQuizzes]
     except:
         availableQuizIds = []
+    context = get_dashboard_context(availableQuizIds, course, current_affairs, modules, modules_data, quiz_data,
+                                    user_course_list)
+    return my_render_to_response(request, 'portal_pages/index.html', context)
+
+
+def get_dashboard_context(availableQuizIds, course, current_affairs, modules, modules_data, quiz_data,
+                          user_course_list):
     if course not in user_course_list:
         raise Http404('This course does not belong to you')
     for module in modules:
@@ -249,12 +272,11 @@ def dashboard(request, course_id):
                     'name': quiz.description,
                     'id': quiz.id,
                     'module_id': module.id,
-                    'module_name' : module.description
+                    'module_name': module.description
                 })
                 has_quizzes += 1
         modules_data.append({'name': module.description, 'id': module.id,
                              'total_quizzes': len(quizzes), 'has_quizzes': has_quizzes})
-
     context = {
         'courses': user_course_list,
         'modules': modules_data,
@@ -262,8 +284,23 @@ def dashboard(request, course_id):
         'current_course': course,
         'current_affairs': current_affairs,
     }
-    return my_render_to_response(request, 'portal_pages/index.html', context)
+    return context
 
+
+def dashboard_anonymous(request, user, course_id):
+    user_course_list = Course.objects.filter(id__in = user.interests)  # Gives course list that user is enrolled in
+    if course_id is None:
+        course = user_course_list[0]  # Course for particular course id
+    else:
+        course = Course.objects.get(id=course_id)
+    modules = course.learning_module.all()  # Module for particular course
+    current_affairs = CurrentAffair.objects.order_by('-pubDate')[:3]
+    modules_data = []
+    quiz_data = []
+    availableQuizIds = []
+    context = get_dashboard_context(availableQuizIds, course, current_affairs, modules, modules_data, quiz_data,
+                                    user_course_list)
+    return my_render_to_response(request, 'portal_pages/index.html', context)
 
 @login_required
 def initiate_subjects(request):
@@ -273,16 +310,24 @@ def initiate_subjects(request):
     return subjects(request, course_id)
 
 
-@login_required
 def subjects(request, course_id):
+    ip = request.META['REMOTE_ADDR']
+    anon_user = AnonymousUser.objects.filter(user_ip=ip)
+    if len(anon_user) > 0:
+        return show_subjects(course_id, request, anon_user[0], Course.objects.filter(id__in = anon_user[0].interests))
     user = request.user  # Gives the logged in user
     user_course_list = user.students.all()  # Gives course list that user is enrolled in
+    return show_subjects(course_id, request, user, user_course_list)
+
+
+def show_subjects(course_id, request, user, user_course_list):
     course = Course.objects.get(id=course_id)
     modules = course.learning_module.all()
     modules_data = []
     quiz_data = []
     try:
-        availableQuizzes = json.loads(json.dumps(AvailableQuizzesSerializer(AvailableQuizzes.objects.filter(user=user, successful = True), many=True).data))
+        availableQuizzes = json.loads(json.dumps(
+            AvailableQuizzesSerializer(AvailableQuizzes.objects.filter(user=user, successful=True), many=True).data))
         availableQuizIds = [quiz['quiz'] for quiz in availableQuizzes]
     except:
         availableQuizIds = []
@@ -300,9 +345,8 @@ def subjects(request, course_id):
                     'module_name': module.description
                 })
                 has_quizzes += 1
-        modules_data.append({'name' : module.description, 'id' : module.id,
-                              'total_quizzes' : len(quizzes), 'has_quizzes' : has_quizzes })
-
+        modules_data.append({'name': module.description, 'id': module.id,
+                             'total_quizzes': len(quizzes), 'has_quizzes': has_quizzes})
     context = {
         'courses': user_course_list,
         'modules': modules_data,
