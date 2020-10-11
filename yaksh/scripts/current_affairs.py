@@ -29,10 +29,13 @@ from dateutil.parser import parse
 import argparse
 parser = argparse.ArgumentParser()
 parser.add_argument("server", help="Posts Current Affairs data to Development Server or Production Server. Type 'prod' for production and 'dev' for development")
+parser.add_argument("date", help="Enter the date Current affairs to be posted format: [dd-mm-yy]")
 args = parser.parse_args()
 
-print(args.server)
 
+
+print(args.server)
+print(args.date)
 if args.server == "prod":
     server_url="https://missionpcs.com/"
 elif args.server == "dev":
@@ -40,6 +43,10 @@ elif args.server == "dev":
 else:
     print("Please use -h argument for help")
     exit()
+
+url = 'http://127.0.0.1:8000/api/login/'
+cred = {'username': 'test', 'password': 'test'}
+
 
 nltk.download('stopwords')
 
@@ -132,7 +139,7 @@ vectorizer = joblib.load("../../current_affairs/bow_vectorizer_joblib")
 df = []
 # with open(os.path.join(settings.BASE_DIR, "current_affairs", "today.json")) as f:
 
-with open("../../current_affairs/today.json") as f:
+with open(f"../../current_affairs/{args.date}.json") as f:
     data = json.load(f)
     df.append(pd.DataFrame(data))
 jsondata = pd.concat(df)
@@ -143,6 +150,8 @@ jsondata['newsclean'] = jsondata['news'].apply(lambda x : clean_text(x))
 vecnews = vectorizer.transform(jsondata['newsclean'])
 jsondata['current_affairs'] = model.predict(vecnews)
 
+user_response = req.post(url, data = cred)
+user_token = user_response.json()['token']
 ca_data = jsondata[jsondata['current_affairs'] == '1']
 
 for dat in ca_data['title = '].index:
@@ -151,7 +160,7 @@ for dat in ca_data['title = '].index:
     
     if re.search(r'\b(\w*letter\w*)\b', ca_data['title = '][dat], re.IGNORECASE) and re.search(r'\b(\w*editor\w*)\b', ca_data['title = '][dat], re.IGNORECASE):
         continue
-    response = req.post(f'{server_url}api/current_affairs/', json={'summary': ca_data['summary = '][dat], 'title': ca_data['title = '][dat], 'news': ca_data['total news'][dat], 'link': ca_data['link = '][dat], 'pubDate': pdateobj.isoformat() }, headers={'Authorization': 'token 3c178fe457610e3d5ae03fc5d45d3abf6c035eca'})
+    response = req.post(f'{server_url}api/current_affairs/', json={'summary': ca_data['summary = '][dat], 'title': ca_data['title = '][dat], 'news': ca_data['total news'][dat], 'link': ca_data['link = '][dat], 'pubDate': pdateobj.isoformat() }, headers={'Authorization': f'token {user_token}'})
     print(ca_data['title = '][dat])
     print(response.status_code)
     # a = CurrentAffairs.objects.create(summary=ca_data['summary = '][dat], title=ca_data['title = '][dat], news=ca_data['newsclean'][dat])

@@ -23,8 +23,13 @@ else:
     print("Please use -h argument for help")
     exit()
 
+url = 'http://127.0.0.1:8000/api/login/'
+cred = {'username': 'test', 'password': 'test'}
 
 courses = req.get(f'{server_url}api/all_courses')
+
+user_response = req.post(url, data = cred)
+user_token = user_response.json()['token']
 try:
     for course in courses.json():
         name = course['name']
@@ -39,20 +44,14 @@ try:
             # if getres.status_code == 200:
             #     continue
             if update['title'].find('result') !=-1:
-                response = req.post(f'{server_url}api/updates/', json={'headline': update['title'], 'description': update['title'], 'link': update['link'], 'type': 'result', 'guid': update['guid']['#text'],'pubDate': pdate.isoformat(), 'course': cid}, headers={'Authorization': 'token 3c178fe457610e3d5ae03fc5d45d3abf6c035eca'})
+                response = req.post(f'{server_url}api/updates/', json={'headline': update['title'], 'description': update['title'], 'link': update['link'], 'type': 'result', 'guid': update['guid']['#text'],'pubDate': pdate.isoformat(), 'course': cid}, headers={'Authorization': f'token {user_token}'})
                 print(response.status_code)
-                if response.status_code != 201:
-                    break
             elif update['title'].find('admit') !=-1:
-                response = req.post(f'{server_url}api/updates/', json={'headline': update['title'], 'description': update['title'], 'link': update['link'], 'type': 'admit_card', 'guid': update['guid']['#text'],'pubDate': pdate.isoformat(), 'course': cid}, headers={'Authorization': 'token 3c178fe457610e3d5ae03fc5d45d3abf6c035eca'})
+                response = req.post(f'{server_url}api/updates/', json={'headline': update['title'], 'description': update['title'], 'link': update['link'], 'type': 'admit_card', 'guid': update['guid']['#text'],'pubDate': pdate.isoformat(), 'course': cid}, headers={'Authorization': f'token {user_token}'})
                 print(response.status_code)
-                if response.status_code != 201:
-                    break
             else:
-                response = req.post(f'{server_url}api/updates/', json={'headline': update['title'], 'description': update['title'], 'link': update['link'], 'type': 'announcement', 'guid': update['guid']['#text'],'pubDate': pdate.isoformat(), 'course': cid}, headers={'Authorization': 'token 3c178fe457610e3d5ae03fc5d45d3abf6c035eca'})
+                response = req.post(f'{server_url}api/updates/', json={'headline': update['title'], 'description': update['title'], 'link': update['link'], 'type': 'announcement', 'guid': update['guid']['#text'],'pubDate': pdate.isoformat(), 'course': cid}, headers={'Authorization': f'token {user_token}'})
                 print(response.status_code)
-                if response.status_code != 201:
-                    break
             print(update['title'])
 except Exception as e:
     print(e)

@@ -11,7 +11,9 @@
 
 {% block content %}
 <!--Corousel / Slider -->
-    <div id="carouselIndicators2" class="carousel slide" data-ride="carousel">
+<div class="container-fluid">
+  <div class="row">
+    <div id="carouselIndicators2" class="carousel slide col-12 col-lg-8 col-xl-9" data-ride="carousel">
         <ol class="carousel-indicators">
         <li data-target="#carouselIndicators2" data-slide-to="0" class="active"></li>
         <li data-target="#carouselIndicators2" data-slide-to="1"></li>
@@ -37,86 +39,98 @@
         <span class="sr-only">Next</span>
         </a>
     </div>
-
+    <div class="col-md-12 col-lg-4 col-xl-3 text-center">
+      <div class="p-2">
+      <h5>
+      Select Your Exam
+      </h5>
+      <!-- Button trigger modal -->
+   <div>
+       <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+           {{ current_course }}&nbsp;&nbsp;<i class="fa fa-caret-down"></i>
+       </button>
+         <!-- Modal -->
+       <div class="modal fade select-exam-modal" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+           <div class="modal-dialog" role="document">
+           <div class="modal-content">
+               <div class="modal-header">
+               <h5 class="modal-title" id="exampleModalLabel">Select Your Exam</h5>
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                   <span aria-hidden="true">&times;</span>
+               </button>
+               </div>
+               <div class="modal-body">
+                   <ul class="">
+                      {% for course in courses %}
+                         {% if current_course.id == course.id %}
+                         <li><a class="exams-list bg-success text-white" href="/exam/dashboard/{{course.id}}" data-catid="{{ course.id }}">{{ course }}</a></li>
+                         {% else %}
+                         <li><a class="exams-list" href="/exam/dashboard/{{course.id}}" data-catid="{{ course.id }}">{{ course }}</a></li>
+                         {% endif %}
+                         
+                      {% endfor %}
+                      {% if rest_courses %}
+                        <p>--- Not Enrolled ---</p>
+                        {% for rest_course in rest_courses %}
+                          <li class="my-2"><button class="btn btn-secondary w-100" data-catid="{{ rest_course.id }}" disabled>{{ rest_course }}</button><a href="{% url 'yaksh:enroll_request' rest_course.id %}">Enroll Now</a></li>
+                        {% endfor %}
+                      {% endif %} 
+                     </ul>
+               </div>
+               <div class="modal-footer">
+               <button type="button" class="btn btn-danger px-3 btn-sm " data-dismiss="modal">Close</button>
+               </div>
+           </div>
+           </div>
+       </div>
+     </div>
+    </div>
+     <!-- <div class="dropdown">
+     <button class=" dropdown-toggle btn btn-primary" type="button" data-toggle="dropdown">{{ current_course }}
+     <span class="caret"></span></button>
+     <div class="dropdown-menu">
+       {% for course in courses %}
+         <a class="exams-list dropdown-item" href="/exam/dashboard/{{course.id}}" data-catid="{{ course.id }}">{{ course }}</a>
+         {% endfor %}
+     </div>
+     </div> -->
+     <div class="card lets-start">
+         <div class="card-head">
+             <h4>
+                 Let's Start Learning
+             </h4>
+               <a href="/exam/subjects/{{ current_course.id }}" class="card-body">
+                   <img src=" {% static 'portal_pages/images/subject_icon.png' %}" alt="Subjects icon" />
+                   <h6 class="card-title">Subjects</h6>
+               </a>
+                 <a href="#" class="card-body">
+                     <img src=" {% static 'portal_pages/images/test_icon_2.png' %} " alt="Previous Paper Icons" />
+                     <h6 class="card-title">Previous Year Papers</h6>
+                 </a>
+                 <a href="#" class="card-body">
+                     <img src=" {% static 'portal_pages/images/paper_icon_2.png'  %}" alt="Test Icon" />
+                     <h6 class="card-title">Tests Series</h6>
+                 </a>
+                 <a href="#" class="card-body">
+                     <img src=" {% static 'portal_pages/images/announ_icon.png'  %}" alt="Announcements icon" />
+                     <h6 class="card-title">Announcements</h6>
+                 </a>
+                 <a href="#" class="card-body">
+                     <img src=" {% static 'portal_pages/images/news-icon.jpg'  %}" alt="News icon" />
+                     <h6 class="card-title">Current Affairs</h6>
+                 </a>
+         </div>
+     </div>
+ </div>
+  </div>
+  </div>
     
     <!-- Learning Corner  -->
         <div class="container text-center p-4">
             <h3 class="sub-head">&diamond; Suggested Free Tests &diamond;</h3>
           <div class="row">
-              <div class="col-md-4">
-                   Select Your Exam
-                      <!-- Button trigger modal -->
-                <div>
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                        {{ current_course }}&nbsp;&nbsp;<i class="fa fa-caret-down"></i>
-                    </button>
-                      <!-- Modal -->
-                    <div class="modal fade select-exam-modal" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Select Your Exam</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                            </div>
-                            <div class="modal-body">
-                                <ul class="">
-                                    {% for course in courses %}
-                                      {% if current_course.id == course.id %}
-                                      <li><a class="exams-list bg-success text-white" href="/exam/dashboard/{{course.id}}" data-catid="{{ course.id }}">{{ course }}</a></li>
-                                      {% else %}
-                                      <li><a class="exams-list" href="/exam/dashboard/{{course.id}}" data-catid="{{ course.id }}">{{ course }}</a></li>
-                                      {% endif %}
-                                      
-                                      {% endfor %}
-                                  </ul>
-                            </div>
-                            <div class="modal-footer">
-                            <button type="button" class="btn btn-danger px-3 btn-sm " data-dismiss="modal">Close</button>
-                            </div>
-                        </div>
-                        </div>
-                    </div>
-                  </div>
-                  <!-- <div class="dropdown">
-                  <button class=" dropdown-toggle btn btn-primary" type="button" data-toggle="dropdown">{{ current_course }}
-                  <span class="caret"></span></button>
-                  <div class="dropdown-menu">
-                    {% for course in courses %}
-                      <a class="exams-list dropdown-item" href="/exam/dashboard/{{course.id}}" data-catid="{{ course.id }}">{{ course }}</a>
-                      {% endfor %}
-                  </div>
-                  </div> -->
-                  <div class="card lets-start">
-                      <div class="card-head">
-                          <h4>
-                              Let's Start Learning
-                          </h4>
-                            <a href="/exam/subjects/{{ current_course.id }}" class="card-body">
-                                <img src=" {% static 'portal_pages/images/subject_icon.png' %}" alt="Subjects icon" />
-                                <h5 class="card-title">Subjects</h5>
-                            </a>
-                              <a href="#" class="card-body">
-                                  <img src=" {% static 'portal_pages/images/test_icon_2.png' %} " alt="Previous Paper Icons" />
-                                  <h5 class="card-title">Previous Year Papers</h5>
-                              </a>
-                              <a href="#" class="card-body">
-                                  <img src=" {% static 'portal_pages/images/paper_icon_2.png'  %}" alt="Test Icon" />
-                                  <h5 class="card-title">Tests Series</h5>
-                              </a>
-                              <a href="#" class="card-body">
-                                  <img src=" {% static 'portal_pages/images/announ_icon.png'  %}" alt="Announcements icon" />
-                                  <h5 class="card-title">Announcements</h5>
-                              </a>
-                              <a href="#" class="card-body">
-                                  <img src=" {% static 'portal_pages/images/news-icon.jpg'  %}" alt="News icon" />
-                                  <h5 class="card-title">Current Affairs</h5>
-                              </a>
-                      </div>
-                  </div>
-              </div>
-              <div class="col-md-8">
+              
+              <div class="col-12">
                   <div class="free-tests">
                       {% for quiz in quizzes %}
                         <div class="card">
@@ -227,7 +241,7 @@
                   <div class="row p-4">
                       <div class="col-md-4">
                           <div class="card-img-left">
-                              <img src=" {% static 'portal_pages/images/drone.png'  %}" class="card-img-left w-100" alt="news-1">
+                              <img src=" {% static 'portal_pages/images/news-1.jpg'  %}" class="card-img-left w-100" alt="news-1">
                               <h6 class="post-date" id="date">{{ ca.pubDate }}</h6>
                           </div>
                       </div>
