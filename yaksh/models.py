@@ -1965,7 +1965,10 @@ class QuestionPaper(models.Model):
         questions = self.get_ordered_questions() + \
                     list(self.random_questions.all())
         return len(questions) > 0
-
+    def tot_questions(self):
+        questions = self.get_ordered_questions() + \
+                    list(self.random_questions.all())
+        return len(questions)
     def __str__(self):
         return "Question Paper for " + self.quiz.description
 

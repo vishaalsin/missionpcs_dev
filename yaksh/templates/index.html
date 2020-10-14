@@ -98,55 +98,14 @@
     <section id="c-affairs">
       <h3 class="sub-head">&diamond; Current Affairs &diamond;</h3>
       <div class="row">
+        {% for month in prev_months %}
         <div class="col-6 col-md-4 col-lg-3 mb-3">
-          <a class="date-card" style="max-width: 18rem;">
+          <a class="date-card" style="max-width: 18rem;" href="/letsprepare/current-affairs/{{ month|date:'m' }}/{{ month|date:'Y' }}">
             <i class="fa fa-calendar"></i>
-            <p class="m-auto">July 2020</p>
+            <p class="m-auto">{{ month|date:"M"}} {{ month|date:"Y" }}</p>
           </a>
         </div>
-
-        <div class="col-6 col-md-4 col-lg-3 mb-3">
-          <a class="date-card" style="max-width: 18rem;">
-            <i class="fa fa-calendar"></i>
-            <p class="m-auto">July 2020</p>
-          </a>
-        </div>
-        <div class="col-6 col-md-4 col-lg-3 mb-3">
-          <a class="date-card" style="max-width: 18rem;">
-            <i class="fa fa-calendar"></i>
-            <p class="m-auto">July 2020</p>
-          </a>
-        </div>
-        <div class="col-6 col-md-4 col-lg-3 mb-3">
-          <a class="date-card" style="max-width: 18rem;">
-            <i class="fa fa-calendar"></i>
-            <p class="m-auto">July 2020</p>
-          </a>
-        </div>
-        <div class="col-6 col-md-4 col-lg-3 mb-3">
-          <a class="date-card" style="max-width: 18rem;">
-            <i class="fa fa-calendar"></i>
-            <p class="m-auto">July 2020</p>
-          </a>
-        </div>
-        <div class="col-6 col-md-4 col-lg-3 mb-3">
-          <a class="date-card" style="max-width: 18rem;">
-            <i class="fa fa-calendar"></i>
-            <p class="m-auto">July 2020</p>
-          </a>
-        </div>
-        <div class="col-6 col-md-4 col-lg-3 mb-3">
-          <a class="date-card" style="max-width: 18rem;">
-            <i class="fa fa-calendar"></i>
-            <p class="m-auto">July 2020</p>
-          </a>
-        </div>
-        <div class="col-6 col-md-4 col-lg-3 mb-3">
-          <a class="date-card" style="max-width: 18rem;">
-            <i class="fa fa-calendar"></i>
-            <p class="m-auto">July 2020</p>
-          </a>
-        </div>
+        {% endfor %}
       </div>
       <a href="#" class="view-more-btn"><i class="fa fa-arrow-down"></i></a>
       <p class="view-more-text">View More</p>
