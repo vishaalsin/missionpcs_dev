@@ -254,12 +254,12 @@ def dashboard(request, course_id):
     except:
         availableQuizIds = []
     context = get_dashboard_context(availableQuizIds, course, current_affairs, modules, modules_data, quiz_data,
-                                    user_course_list)
+                                    user_course_list, rest_courses)
     return my_render_to_response(request, 'portal_pages/index.html', context)
 
 
 def get_dashboard_context(availableQuizIds, course, current_affairs, modules, modules_data, quiz_data,
-                          user_course_list):
+                          user_course_list, rest_courses):
     if course not in user_course_list:
         raise Http404('This course does not belong to you')
     for module in modules:
