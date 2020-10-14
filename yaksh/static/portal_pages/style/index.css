@@ -3,7 +3,6 @@
     box-shadow: 0 3px 9px 0 rgba(0, 0, 0, 0.2);
     background-color: rgb(95,9,210);
     padding: 1rem 2rem;
-    margin-top: 2rem;
 }
 
 .lets-start h4 {
@@ -96,3 +95,14 @@
 .free-tests .start-test-btn:hover {
     box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.3);
 }
+
+.cr-prop {
+    height: 512px;
+}
+
+@media only screen and (max-width: 768px) {
+    .cr-prop {
+        height: 100%;
+        min-height: 220px;
+    }
+  }

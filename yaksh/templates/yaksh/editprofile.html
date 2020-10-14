@@ -3,12 +3,12 @@
 {% block title %} Edit Profile {% endblock %}
 {% block pagetitle %} My Profile {% endblock %}
 {% block head %}
-      <link rel="stylesheet" href="{% static 'yaksh/css/bootstrap.min.css' %}">
+      <!-- <link rel="stylesheet" href="{% static 'yaksh/css/bootstrap.min.css' %}">
       <link rel="stylesheet" href="{% static 'yaksh/css/custom.css' %}" type="text/css" />
       <link rel="stylesheet" href="{% static 'yaksh/css/animate.min.css' %}" type="text/css" />
       <link rel="stylesheet" href="{% static 'yaksh/css/font-awesome.css' %}" type="text/css" />
-      <link rel="stylesheet" href="{% static 'yaksh/css/ontop.css' %}" type="text/css" />
-      <script language="JavaScript" type="text/javascript" src="{% static 'yaksh/js/jquery-3.3.1.min.js' %}"></script>
+      <link rel="stylesheet" href="{% static 'yaksh/css/ontop.css' %}" type="text/css" /> -->
+      <!-- <script language="JavaScript" type="text/javascript" src="{% static 'yaksh/js/jquery-3.3.1.min.js' %}"></script> -->
 
 {% endblock %}
 {% block content %}
@@ -71,10 +71,6 @@
     </form>
 </div>
 
-{% endblock %}
-
-{% block script %}
-
 <script>
     sendOtpBtn=document.querySelector('#send-otp-1');
     loadEventListeners();
@@ -89,9 +85,15 @@
     country_code = $("#id_country_code").val()
     phone_number = $("#id_phone_number").val()
     student_number = "+".concat(country_code.split("-")[1]).concat(phone_number)
-
+    console.log(student_number);
     submitData = {'number' : student_number}
-
+    $.ajaxSetup({
+          beforeSend: function(xhr, settings) {
+              if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                  xhr.setRequestHeader("X-CSRFToken", csrftoken);
+              }
+          }
+      });
     $.post("/letsprepare/send_otp/",
   {
     data: JSON.stringify(submitData)
@@ -130,4 +132,88 @@
 
 }
 </script>
+<!-- 
+<script>
+    sendOtpBtn=document.querySelector('#send-otp-1');
+      loadEventListeners();
+      function loadEventListeners(){
+      sendOtpBtn.addEventListener('click', sendOtp);}
+      function sendOtp(e){
+      if(!$('#tnc-1').is(":checked")){
+      alert("Please agree to the terms and conditions.");
+      return;
+      }
+      country_code = $("#id_country_code").val().length
+      phone_number = $("#id_phone_number").val().length
+  
+      if(last_name==0 ||
+          country_code==0 ||
+          phone_number==0
+      ) {
+      alert("Fill all the below fields.");
+      if(password!=confirm_password){
+        alert("Password didn't match");
+      }
+      return;}
+  
+      country_code = $("#id_country_code").val()
+      phone_number = $("#id_phone_number").val()
+      student_number = "+".concat(country_code.split("-")[1]).concat(phone_number)
+  
+      submitData = {'number' : student_number}
+    $.ajaxSetup({
+          beforeSend: function(xhr, settings) {
+              if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                  xhr.setRequestHeader("X-CSRFToken", csrftoken);
+              }
+          }
+      });
+     $.post("/letsprepare/send_otp/",
+    {
+  
+      data: JSON.stringify(submitData)
+  
+    },
+  
+    function(data){
+      key = Object.keys(data)[0]
+      value = Object.values(data)[0]
+      if (key == "SENT"){
+  
+      if ($.trim($("#send-otp").text()) == "Resend OTP"){
+        $("#send-otp").attr("style", "visibility: hidden")
+      }
+      if ($.trim($("#send-otp").text()) ==  "Get OTP"){
+        $("#send-otp").text("Resend OTP");
+      }
+  
+          var i = 2;
+          while(i > 0) {
+              var otp = window. prompt("Please enter OTP sent to your mobile number: ");
+              if(value == otp) {
+                 i = -1
+  
+                 $("#submit-form").click();
+              }
+              else {
+              alert("Incorrect OTP!!");
+                  i = i-1;
+  
+              if (i==0 && $("#send-otp").css("visibility")=="hidden"){
+              window.location.href = "/";
+              }
+          }
+      }}
+      else {
+      alert("Please enter a valid mobile number.");}
+    });
+  
+  }
+    </script> -->
+
+{% endblock %}
+
+{% block script %}
+
+
 {% endblock %}

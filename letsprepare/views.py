@@ -401,7 +401,6 @@ def index(request):
             else:
                 context["username"] = username
                 context["error"]="Invalid username/password"
-            print("its here")
             return my_render_to_response(request, 'index.html', context)    
         if request.POST["sub"] == "Sign Up":
             username = request.POST["username"]

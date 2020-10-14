@@ -139,6 +139,7 @@
         </div>
     </div>
   </nav>
+  {% if not user.is_authenticated %}
   <div class="login-register-popup" id="login-register-popup">
     <div class="login-section">
       <button class="close-btn">&Cross;</button>
@@ -260,6 +261,7 @@
         <a href="#" class="forgot-pass" style="font-weight: 600;">Forgot ID/Password ?</a>
     </div>
   </div>
+  {% endif %}
 {% endblock %}
 
         {% block content %}

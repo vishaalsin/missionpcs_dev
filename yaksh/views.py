@@ -242,6 +242,7 @@ def dashboard(request, course_id):
         else:
             return select_exam(request)
     user_course_list = user.students.all()  # Gives course list that user is enrolled in
+    rest_courses = Course.objects.exclude(students=user.id) 
     course = Course.objects.get(id=course_id)  # Course for particular course id
     modules = course.learning_module.all()  # Module for particular course
     current_affairs = CurrentAffair.objects.order_by('-pubDate')[:3]
@@ -283,6 +284,7 @@ def get_dashboard_context(availableQuizIds, course, current_affairs, modules, mo
         'quizzes': quiz_data,
         'current_course': course,
         'current_affairs': current_affairs,
+        'rest_courses': rest_courses,
     }
     return context
 
@@ -894,7 +896,7 @@ def start(request, questionpaper_id=None, attempt_num=None, course_id=None,
         }
         if is_moderator(user):
             context["status"] = "moderator"
-        return my_render_to_response(request, 'yaksh/intro.html', context)
+        return my_render_to_response(request, 'upgradev001/intro.html', context)
     else:
         ip = request.META['REMOTE_ADDR']
         if not hasattr(user, 'profile'):
@@ -1007,7 +1009,7 @@ def show_question(request, question, paper, error_message=None,
     #     paper.answers.add(new_answer)
 
 
-    return my_render_to_response(request, 'yaksh/question.html', context)
+    return my_render_to_response(request, 'upgradev001/question.html', context)
 
 
 @login_required
@@ -1304,7 +1306,7 @@ def quit(request, reason=None, attempt_num=None, questionpaper_id=None,
                                     course_id=course_id)
     context = {'paper': paper, 'message': reason, 'course_id': course_id,
                'module_id': module_id}
-    return my_render_to_response(request, 'yaksh/quit.html', context)
+    return my_render_to_response(request, 'upgradev001/quit.html', context)
 
 
 @login_required
@@ -1318,7 +1320,7 @@ def complete(request, reason=None, attempt_num=None, questionpaper_id=None,
                              "contact your instructor/administrator."
                              )
         context = {'message': message}
-        return my_render_to_response(request, 'yaksh/complete.html', context)
+        return my_render_to_response(request, 'upgradev001/complete.html', context)
     else:
         q_paper = QuestionPaper.objects.get(id=questionpaper_id)
         paper = AnswerPaper.objects.get(
@@ -1338,7 +1340,7 @@ def complete(request, reason=None, attempt_num=None, questionpaper_id=None,
                    'course_id': course_id, 'learning_unit': learning_unit}
         if is_moderator(user):
             context['user'] = "moderator"
-        return my_render_to_response(request, 'yaksh/complete.html', context)
+        return my_render_to_response(request, 'upgradev001/complete.html', context)
 
 
 @login_required
@@ -2676,7 +2678,7 @@ def view_answerpaper(request, questionpaper_id, course_id):
         context = {'data': data, 'quiz': quiz, 'course_id': course.id,
                    "has_user_assignment": has_user_assignment}
         return my_render_to_response(
-            request, 'yaksh/view_answerpaper.html', context
+            request, 'upgradev001/view_answerpaper.html', context
         )
     else:
         return my_redirect('/exam/quizzes/')
