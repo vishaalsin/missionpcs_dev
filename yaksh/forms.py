@@ -1,5 +1,6 @@
 from django import forms
 
+from letsprepare.models import AvailableQuizzes
 from yaksh.models import (
     get_model_class, Profile, Quiz, Question, Course, QuestionPaper, Lesson,
     LearningModule, TestCase, languages, question_types, Post, Comment, Test_Series, Test
@@ -865,12 +866,24 @@ class CommentForm(forms.ModelForm):
             )
         }
 
+class TestSeriesForm(forms.Form):
+    def __init__(self, user, *args, **kwargs):
+        super(TestSeriesForm, self).__init__(*args, **kwargs)
+        self.fields['test_series_name'] = forms.CharField(max_length=100)
+        self.fields['test_series_desc'] = forms.CharField(max_length=100)
+        self.fields['test1'] = forms.CharField(label='Select test 1 :', initial='NONE', required=False, widget=forms.Select(choices=[(q.quiz.id, q.quiz.quiz_code) for q in AvailableQuizzes.objects.filter(user=user, successful=True)] + [(q.id, q.quiz_code) for q in Quiz.objects.filter(is_free = True)] + [('NONE', 'NONE')]))
+        self.fields['test_date1'] = forms.DateField(widget=forms.SelectDateWidget)
+        self.fields['test2'] = forms.CharField(label='Select test 2 :', initial='NONE', required=False, widget=forms.Select(choices=[(q.quiz.id, q.quiz.quiz_code) for q in AvailableQuizzes.objects.filter(user=user, successful=True)] + [(q.id, q.quiz_code) for q in Quiz.objects.filter(is_free = True)] + [('NONE', 'NONE')]))
+        self.fields['test_date2'] = forms.DateField(widget=forms.SelectDateWidget)
+        self.fields['test3'] = forms.CharField(label='Select test 3 :', initial='NONE', required=False, widget=forms.Select(choices=[(q.quiz.id, q.quiz.quiz_code) for q in AvailableQuizzes.objects.filter(user=user, successful=True)] + [(q.id, q.quiz_code) for q in Quiz.objects.filter(is_free = True)] + [('NONE', 'NONE')]))
+        self.fields['test_date3'] = forms.DateField(widget=forms.SelectDateWidget)
+        self.fields['test4'] = forms.CharField(label='Select test 4 :', initial='NONE', required=False, widget=forms.Select(choices=[(q.quiz.id, q.quiz.quiz_code) for q in AvailableQuizzes.objects.filter(user=user, successful=True)] + [(q.id, q.quiz_code) for q in Quiz.objects.filter(is_free = True)] + [('NONE', 'NONE')]))
+        self.fields['test_date4'] = forms.DateField(widget=forms.SelectDateWidget)
+        self.fields['test5'] = forms.CharField(label='Select test 5 :', initial='NONE', required=False, widget=forms.Select(choices=[(q.quiz.id, q.quiz.quiz_code) for q in AvailableQuizzes.objects.filter(user=user, successful=True)] + [(q.id, q.quiz_code) for q in Quiz.objects.filter(is_free = True)] + [('NONE', 'NONE')]))
+        self.fields['test_date5'] = forms.DateField(widget=forms.SelectDateWidget)
 
-class TestSeriesForm(forms.ModelForm):
     class Meta:
         model = Test_Series
-        fields = ['test_series_name', 'test_series_description']
-#        fields = '__all__'
 
 class TestForm(forms.ModelForm):
     class Meta:

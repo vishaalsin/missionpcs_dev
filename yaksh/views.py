@@ -62,7 +62,7 @@ from notifications_plugin.models import Notification
 from plotly.offline import plot
 import plotly.graph_objs as go
 import pandas as pd
-
+import datetime
 
 def my_redirect(url):
     """An overridden redirect to deal with URL_ROOT-ing. See settings.py
@@ -367,55 +367,87 @@ def user_logout(request):
 
 def test_series(request):
     t_serieses = Test_Series.objects.all()
-    form = TestSeriesForm()
+    form = TestSeriesForm(request.user)
     form_t = TestForm()
-    quizzes = Quiz.objects.all()
+    quizzes = [q.quiz for q in AvailableQuizzes.objects.filter(user=request.user, successful=True)] + [q for q in Quiz.objects.filter(is_free=True)]
+    # quizzes = Quiz.objects.all()
     context = {
         't_serieses': t_serieses,
         'form_1': form,
         'form': form_t,
         'quizzes': quizzes
-
     }
     return my_render_to_response(request, 'portal_pages/test-series.html', context)
 
 
-def create_series(request):
-    # form = TestSeriesForm()
-    if request.method == 'POST':
-        form = TestSeriesForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return my_redirect('/exam/test-series/')
-    # context = {
-    #     'form':form
-    # }
-    # return my_render_to_response(request, 'portal_pages/create_series.html', context)
-
-
-def test_series(request):
-    t_serieses = Test_Series.objects.all()
-    form = TestSeriesForm()
-    context = {
-        't_serieses': t_serieses,
-        'form_1': form
-    }
-    return my_render_to_response(request, 'portal_pages/test-series.html', context)
-
+def add_test_to_series(request):
+    test_series = request.POST.get('test-series')
+    test = request.POST.get('test')
+    date = request.POST.get('date')
+    t_s = Test_Series.objects.get(id = test_series)
+    quiz = Quiz.objects.get(id=test)
+    test_ = Test(test_name=quiz.description, quiz=quiz, test_date=date)
+    test_.save()
+    t_s.tests.add(test_)
+    return my_redirect('/exam/test-series/')
 
 def create_series(request):
     # form = TestSeriesForm()
     if request.method == 'POST':
-        test_name = request.POST.get('test-name')
-        quiz_id = request.POST.get('quizes')
-        quiz = Quiz.objects.get(id = quiz_id)
-        date = request.POST.get('date')
-        t_s_id = request.POST.get('test-series')
-        t_s = Test_Series.objects.get(id = t_s_id)
-        test = Test(test_name= test_name, test_date=date)
-        test.save()
-        test.test.add(quiz)
-        test.test_series.add(t_s)
+        test_series_name = request.POST.get('test_series_name')
+        test_series_description = request.POST.get('test_series_desc')
+        t_s = Test_Series(test_series_name = test_series_name, test_series_description = test_series_description)
+        t_s.save()
+        test1 = request.POST.get('test1')
+        test_date1_day = request.POST.get('test_date1_day')
+        test_date1_month = request.POST.get('test_date1_month')
+        test_date1_year = request.POST.get('test_date1_year')
+        if test1 != 'NONE':
+            quiz = Quiz.objects.get(id=test1)
+            test_date = datetime.datetime.strptime(test_date1_year + '-' + test_date1_month + '-' + test_date1_day, '%Y-%m-%d').date()
+            test_1 = Test(test_name= quiz.description, quiz = quiz, test_date = test_date)
+            test_1.save()
+            t_s.tests.add(test_1)
+        test2 = request.POST.get('test2')
+        test_date2_day = request.POST.get('test_date2_day')
+        test_date2_month = request.POST.get('test_date2_month')
+        test_date2_year = request.POST.get('test_date2_year')
+        if test2 != 'NONE':
+            quiz = Quiz.objects.get(id=test2)
+            test_date = datetime.datetime.strptime(test_date2_year + '-' + test_date2_month + '-' + test_date2_day, '%Y-%m-%d')
+            test_2 = Test(test_name= quiz.description, quiz = quiz, test_date = test_date)
+            test_2.save()
+            t_s.tests.add(test_2)
+        test3 = request.POST.get('test3')
+        test_date3_day = request.POST.get('test_date3_day')
+        test_date3_month = request.POST.get('test_date3_month')
+        test_date3_year = request.POST.get('test_date3_year')
+        if test3 != 'NONE':
+            quiz = Quiz.objects.get(id=test3)
+            test_date = datetime.datetime.strptime(test_date3_year + '-' + test_date3_month + '-' + test_date3_day, '%Y-%m-%d')
+            test_3 = Test(test_name= quiz.description, quiz = quiz, test_date = test_date)
+            test_3.save()
+            t_s.tests.add(test_3)
+        test4 = request.POST.get('test4')
+        test_date4_day = request.POST.get('test_date4_day')
+        test_date4_month = request.POST.get('test_date4_month')
+        test_date4_year = request.POST.get('test_date4_year')
+        if test4 != 'NONE':
+            quiz = Quiz.objects.get(id=test4)
+            test_date = datetime.datetime.strptime(test_date4_year + '-' + test_date4_month + '-' + test_date4_day, '%Y-%m-%d')
+            test_4 = Test(test_name= quiz.description, quiz = quiz, test_date = test_date)
+            test_4.save()
+            t_s.tests.add(test_4)
+        test5 = request.POST.get('test5')
+        test_date5_day = request.POST.get('test_date5_day')
+        test_date5_month = request.POST.get('test_date5_month')
+        test_date5_year = request.POST.get('test_date5_year')
+        if test5 != 'NONE':
+            quiz = Quiz.objects.get(id=test5)
+            test_date = datetime.datetime.strptime(test_date5_year + '-' + test_date5_month + '-' + test_date5_day, '%Y-%m-%d')
+            test_5 = Test(test_name= quiz.description, quiz = quiz, test_date = test_date)
+            test_5.save()
+            t_s.tests.add(test_5)
         return my_redirect('/exam/test-series/')
 
 
@@ -622,9 +654,6 @@ def add_quiz(request, course_id=None, module_id=None, quiz_id=None):
             unit, created = LearningUnit.objects.get_or_create(
                     type="quiz", quiz=added_quiz, order=order
                 )
-            got, created = Test.objects.get_or_create(
-                test=added_quiz
-            )
             if created:
                 module.learning_unit.add(unit.id)
             messages.success(request, "Quiz saved successfully")

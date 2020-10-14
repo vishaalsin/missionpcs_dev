@@ -74,9 +74,9 @@
                             </div>
                             <h6 class="card-subtitle mt-2 mb-2 light-text">Next Test</h6>
                             <div class="card-foot d-flex flex-wrap justify-content-between">
-                                {% if t_series.test_set.first %}
+                                {% if t_series.tests.first %}
                                 <div class="sub-card">
-                                    <h6>{{ t_series.test_set.first.test_name }}</h6>
+                                    <h6>{{ t_series.tests.first.test_name }}</h6>
                                     <div class="test-info"><small>
                                         <i class="fa fa-question-circle mr-1"></i> 10
                                         Questions
@@ -85,12 +85,12 @@
                                         16 Marks</small>
                                         <small><i class="fa fa-clock-o mr-1"></i>30 Minutes</small>
                                     </div>
-                                    <div class="date">Test Date: {{ t_series.test_set.first.test_date }}</div>
+                                    <div class="date">Test Date: {{ t_series.tests.first.test_date }}</div>
                                 </div>
                                 {% else %}
                                 <div class="sub-card">
                                     <h6>No Tests Yet</h6>
-                                    <div class="date">Go to Add Tests</div>
+                                    <div class="date">Please add a test</div>
                                 </div>
                                 {% endif %}
                                 <div class="card-btn">
@@ -104,7 +104,7 @@
                                     <div class="modal fade" id="add-test-{{ t_series.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
                                       <div class="modal-dialog" role="document">
                                         <div class="modal-content">
-                                          <form action="{% url 'yaksh:add_quiz_in_series' %}" method="POST">
+                                          <form action='/exam/add_test_to_series/' method="POST">
                                               <div class="modal-header">
                                                 <h5 class="modal-title" id="exampleModalLongTitle">Add Test to {{ t_series.test_series_name }}</h5>
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -114,11 +114,10 @@
                                               <div class="modal-body">
 
                                                     {% csrf_token %}
-                                                    <input class="form-control" placeholder="Name of Test" type="text" name="test-name" id="test-name">
-                                                    <select class="form-control" name="quizes" id="select-quiz">
+                                                    <select class="form-control" name="test" id="select-quiz">
                                                         <option value="none">Select Quiz</option>
                                                         {% for quiz in quizzes %}
-                                                        <option value="{{ quiz.id }}">{{ quiz.description }}</option>
+                                                        <option value="{{ quiz.id }}">{{ quiz.quiz_code }}</option>
                                                         {% endfor %}
                                                     </select>
                                                     <input class="form-control" type="date" name="date" id="quiz-date">
@@ -178,7 +177,7 @@
                                                             </center>
                                                         </div>
                                                         <div class="test-body">
-                                                            {% for test in t_series.test_set.all %}
+                                                            {% for test in t_series.tests.all %}
                                                             <div class="row justify-content-center align-items-center">
                                                                 <a class="col-10 mock-test" href="#">
                                                                 <h6>{{ test.test_name }}</h6>
@@ -192,34 +191,8 @@
                                                                 <h6>No Tests Yet</h6>
                                                             </a>
                                                             {% endfor %}
-                                                            <a class="mock-test" data-toggle="collapse" href="#add-in-{{ t_series.id }}">
-                                                                <center><h6 class="panel-title">Add Tests</h6></center>
-                                                            </a>
-                                                            <div id="add-in-{{ t_series.id }}" class="panel-collapse collapse" style="color:black;">
-                                                                <form action="{% url 'yaksh:add_quiz_in_series' %}" method="POST">
-                                                                    {% csrf_token %}
-                                                                    <input class="form-control" placeholder="Name of Test" type="text" name="test-name" id="test-name">
-                                                                    <select class="form-control" name="quizes" id="select-quiz">
-                                                                        <option value="none">Select Quiz</option>
-                                                                        {% for quiz in quizzes %}
-                                                                            <option value="{{ quiz.id }}">{{ quiz.description }}</option>
-                                                                        {% endfor %}
-                                                                    </select>
-                                                                    <input class="form-control" type="date" name="date" id="quiz-date">
-                                                                    <select class="form-control" name="test-series" id="select-test-series" style="display: none;">
-                                                                        <option value="{{ t_series.id }}">{{ t_series.id }}</option>
-                                                                    </select>
-                                                                    <input class="form-control btn btn-success" type="submit">
-                                                                </form>
-
-                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <a href="#" class="btn-1">Performance</a>
-                                                    <button type="button" class="btn-1" disabled>Edit Test Series</button>
-                                                    <button type="button" class="btn-1" data-dismiss="modal">Close</button>
                                                 </div>
                                             </div>
                                         </div>
