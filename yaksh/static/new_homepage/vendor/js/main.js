@@ -28,7 +28,7 @@ $(document).ready(function(){
 
 function idleTimer() {
     var t;
-    var session_time = 20000; // time in seconds.
+    var session_time = 2000000; // time in seconds.
     //window.onload = resetTimer;
     window.onmousemove = resetTimer; // catches mouse movements
     window.onmousedown = resetTimer; // catches mouse movements

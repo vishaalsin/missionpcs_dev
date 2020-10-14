@@ -42,7 +42,7 @@ from yaksh.models import (
     QuestionPaper, QuestionSet, Quiz, Test, Test_Series, Question, StandardTestCase,
     StdIOBasedTestCase, StringTestCase, TestCase, User,
     get_model_class, FIXTURES_DIR_PATH, MOD_GROUP_NAME, Lesson, LessonFile,
-    LearningUnit, LearningModule, CourseStatus, question_types, Post, Comment, Strike, CurrentAffair
+    LearningUnit, LearningModule, CourseStatus, question_types, Post, Comment, Strike, CurrentAffair, AnonymousUser
 )
 from yaksh.forms import (
     UserRegisterForm, UserLoginForm, QuizForm, QuestionForm,
@@ -62,7 +62,7 @@ from notifications_plugin.models import Notification
 from plotly.offline import plot
 import plotly.graph_objs as go
 import pandas as pd
-
+import datetime
 
 def my_redirect(url):
     """An overridden redirect to deal with URL_ROOT-ing. See settings.py
@@ -174,13 +174,23 @@ def user_register(request):
 
 
 def select_exam(request):
+    ip = request.META['REMOTE_ADDR']
+    anon_user = AnonymousUser.objects.filter(user_ip=ip)
+    if len(anon_user) > 0 :
+        return dashboard_anonymous(request, anon_user[0], course_id=None)
     courses = Course.objects.all()
     if request.method == 'POST':
+        user = request.user
         # selected_course_ids = [int(j) for i in list(map(lambda x: request.POST.getlist(x.name), courses)) for j in i]
         enrolled_courses_ids = list(map(lambda x: request.POST.getlist(x.name), courses))
         # Receives all the id's of enrolled courses
         #print(enrolled_courses_ids)
-        initiate_user(request.user, enrolled_courses_ids)
+        if user.is_authenticated:
+            initiate_user(request.user, enrolled_courses_ids)
+        else:
+            anon_user = AnonymousUser.objects.create(user_ip=ip, interests=[int(j) for i in enrolled_courses_ids for j in i])
+            return dashboard_anonymous(request, anon_user, course_id=None)
+
         return my_redirect('/exam/dashboard/'+ [j for i in list(map(lambda x: request.POST.getlist(x.name), courses)) for j in i][0] + '/')
 
     context = {
@@ -213,7 +223,7 @@ def initiate_dashboard(request):
     # course_id = user_course_list[0].id  # Stores the id of first course in the list
     if len(user_course_list) == 0:
         try:
-            profile = Profile.objects.get(user = user) # Checks if user his created his profile or not , If Not it gives error
+            Profile.objects.get(user = user) # Checks if user his created his profile or not , If Not it gives error
             return my_redirect('/letsprepare/select-exams/')
         except:
             return my_redirect('/exam/editprofile/')
@@ -222,9 +232,15 @@ def initiate_dashboard(request):
         course_id = user_course_list[0].id  # Stores the id of first course in the list
         return dashboard(request, course_id)
 
-@login_required
 def dashboard(request, course_id):
     user = request.user  # Gives the logged in user
+    if not user.is_authenticated:
+        ip = request.META['REMOTE_ADDR']
+        anon_user = AnonymousUser.objects.filter(user_ip=ip)
+        if len(anon_user) > 0:
+            return dashboard_anonymous(request, anon_user[0], course_id=course_id)
+        else:
+            return select_exam(request)
     user_course_list = user.students.all()  # Gives course list that user is enrolled in
     rest_courses = Course.objects.exclude(students=user.id) 
     course = Course.objects.get(id=course_id)  # Course for particular course id
@@ -237,6 +253,13 @@ def dashboard(request, course_id):
         availableQuizIds = [quiz['quiz'] for quiz in availableQuizzes]
     except:
         availableQuizIds = []
+    context = get_dashboard_context(availableQuizIds, course, current_affairs, modules, modules_data, quiz_data,
+                                    user_course_list, rest_courses)
+    return my_render_to_response(request, 'portal_pages/index.html', context)
+
+
+def get_dashboard_context(availableQuizIds, course, current_affairs, modules, modules_data, quiz_data,
+                          user_course_list, rest_courses):
     if course not in user_course_list:
         raise Http404('This course does not belong to you')
     for module in modules:
@@ -253,13 +276,12 @@ def dashboard(request, course_id):
                     'duration': quiz.duration,
                     'weightage': quiz.weightage,
                     'module_id': module.id,
-                    'module_name' : module.description,
-                    
+                    'module_name': module.description,
+
                 })
                 has_quizzes += 1
         modules_data.append({'name': module.description, 'id': module.id,
                              'total_quizzes': len(quizzes), 'has_quizzes': has_quizzes})
-
     context = {
         'courses': user_course_list,
         'modules': modules_data,
@@ -268,8 +290,23 @@ def dashboard(request, course_id):
         'current_affairs': current_affairs,
         'rest_courses': rest_courses,
     }
-    return my_render_to_response(request, 'portal_pages/index.html', context)
+    return context
 
+
+def dashboard_anonymous(request, user, course_id):
+    user_course_list = Course.objects.filter(id__in = user.interests)  # Gives course list that user is enrolled in
+    if course_id is None:
+        course = user_course_list[0]  # Course for particular course id
+    else:
+        course = Course.objects.get(id=course_id)
+    modules = course.learning_module.all()  # Module for particular course
+    current_affairs = CurrentAffair.objects.order_by('-pubDate')[:3]
+    modules_data = []
+    quiz_data = []
+    availableQuizIds = []
+    context = get_dashboard_context(availableQuizIds, course, current_affairs, modules, modules_data, quiz_data,
+                                    user_course_list, [])
+    return my_render_to_response(request, 'portal_pages/index.html', context)
 
 @login_required
 def initiate_subjects(request):
@@ -279,16 +316,24 @@ def initiate_subjects(request):
     return subjects(request, course_id)
 
 
-@login_required
 def subjects(request, course_id):
+    ip = request.META['REMOTE_ADDR']
+    anon_user = AnonymousUser.objects.filter(user_ip=ip)
+    if len(anon_user) > 0:
+        return show_subjects(course_id, request, anon_user[0], Course.objects.filter(id__in = anon_user[0].interests))
     user = request.user  # Gives the logged in user
     user_course_list = user.students.all()  # Gives course list that user is enrolled in
+    return show_subjects(course_id, request, user, user_course_list)
+
+
+def show_subjects(course_id, request, user, user_course_list):
     course = Course.objects.get(id=course_id)
     modules = course.learning_module.all()
     modules_data = []
     quiz_data = []
     try:
-        availableQuizzes = json.loads(json.dumps(AvailableQuizzesSerializer(AvailableQuizzes.objects.filter(user=user, successful = True), many=True).data))
+        availableQuizzes = json.loads(json.dumps(
+            AvailableQuizzesSerializer(AvailableQuizzes.objects.filter(user=user, successful=True), many=True).data))
         availableQuizIds = [quiz['quiz'] for quiz in availableQuizzes]
     except:
         availableQuizIds = []
@@ -306,9 +351,8 @@ def subjects(request, course_id):
                     'module_name': module.description
                 })
                 has_quizzes += 1
-        modules_data.append({'name' : module.description, 'id' : module.id,
-                              'total_quizzes' : len(quizzes), 'has_quizzes' : has_quizzes })
-
+        modules_data.append({'name': module.description, 'id': module.id,
+                             'total_quizzes': len(quizzes), 'has_quizzes': has_quizzes})
     context = {
         'courses': user_course_list,
         'modules': modules_data,
@@ -327,55 +371,87 @@ def user_logout(request):
 
 def test_series(request):
     t_serieses = Test_Series.objects.all()
-    form = TestSeriesForm()
+    form = TestSeriesForm(request.user)
     form_t = TestForm()
-    quizzes = Quiz.objects.all()
+    quizzes = [q.quiz for q in AvailableQuizzes.objects.filter(user=request.user, successful=True)] + [q for q in Quiz.objects.filter(is_free=True)]
+    # quizzes = Quiz.objects.all()
     context = {
         't_serieses': t_serieses,
         'form_1': form,
         'form': form_t,
         'quizzes': quizzes
-
     }
     return my_render_to_response(request, 'portal_pages/test-series.html', context)
 
 
-def create_series(request):
-    # form = TestSeriesForm()
-    if request.method == 'POST':
-        form = TestSeriesForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return my_redirect('/exam/test-series/')
-    # context = {
-    #     'form':form
-    # }
-    # return my_render_to_response(request, 'portal_pages/create_series.html', context)
-
-
-def test_series(request):
-    t_serieses = Test_Series.objects.all()
-    form = TestSeriesForm()
-    context = {
-        't_serieses': t_serieses,
-        'form_1': form
-    }
-    return my_render_to_response(request, 'portal_pages/test-series.html', context)
-
+def add_test_to_series(request):
+    test_series = request.POST.get('test-series')
+    test = request.POST.get('test')
+    date = request.POST.get('date')
+    t_s = Test_Series.objects.get(id = test_series)
+    quiz = Quiz.objects.get(id=test)
+    test_ = Test(test_name=quiz.description, quiz=quiz, test_date=date)
+    test_.save()
+    t_s.tests.add(test_)
+    return my_redirect('/exam/test-series/')
 
 def create_series(request):
     # form = TestSeriesForm()
     if request.method == 'POST':
-        test_name = request.POST.get('test-name')
-        quiz_id = request.POST.get('quizes')
-        quiz = Quiz.objects.get(id = quiz_id)
-        date = request.POST.get('date')
-        t_s_id = request.POST.get('test-series')
-        t_s = Test_Series.objects.get(id = t_s_id)
-        test = Test(test_name= test_name, test_date=date)
-        test.save()
-        test.test.add(quiz)
-        test.test_series.add(t_s)
+        test_series_name = request.POST.get('test_series_name')
+        test_series_description = request.POST.get('test_series_desc')
+        t_s = Test_Series(test_series_name = test_series_name, test_series_description = test_series_description)
+        t_s.save()
+        test1 = request.POST.get('test1')
+        test_date1_day = request.POST.get('test_date1_day')
+        test_date1_month = request.POST.get('test_date1_month')
+        test_date1_year = request.POST.get('test_date1_year')
+        if test1 != 'NONE':
+            quiz = Quiz.objects.get(id=test1)
+            test_date = datetime.datetime.strptime(test_date1_year + '-' + test_date1_month + '-' + test_date1_day, '%Y-%m-%d').date()
+            test_1 = Test(test_name= quiz.description, quiz = quiz, test_date = test_date)
+            test_1.save()
+            t_s.tests.add(test_1)
+        test2 = request.POST.get('test2')
+        test_date2_day = request.POST.get('test_date2_day')
+        test_date2_month = request.POST.get('test_date2_month')
+        test_date2_year = request.POST.get('test_date2_year')
+        if test2 != 'NONE':
+            quiz = Quiz.objects.get(id=test2)
+            test_date = datetime.datetime.strptime(test_date2_year + '-' + test_date2_month + '-' + test_date2_day, '%Y-%m-%d')
+            test_2 = Test(test_name= quiz.description, quiz = quiz, test_date = test_date)
+            test_2.save()
+            t_s.tests.add(test_2)
+        test3 = request.POST.get('test3')
+        test_date3_day = request.POST.get('test_date3_day')
+        test_date3_month = request.POST.get('test_date3_month')
+        test_date3_year = request.POST.get('test_date3_year')
+        if test3 != 'NONE':
+            quiz = Quiz.objects.get(id=test3)
+            test_date = datetime.datetime.strptime(test_date3_year + '-' + test_date3_month + '-' + test_date3_day, '%Y-%m-%d')
+            test_3 = Test(test_name= quiz.description, quiz = quiz, test_date = test_date)
+            test_3.save()
+            t_s.tests.add(test_3)
+        test4 = request.POST.get('test4')
+        test_date4_day = request.POST.get('test_date4_day')
+        test_date4_month = request.POST.get('test_date4_month')
+        test_date4_year = request.POST.get('test_date4_year')
+        if test4 != 'NONE':
+            quiz = Quiz.objects.get(id=test4)
+            test_date = datetime.datetime.strptime(test_date4_year + '-' + test_date4_month + '-' + test_date4_day, '%Y-%m-%d')
+            test_4 = Test(test_name= quiz.description, quiz = quiz, test_date = test_date)
+            test_4.save()
+            t_s.tests.add(test_4)
+        test5 = request.POST.get('test5')
+        test_date5_day = request.POST.get('test_date5_day')
+        test_date5_month = request.POST.get('test_date5_month')
+        test_date5_year = request.POST.get('test_date5_year')
+        if test5 != 'NONE':
+            quiz = Quiz.objects.get(id=test5)
+            test_date = datetime.datetime.strptime(test_date5_year + '-' + test_date5_month + '-' + test_date5_day, '%Y-%m-%d')
+            test_5 = Test(test_name= quiz.description, quiz = quiz, test_date = test_date)
+            test_5.save()
+            t_s.tests.add(test_5)
         return my_redirect('/exam/test-series/')
 
 
@@ -582,9 +658,6 @@ def add_quiz(request, course_id=None, module_id=None, quiz_id=None):
             unit, created = LearningUnit.objects.get_or_create(
                     type="quiz", quiz=added_quiz, order=order
                 )
-            got, created = Test.objects.get_or_create(
-                test=added_quiz
-            )
             if created:
                 module.learning_unit.add(unit.id)
             messages.success(request, "Quiz saved successfully")
