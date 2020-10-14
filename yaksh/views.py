@@ -301,7 +301,7 @@ def dashboard_anonymous(request, user, course_id):
     quiz_data = []
     availableQuizIds = []
     context = get_dashboard_context(availableQuizIds, course, current_affairs, modules, modules_data, quiz_data,
-                                    user_course_list)
+                                    user_course_list, [])
     return my_render_to_response(request, 'portal_pages/index.html', context)
 
 @login_required
