@@ -19,6 +19,7 @@ urlpatterns = [
     url(r'^prev-tests/$', TemplateView.as_view(template_name='portal_pages/prev-tests.html')),
     url(r'^detailed-news/$', TemplateView.as_view(template_name='portal_pages/detailed-news.html')),
     url(r'^current-affairs/$', views.current_affairs_all, name='all_current_affairs'),
+    url(r'^current-affairs/(?P<month>\d+)/(?P<year>\d+)/$', views.current_affairs_month, name='current_affairs_month'),
     url(r'^home/$', initiate_dashboard, name="Home"),
     url(r'^buy2/$', TemplateView.as_view(template_name='buy/all_on_sale.html')),
     url(r'^detailed-news/(?P<ca_id>\d+)/$',

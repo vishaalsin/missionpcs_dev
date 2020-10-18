@@ -51,6 +51,8 @@ urlpatterns = [
         views.skip, name="skip_question"),
     url(r'^enroll_request/(?P<course_id>\d+)/$', views.enroll_request,
         name='enroll_request'),
+    url(r'^enroll_in_course/(?P<course_id>\d+)/$', views.enroll_request_dash,
+        name='enroll_dash'),
     url(r'^self_enroll/(?P<course_id>\d+)/$', views.self_enroll,
         name='self_enroll'),
     url(r'^view_answerpaper/(?P<questionpaper_id>\d+)/(?P<course_id>\d+)$',

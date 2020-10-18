@@ -272,8 +272,12 @@ def get_dashboard_context(availableQuizIds, course, current_affairs, modules, mo
                     'code': quiz.quiz_code,
                     'name': quiz.description,
                     'id': quiz.id,
+                    'total_questions': quiz.questionpaper_set.get(quiz=quiz.id).tot_questions(),
+                    'duration': quiz.duration,
+                    'weightage': quiz.weightage,
                     'module_id': module.id,
-                    'module_name': module.description
+                    'module_name': module.description,
+
                 })
                 has_quizzes += 1
         modules_data.append({'name': module.description, 'id': module.id,
@@ -4019,3 +4023,25 @@ def hide_comment(request, course_id, uuid):
     comment.active = False
     comment.save()
     return redirect('yaksh:post_comments', course_id, post_uid)
+
+def enroll_request_dash(request, course_id):
+    user = request.user
+    course = get_object_or_404(Course, pk=course_id)
+    if not course.is_active_enrollment() and course.hidden:
+        msg = (
+            'Unable to add enrollments for this course, please contact your '
+            'instructor/administrator.'
+        )
+        messages.warning(request, msg)
+    else:
+        course.enroll(course.get_rejected, user)
+        messages.success(
+            request,
+            "You enrolled for {0} by {1}".format(
+                course.name, course.creator.get_full_name()
+            )
+        )
+    if is_moderator(user):
+        return my_redirect('/exam/manage/courses')
+    else:
+        return my_redirect('/exam/dashboard/')

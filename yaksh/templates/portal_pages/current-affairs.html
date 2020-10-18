@@ -43,16 +43,9 @@
                     <div id="months">
                         <div class="sub-head d-flex align-items-center justify-content-between"><b>Current Affairs By Months</b><a href="javascript:void(0)" class="icon toggle-icon">&#9776;</a></div>
                         <div class="list">
-                            <a href="#" >Current Affairs- August 2020</a>
-                            <a href="#" >Current Affairs- July 2020</a>
-                            <a href="#" >Current Affairs- June 2020</a>
-                            <a href="#" >Current Affairs- May 2020</a>
-                            <a href="#" >Current Affairs- April 2020</a>
-                            <a href="#" >Current Affairs- March 2020</a>
-                            <a href="#" >Current Affairs- February 2020</a>
-                            <a href="#" >Current Affairs- January 2020</a>
-                            <a href="#" >Current Affairs- December 2019</a>
-                            <a href="#" >Current Affairs- November 2019</a>
+                            {%  for month in prev_months %}
+                            <a href="/letsprepare/current-affairs/{{ month|date:'m' }}/{{ month|date:'Y' }}" >Current Affairs- {{ month|date:"F" }} {{ month|date:"Y" }}</a>
+                            {% endfor %}
                         </div>
                     </div>
                     <div id="news-category">
