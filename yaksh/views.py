@@ -177,7 +177,7 @@ def select_exam(request):
     ip = request.META['REMOTE_ADDR']
     anon_user = AnonymousUser.objects.filter(user_ip=ip)
     if len(anon_user) > 0 :
-        return dashboard_anonymous(request, anon_user[0], course_id=None)
+       return dashboard_anonymous(request, anon_user[0], course_id=None)
     courses = Course.objects.all()
     if request.method == 'POST':
         user = request.user
@@ -299,6 +299,7 @@ def get_dashboard_context(availableQuizIds, course, current_affairs, modules, mo
 
 def dashboard_anonymous(request, user, course_id):
     user_course_list = Course.objects.filter(id__in = user.interests)  # Gives course list that user is enrolled in
+    print(user_course_list)
     if course_id is None:
         course = user_course_list[0]  # Course for particular course id
     else:
@@ -310,6 +311,8 @@ def dashboard_anonymous(request, user, course_id):
     availableQuizIds = []
     context = get_dashboard_context(availableQuizIds, course, current_affairs, modules, modules_data, quiz_data,
                                     user_course_list, [])
+    rest_courses = Course.objects.exclude(id__in=user.interests)
+    context["rest_courses"] = rest_courses
     return my_render_to_response(request, 'portal_pages/index.html', context)
 
 @login_required
@@ -374,7 +377,7 @@ def user_logout(request):
 
 
 def test_series(request):
-    t_serieses = Test_Series.objects.all()
+    t_serieses = Test_Series.objects.all() 
     form = TestSeriesForm(request.user)
     form_t = TestForm()
     quizzes = [q.quiz for q in AvailableQuizzes.objects.filter(user=request.user, successful=True)] + [q for q in Quiz.objects.filter(is_free=True)]
@@ -383,7 +386,8 @@ def test_series(request):
         't_serieses': t_serieses,
         'form_1': form,
         'form': form_t,
-        'quizzes': quizzes
+        'quizzes': quizzes,
+        'today': timezone.now,
     }
     return my_render_to_response(request, 'portal_pages/test-series.html', context)
 
@@ -4039,13 +4043,33 @@ def enroll_request_dash(request, course_id):
         messages.warning(request, msg)
     else:
         course.enroll(course.get_rejected, user)
-        messages.success(
-            request,
-            "You enrolled for {0} by {1}".format(
-                course.name, course.creator.get_full_name()
-            )
-        )
+        
     if is_moderator(user):
         return my_redirect('/exam/manage/courses')
     else:
         return my_redirect('/exam/dashboard/')
+
+def anon_enroll(request, course_id):
+    try:
+        course = Course.objects.get(id=course_id)
+    except Course.DoesNotExist:
+        raise Http404('The Course does not exist.')
+    except Exception as e:
+        print(e)
+    
+    if course == None:
+        my_redirect('')
+    ip = request.META['REMOTE_ADDR']
+    anon_user = AnonymousUser.objects.get(user_ip=ip)
+    if not int(course_id) in anon_user.interests:
+        anon_user.interests.append(int(course_id))
+        anon_user.save()
+        
+    else:
+        messages.warning(
+                request,
+                "You are already enrolled for {0} by {1}".format(
+                    course.name, course.creator.get_full_name()
+                )
+            )
+    return my_redirect('/letsprepare/select-exams')

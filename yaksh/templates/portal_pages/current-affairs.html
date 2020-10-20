@@ -5,6 +5,7 @@
 {% endblock %}
 {% block content %}
     <div class="container-xl">
+        {% load tz %}
         <div class="row argmt">
             
             <div class="col-lg-9 mt-4">
@@ -15,7 +16,9 @@
                             <div class="col-md-4">
                                 <div class="card-img-left">
                                     <img src="{% static 'portal_pages/images/news-1.jpg' %}" class="card-img-left w-100" alt="news-1">
-                                    <h6 class="post-date" id="date">{{ c.pubDate }}</h6>
+                                    <h6 class="post-date" id="date">{% localtime off %}
+                                     {{ c.pubDate }}
+                                 {% endlocaltime %}</h6>
                                 </div>
                             </div>
                             <div class="col-md-8">
@@ -29,6 +32,7 @@
                                     <p class="card-text text-secondary">{{ c.summary }}...
                                         <h6><a href="{% url 'letsprepare:current_affair-detail' c.id %}" class="readmore-btn">Read More</a></h6>
                                     </p>
+                                    <p>Source : <a href="{{ c.link }}"> The Hindu</a></p>
         
                                 </div>
                             </div>

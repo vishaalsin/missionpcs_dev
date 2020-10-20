@@ -11,8 +11,7 @@
 
 {% block content %}
 <!--Corousel / Slider -->
-<div class="container-fluid">
-  {% if messages %}
+{% if messages %}
       {% for message in messages %}
           <div class="alert alert-dismissible alert-{{ message.tags }}">
               <button type="button" class="close" data-dismiss="alert">
@@ -23,6 +22,8 @@
           <br>
       {% endfor %}
   {% endif %}
+<div class="container-fluid">
+  
   <div class="row">
     <div id="carouselIndicators2" class="carousel slide col-12 col-lg-8 col-xl-9" data-ride="carousel">
         <ol class="carousel-indicators">
@@ -83,7 +84,7 @@
                       {% if rest_courses %}
                         <p>--- Not Enrolled ---</p>
                         {% for rest_course in rest_courses %}
-                          <li class="my-2"><button class="btn btn-secondary w-100" data-catid="{{ rest_course.id }}" disabled>{{ rest_course }}</button><a href="{% url 'yaksh:enroll_dash' rest_course.id %}">Enroll Now</a></li>
+                          <li class="my-2"><button class="btn btn-secondary w-100" data-catid="{{ rest_course.id }}" disabled>{{ rest_course }}</button><a href="{% if user.is_authenticated %}{% url 'yaksh:enroll_dash' rest_course.id %}{% else %}{% url 'yaksh:anon_enroll' rest_course.id %}{% endif %}">Enroll Now</a></li>
                         {% endfor %}
                       {% endif %} 
                      </ul>
@@ -242,7 +243,7 @@
             </section>
             
         
-
+            {% load tz %}
         <!-- Current Affairs -->
         <h3 class="sub-head">&diamond; Current Affairs &diamond;</h3>
         <div class="col">
@@ -253,7 +254,9 @@
                       <div class="col-md-4">
                           <div class="card-img-left">
                               <img src=" {% static 'portal_pages/images/news-1.jpg'  %}" class="card-img-left w-100" alt="news-1">
-                              <h6 class="post-date" id="date">{{ ca.pubDate }}</h6>
+                              <h6 class="post-date" id="date">{% localtime off %}
+                                {{ ca.pubDate }}
+                            {% endlocaltime %}</h6>
                           </div>
                       </div>
                       <div class="col-md-8">

@@ -55,6 +55,8 @@ urlpatterns = [
         name='enroll_dash'),
     url(r'^self_enroll/(?P<course_id>\d+)/$', views.self_enroll,
         name='self_enroll'),
+    url(r'^anon_enroll/(?P<course_id>\d+)/$', views.anon_enroll,
+        name='anon_enroll'),
     url(r'^view_answerpaper/(?P<questionpaper_id>\d+)/(?P<course_id>\d+)$',
         views.view_answerpaper, name='view_answerpaper'),
     url(r'^download/user_assignment/(?P<question_id>\d+)/(?P<user_id>\d+)/'

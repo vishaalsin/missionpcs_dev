@@ -23,6 +23,7 @@ import re
 
 import datetime as dt
 from dateutil.parser import parse
+import pytz
 
 # from django.conf import settings
 
@@ -157,6 +158,8 @@ ca_data = jsondata[jsondata['current_affairs'] == '1']
 for dat in ca_data['title = '].index:
     pdate = ca_data['date = '][dat]
     pdateobj = dt.datetime.strptime(pdate, '%d/%m/%Y')
+    asia_time = pytz.timezone('Asia/Kolkata')
+    pdateobj = pdateobj.astimezone(asia_time)
     
     if re.search(r'\b(\w*letter\w*)\b', ca_data['title = '][dat], re.IGNORECASE) and re.search(r'\b(\w*editor\w*)\b', ca_data['title = '][dat], re.IGNORECASE):
         continue

@@ -88,9 +88,9 @@ WSGI_APPLICATION = 'online_test.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'new2',
-        'USER': 'vishaal',
-        'PASSWORD': 'password',
+        'NAME': 'New_Database',#'shivam',
+        'USER': 'postgres',
+        'PASSWORD': '12345678',#'shivam20',
         'HOST': 'localhost',
         'PORT': '5432',
     }
@@ -100,7 +100,7 @@ DATABASES = {
 # https://docs.djangoproject.com/en/1.6/topics/i18n/
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Kolkata'
 
 USE_I18N = True
 
@@ -271,3 +271,5 @@ CORS_ALLOW_CREDENTIALS = True
 SESSION_EXPIRE_SECONDS = 7200000 # in seconds enter your time
 SESSION_EXPIRE_AFTER_LAST_ACTIVITY = True
 SESSION_TIMEOUT_REDIRECT = ''
+PERMITTED_USER_NAME = ['test']
+PERMITTED_USER_ID = []

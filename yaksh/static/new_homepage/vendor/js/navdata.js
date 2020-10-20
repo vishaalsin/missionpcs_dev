@@ -51,7 +51,7 @@ function load_navdata(){
             // Sub Dropdown Test Series
             
 
-
+            if(document.getElementById('courses-drop')==null) break;
             document.getElementById('courses-drop').appendChild(courseli);
             
             // subjects drop down

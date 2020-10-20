@@ -18,6 +18,7 @@ from django.contrib.auth import authenticate
 from yaksh.code_server import get_result as get_result_from_code_server
 from yaksh.settings import SERVER_POOL_PORT, SERVER_HOST_NAME
 import json
+from django.conf import settings
 
 
 class QuestionList(APIView):
@@ -456,8 +457,8 @@ class CurrentAffairView(APIView):
         return Response(serializer.data)
     
     def post(self, request, format=None):
-        permitteduserid = []
-        permittedusername = ['test']
+        permitteduserid = settings.PERMITTED_USER_ID
+        permittedusername = settings.PERMITTED_USER_NAME
         if request.user.is_superuser or (request.user.id in permitteduserid) or (request.user.username in permittedusername):
             serializer = CurrentAffairSerializer(data=request.data)
             if serializer.is_valid():
@@ -488,8 +489,8 @@ class UpdateView(APIView):
         #     return Response(serializer.data)
     
     def post(self, request, format=None):
-        permitteduserid = []
-        permittedusername = ['test']
+        permitteduserid = settings.PERMITTED_USER_ID
+        permittedusername = settings.PERMITTED_USER_NAME
         if request.user.is_superuser or (request.user.id in permitteduserid) or (request.user.username in permittedusername):
             serializer = UpdateSerializer(data=request.data)
             if serializer.is_valid():

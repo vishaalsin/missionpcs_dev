@@ -635,7 +635,7 @@ class Quiz(models.Model):
 class Test(models.Model):
     test_name = models.CharField(max_length=100, default='New Test')
     quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE, default=None, null=True)
-    test_date = models.DateField(auto_now=False, auto_now_add=False, null=True)
+    test_date = models.DateField(auto_now=False, auto_now_add=False)
 
     def __str__(self):
         return self.quiz.description
@@ -645,10 +645,11 @@ class Test(models.Model):
 class Test_Series(models.Model):
     test_series_name = models.CharField(max_length=255)
     test_series_description = models.TextField(default=None, null=True, blank=True)
-    tests = models.ManyToManyField(Test, null=True)
+    tests = models.ManyToManyField(Test)
+    # created_by = models.ForeignKey(User, on_delete=models.CASCADE, default=None)
 
-
-
+    def __str__(self):
+        return self.test_series_name
 ##########################################################################
 class LearningUnit(models.Model):
     """ Maintain order of lesson and quiz added in the course """
@@ -2800,9 +2801,9 @@ class CurrentAffair(models.Model):
     title = models.CharField(max_length=200)
     summary = models.CharField(max_length=200)
     news = models.TextField()
-    created_on = models.DateTimeField(default=dt.datetime.now)
+    created_on = models.DateTimeField(default=timezone.now)
     link = models.TextField(blank=True)
-    pubDate = models.DateTimeField(default=dt.datetime.now)
+    pubDate = models.DateTimeField(default=timezone.now)
     def __str__(self):
         return self.title
 
@@ -2816,7 +2817,7 @@ class Update(models.Model):
     type = models.TextField()
     guid = models.TextField()
     created_on = models.DateTimeField(auto_now_add=True)
-    pubDate = models.DateTimeField(default=dt.datetime.now)
+    pubDate = models.DateTimeField(default=timezone.now)
     def __str__(self):
         return self.headline
 
