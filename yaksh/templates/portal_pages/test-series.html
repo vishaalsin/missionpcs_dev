@@ -2,13 +2,14 @@
 {% load static %}
 {% block cssfile %}
     <link rel="stylesheet" href=" {% static 'portal_pages/style/test-series.css' %}" />
+    <script src="{% static 'portal_pages/js/test-series.js' %}"></script>
 {% endblock %}
 {% block content %}
 <section id="test-series" class="test-series" style="width: 80%; margin-left:auto; margin-right:auto;">
-            <div class="head p-2 d-flex justify-content-between" style="background-color: #c9cdd3; border-radius: 15px;">
-                <h2><b>Your Test Series</b></h2>
+            <div class="col-12 test-series-header">
+                <h2 class="mb-0 d-inline-block">Your Test Series</h2>
                 <!--<a href="{% url 'yaksh:create_series' %}" class="btn btn-success" style="border-radius: 15px;">Create Test Series</a>-->
-                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#create-series-modal" style="border-radius: 15px;">
+                <button type="button" class="create-test" data-toggle="modal" data-target="#create-series-modal">
                         Create Test Series
                 </button>
                 <!-- Modal -->
@@ -27,12 +28,13 @@
 
                                     {% csrf_token %}
                                     {{ form_1.as_p }}
+                                    <button id="add_more" class="btn btn-primary">Add another test</button>
 
                               </div>
                           </div>
                           <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button  type="submit" class="btn btn-primary">Save changes</button>
+                            <button  type="submit" class="btn btn-success">Save changes</button>
                           </div>
                         </form>
                         </div>
@@ -75,8 +77,9 @@
                             <h6 class="card-subtitle mt-2 mb-2 light-text">Next Test</h6>
                             <div class="card-foot d-flex flex-wrap justify-content-between">
                                 {% if t_series.tests.first %}
+                                {% for t_seri in t_series.all %}
                                 <div class="sub-card">
-                                    <h6>{{ t_series.tests.first.test_name }}</h6>
+                                    <h6>{{ t_seri.tests.test_name }} | {{ next_test }}</h6>
                                     <div class="test-info"><small>
                                         <i class="fa fa-question-circle mr-1"></i> 10
                                         Questions
@@ -85,8 +88,9 @@
                                         16 Marks</small>
                                         <small><i class="fa fa-clock-o mr-1"></i>30 Minutes</small>
                                     </div>
-                                    <div class="date">Test Date: {{ t_series.tests.first.test_date }}</div>
+                                    <div class="date">Test Date: {{ t_seri.tests.test_date }}</div>
                                 </div>
+                                {% endfor %}
                                 {% else %}
                                 <div class="sub-card">
                                     <h6>No Tests Yet</h6>
