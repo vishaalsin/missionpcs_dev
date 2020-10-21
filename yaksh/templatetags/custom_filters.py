@@ -122,3 +122,7 @@ def highlight_spaces(text):
     return text.replace(
         " ", '<span style="background-color:#ffb6db">&nbsp</span>'
         )
+
+@register.filter(name='in_date')
+def in_date(tests, today):
+    return tests.filter(test_date__gte=today)

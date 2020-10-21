@@ -76,10 +76,12 @@
                             </div>
                             <h6 class="card-subtitle mt-2 mb-2 light-text">Next Test</h6>
                             <div class="card-foot d-flex flex-wrap justify-content-between">
-                                {% if t_series.tests.first %}
-                                {% for t_seri in t_series.all %}
-                                <div class="sub-card">
-                                    <h6>{{ t_seri.tests.test_name }} | {{ next_test }}</h6>
+                              {% load custom_filters %}
+                              {% with next_tests=t_series.tests.all|in_date:today %}
+                                {% if next_tests.first %}
+                                  
+                                  <div class="sub-card">
+                                    <h6>{{ next_tests.first.test_name }}</h6>
                                     <div class="test-info"><small>
                                         <i class="fa fa-question-circle mr-1"></i> 10
                                         Questions
@@ -88,16 +90,21 @@
                                         16 Marks</small>
                                         <small><i class="fa fa-clock-o mr-1"></i>30 Minutes</small>
                                     </div>
-                                    <div class="date">Test Date: {{ t_seri.tests.test_date }}</div>
+                                    <div class="date">Test Date: {{ next_tests.first.test_date }}</div>
                                 </div>
-                                {% endfor %}
+                                  
                                 {% else %}
                                 <div class="sub-card">
                                     <h6>No Tests Yet</h6>
                                     <div class="date">Please add a test</div>
                                 </div>
                                 {% endif %}
+                                
                                 <div class="card-btn">
+                                  {% if next_tests.first.test_date == today %}
+                                  <a href="/exam/start/{{next_tests.first.quiz.questionpaper_set.get.id}}/{{next_tests.first.quiz.learningunit_set.get.learning_unit.get.id}}{{module_id}}/{{next_tests.first.quiz.learningunit_set.get.learning_unit.get.learning_module.get.id}}{{course_id}}/" class="btn-1">Start</a>
+                                  {% endif %}
+                                  {% endwith %}
                                     <a href="#" class="btn-1">Performance</a>
                                                                         <!-- Add Tests Button trigger modal -->
                                     <a href="#" class="btn-1" data-toggle="modal" data-target="#add-test-{{ t_series.id }}">
