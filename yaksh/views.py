@@ -64,6 +64,7 @@ import plotly.graph_objs as go
 import pandas as pd
 import datetime
 
+
 def my_redirect(url):
     """An overridden redirect to deal with URL_ROOT-ing. See settings.py
     for details."""
@@ -174,10 +175,11 @@ def user_register(request):
 
 
 def select_exam(request):
-    ip = request.META['REMOTE_ADDR']
-    anon_user = AnonymousUser.objects.filter(user_ip=ip)
-    if len(anon_user) > 0 :
-       return dashboard_anonymous(request, anon_user[0], course_id=None)
+    if not request.user.is_authenticated:    
+        ip = request.META['REMOTE_ADDR']
+        anon_user = AnonymousUser.objects.filter(user_ip=ip)
+        if len(anon_user) > 0 :
+            return dashboard_anonymous(request, anon_user[0], course_id=None)
     courses = Course.objects.all()
     if request.method == 'POST':
         user = request.user
@@ -383,7 +385,7 @@ def test_series(request):
         'form_1': form,
         'form': form_t,
         'quizzes': quizzes,
-        'today': timezone.now,
+        'today': datetime.date.today(),
     }
     return my_render_to_response(request, 'portal_pages/test-series.html', context)
 
