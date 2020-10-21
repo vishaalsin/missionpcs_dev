@@ -45,7 +45,7 @@ else:
     print("Please use -h argument for help")
     exit()
 
-url = 'http://127.0.0.1:8000/api/login/'
+url = server_url + 'api/login/'
 cred = {'username': 'test', 'password': 'test'}
 
 
