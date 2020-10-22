@@ -646,7 +646,7 @@ class Test_Series(models.Model):
     test_series_name = models.CharField(max_length=255)
     test_series_description = models.TextField(default=None, null=True, blank=True)
     tests = models.ManyToManyField(Test)
-    # created_by = models.ForeignKey(User, on_delete=models.CASCADE, default=None)
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.test_series_name

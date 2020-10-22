@@ -9,6 +9,7 @@
         <div class="row argmt">
             
             <div class="col-lg-9 mt-4">
+                {% block connt %}
                 <div class="affairs">
                     {% for c in ca %}
                     <div class="card mt-2 mb-3">
@@ -41,7 +42,10 @@
                     {% endfor %}
                     
                 </div>
+                {% endblock %}
             </div>
+            
+
             <div class="col-lg-3">
                 <div class="category mt-2">
                     <div id="months">

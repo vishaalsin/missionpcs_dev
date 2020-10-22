@@ -475,12 +475,16 @@ def index(request):
         return my_redirect('/exam/login/?next=/letsprepare/show_modules/')
 
 def detailed_news(request, ca_id):
+    months_to_show = []
+    today_dt = date.today()
+    for i in range(0, 10):
+        p_month = today_dt + relativedelta(months=-i)
+        months_to_show.append(p_month)
     ca = CurrentAffair.objects.get(id=ca_id)
-    context = {'ca': ca}
+    context = {'ca': ca, 'prev_months': months_to_show}
     return my_render_to_response(request, "portal_pages/detailed-news.html", context)
 
 def current_affairs_all(request):
-    this_month = datetime.now().month
     months_to_show = []
     today_dt = date.today()
     for i in range(0, 10):
@@ -491,7 +495,6 @@ def current_affairs_all(request):
     return my_render_to_response(request, "portal_pages/current-affairs.html", context)
 
 def current_affairs_month(request, month, year):
-    this_month = datetime.now().month
     months_to_show = []
     today_dt = date.today()
     for i in range(0, 10):
