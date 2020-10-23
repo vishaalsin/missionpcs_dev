@@ -379,11 +379,14 @@ def user_logout(request):
 
 
 def test_series(request):
-    t_serieses = Test_Series.objects.all() 
+    t_serieses = Test_Series.objects.filter(created_by=request.user)
     form = TestSeriesForm(request.user)
     form_t = TestForm()
     quizzes = [q.quiz for q in AvailableQuizzes.objects.filter(user=request.user, successful=True)] + [q for q in Quiz.objects.filter(is_free=True)]
-    # quizzes = Quiz.objects.all()
+    # user_units = [l_units.id for l_units in [a for a in [module for module in [modules.all() for modules in [cour.learning_module for cour in Course.objects.filter(students=request.user)]]]]]
+    # print(user_units)
+    # quizzes = Quiz.objects.filter(learningunit__in=user_units)
+    print(quizzes)
     context = {
         't_serieses': t_serieses,
         'form_1': form,
@@ -410,7 +413,7 @@ def create_series(request):
     if request.method == 'POST':
         test_series_name = request.POST.get('test_series_name')
         test_series_description = request.POST.get('test_series_desc')
-        t_s = Test_Series(test_series_name = test_series_name, test_series_description = test_series_description)
+        t_s = Test_Series(test_series_name = test_series_name, test_series_description = test_series_description, created_by=request.user)
         t_s.save()
         test1 = request.POST.get('test1')
         test_date1_day = request.POST.get('test_date1_day')

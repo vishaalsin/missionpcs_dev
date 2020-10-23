@@ -125,4 +125,4 @@ def highlight_spaces(text):
 
 @register.filter(name='in_date')
 def in_date(tests, today):
-    return tests.filter(test_date__gte=today)
+    return tests.filter(test_date__gte=today).order_by('test_date')
