@@ -378,11 +378,13 @@ def test_series(request):
     t_serieses = Test_Series.objects.filter(created_by=request.user)
     form = TestSeriesForm(request.user)
     form_t = TestForm()
-    quizzes = [q.quiz for q in AvailableQuizzes.objects.filter(user=request.user, successful=True)] + [q for q in Quiz.objects.filter(is_free=True)]
-    # user_units = [l_units.id for l_units in [a for a in [module for module in [modules.all() for modules in [cour.learning_module for cour in Course.objects.filter(students=request.user)]]]]]
-    # print(user_units)
+    # quizzes = [q.quiz for q in AvailableQuizzes.objects.filter(user=request.user, successful=True)] + [q for q in Quiz.objects.filter(is_free=True)]
+    quizzes = set()
+    # user_units = [[[quizzes.append(unit.quiz) for unit in m.learning_unit.all()] for m in modules.all()] for modules in [cour.learning_module for cour in Course.objects.filter(students=request.user)]]
+    user_units = [[[quizzes.add(unit.quiz) for unit in lmodule.learning_unit.all()] for lmodule in cour.learning_module.all()] for cour in Course.objects.filter(students=request.user)]
+    
     # quizzes = Quiz.objects.filter(learningunit__in=user_units)
-    print(quizzes)
+    print(user_units)
     context = {
         't_serieses': t_serieses,
         'form_1': form,
@@ -390,6 +392,24 @@ def test_series(request):
         'quizzes': quizzes,
         'today': datetime.date.today(),
     }
+    if request.method == "POST":
+        test_series = request.POST.get('test-series')
+        test = request.POST.get('test')
+        date = request.POST.get('date')
+
+        
+        t_s = Test_Series.objects.get(id = test_series)
+        print([q.quiz.id for q in t_s.tests.all()])
+        print(test)
+        print(test in [q.quiz.id for q in t_s.tests.all()])
+        if int(test) in [q.quiz.id for q in t_s.tests.all()]:
+            messages.warning(request, "test already present")
+            return my_render_to_response(request, 'portal_pages/test-series.html', context)
+        quiz = Quiz.objects.get(id=test)
+        test_ = Test(test_name=quiz.description, quiz=quiz, test_date=date)
+        test_.save()
+        t_s.tests.add(test_)
+        return my_redirect('/exam/test-series/')
     return my_render_to_response(request, 'portal_pages/test-series.html', context)
 
 
@@ -410,11 +430,24 @@ def create_series(request):
         test_series_name = request.POST.get('test_series_name')
         test_series_description = request.POST.get('test_series_desc')
         t_s = Test_Series(test_series_name = test_series_name, test_series_description = test_series_description, created_by=request.user)
-        t_s.save()
+        
         test1 = request.POST.get('test1')
         test_date1_day = request.POST.get('test_date1_day')
         test_date1_month = request.POST.get('test_date1_month')
         test_date1_year = request.POST.get('test_date1_year')
+        all_tests = []
+        for test in range(1,6):
+            if request.POST.get(f'test{test}') != 'NONE':
+                all_tests.append(request.POST.get(f'test{test}'))
+        all_tests.sort()
+        f='0'
+        for a in all_tests:
+            if a==f:
+                messages.warning(request, "tests are repeated")
+                return my_redirect('/exam/test-series/')
+            else:
+                f=a
+        t_s.save()
         if test1 != 'NONE':
             quiz = Quiz.objects.get(id=test1)
             test_date = datetime.datetime.strptime(test_date1_year + '-' + test_date1_month + '-' + test_date1_day, '%Y-%m-%d').date()
