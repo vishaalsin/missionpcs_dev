@@ -20,7 +20,6 @@
             <div class="col-12 test-series-header">
               
                 <h2 class="mb-0 d-inline-block">Your Test Series</h2>
-                <!--<a href="{% url 'yaksh:create_series' %}" class="btn btn-success" style="border-radius: 15px;">Create Test Series</a>-->
                 <button type="button" class="create-test" data-toggle="modal" data-target="#create-series-modal">
                         Create Test Series
                 </button>
@@ -34,7 +33,7 @@
                               <span aria-hidden="true">&times;</span>
                             </button>
                           </div>
-                        <form method="POST" action="{% url 'yaksh:create_series' %}">
+                        <form method="POST" action="{% url 'yaksh:test_series' %}">
                           <div class="modal-body">
                               <div id="create-series-form">
 
@@ -127,7 +126,7 @@
                                     <div class="modal fade" id="add-test-{{ t_series.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
                                       <div class="modal-dialog" role="document">
                                         <div class="modal-content">
-                                          <form action='{% url "yaksh:test_series" %}' method="POST">
+                                          <form action='{% url "yaksh:add_test_to_series" %}' method="POST">
                                               <div class="modal-header">
                                                 <h5 class="modal-title" id="exampleModalLongTitle">Add Test to {{ t_series.test_series_name }}</h5>
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
