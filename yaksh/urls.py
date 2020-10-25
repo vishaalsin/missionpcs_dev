@@ -17,7 +17,6 @@ urlpatterns = [
     url(r'^subjects/$', views.initiate_subjects, name='initiate_subject'),
     url(r'^subjects/(?P<course_id>\d+)/$', views.subjects, name='subjects'),
     url(r'^test-series/$', views.test_series, name='test_series'),
-    url(r'^create-series/$', views.create_series, name='create_series'),
     url(r'^add_test_to_series/$', views.add_test_to_series, name='add_test_to_series'),
     url(r'^delete-test/(?P<test_id>\d+)/$', views.delete_test, name='delete_quiz_in_series'),
     url(r'^delete-series/(?P<series_id>\d+)/$', views.delete_series, name='delete_series'),

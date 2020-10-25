@@ -8,7 +8,8 @@ document.addEventListener("DOMContentLoaded", ()=>{
     }
     let i=2;
     add_more = document.querySelector("#add_more");
-    add_more.onclick = () => {
+    add_more.onclick = (e) => {
+        e.preventDefault()
         if(i==5){
             add_more.style.display = "none"
             p_later = document.createElement('p')
