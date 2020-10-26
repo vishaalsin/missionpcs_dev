@@ -1,7 +1,7 @@
 .test-series .card {
     background-color: rgb(72,89,110);
     color: #ffffff;
-    border-radius: 20px;
+    border-radius: 5px;
     margin: 0.5rem;
 }
 
@@ -73,11 +73,14 @@
     display: inline-block;
     margin-right: 20px;
     padding: 0.4rem 1rem;
-    border: none;
+    border-style: solid;
+    border-color: rgb(0,0,0,0.3);
+    border-width: 0px 1px 2px 0px;
     cursor: pointer;
     border-radius: 50px;
     font-weight: 600;
 }
+
 
 .test-series .btn-1:disabled {
     color: rgb(52,52,52);
@@ -91,7 +94,6 @@
 }
 
 .test-series .btn-1:hover {
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
     text-decoration: none;
 }
 
@@ -143,6 +145,7 @@
     box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.5);
     background-color: rgb(234, 239, 245);
 }
+
 .test-series-header {
     background-color: rgb(72,89,110);
     color: white;
@@ -173,4 +176,17 @@
     color: #ffffff;
     text-decoration: none;
     box-shadow: 0 2px 6px 0 #0000002a;
+}
+
+
+@media only screen and (max-width: 480px) {
+    .test-series .card .sub-card {
+        display: block;
+    }
+
+    .test-series .card .sub-card .date {
+        margin: 0.5rem;
+        display: inline-block;
+        float: right;
+    }
 }

@@ -23,12 +23,11 @@ function load_navdata(){
             courselink.href = "#a";
             courselink.textContent = response[res].name;
             courseli.appendChild(courselink);
-
             // subdropdown subject in exams
             let course_sub_drop_ul = document.createElement('ul');
             course_sub_drop_ul.classList = "sub-dropdown-content";
             course_sub_drop_a = document.createElement('a');
-            course_sub_drop_a.href="#";
+            course_sub_drop_a.href=`/exam/subjects/${response[res].id}`;
             course_sub_drop_a.textContent = "Subjects";
             
             course_sub_drop_ul.appendChild(course_sub_drop_a);
@@ -57,7 +56,7 @@ function load_navdata(){
             // subjects drop down
             courseli = document.createElement('li');
             courselink = document.createElement('a');
-            courselink.href = "#b";
+            courselink.href = `/exam/subjects/${response[res].id}`;
             courselink.textContent = response[res].name
             courseli.appendChild(courselink)
             document.querySelector('#subjects-drop').appendChild(courseli)

@@ -113,7 +113,7 @@
                                 
                                 <div class="card-btn">
                                   {% if next_tests.first.test_date == today %}
-                                  <a href="/exam/start/{{next_tests.first.quiz.questionpaper_set.get.id}}/{{next_tests.first.quiz.learningunit_set.get.learning_unit.get.id}}{{module_id}}/{{next_tests.first.quiz.learningunit_set.get.learning_unit.get.learning_module.get.id}}{{course_id}}/" class="btn-1">Start</a>
+                                  <a href="/exam/start/{{next_tests.first.quiz.questionpaper_set.get.id}}/{{next_tests.first.quiz.learningunit_set.get.learning_unit.get.id}}/{{next_tests.first.quiz.learningunit_set.get.learning_unit.get.learning_module.get.id}}/" class="btn-1">Start</a>
                                   {% endif %}
                                   {% endwith %}
                                     <a href="#" class="btn-1">Performance</a>

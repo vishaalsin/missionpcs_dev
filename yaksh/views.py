@@ -42,7 +42,7 @@ from yaksh.models import (
     QuestionPaper, QuestionSet, Quiz, Test, Test_Series, Question, StandardTestCase,
     StdIOBasedTestCase, StringTestCase, TestCase, User,
     get_model_class, FIXTURES_DIR_PATH, MOD_GROUP_NAME, Lesson, LessonFile,
-    LearningUnit, LearningModule, CourseStatus, question_types, Post, Comment, Strike, CurrentAffair, AnonymousUser
+    LearningUnit, LearningModule, CourseStatus, question_types, Post, Comment, Strike, CurrentAffair, AnonymousUser, Update
 )
 from yaksh.forms import (
     UserRegisterForm, UserLoginForm, QuizForm, QuestionForm,
@@ -250,6 +250,9 @@ def dashboard(request, course_id):
     current_affairs = CurrentAffair.objects.order_by('-pubDate')[:3]
     modules_data = []
     quiz_data = []
+    updates_result = Update.objects.order_by('-pubDate').filter(type='result')[:5]
+    update_announcements = Update.objects.order_by('-pubDate').filter(type='announcement')[:5]
+    admit_cards = Update.objects.order_by('-pubDate').filter(type='admit_card')[:5]
     try:
         availableQuizzes = json.loads(json.dumps(AvailableQuizzesSerializer(AvailableQuizzes.objects.filter(user=user, successful = True), many=True).data))
         availableQuizIds = [quiz['quiz'] for quiz in availableQuizzes]
@@ -257,6 +260,9 @@ def dashboard(request, course_id):
         availableQuizIds = []
     context = get_dashboard_context(availableQuizIds, course, current_affairs, modules, modules_data, quiz_data,
                                     user_course_list, rest_courses)
+    context['updates_result'] = updates_result 
+    context['update_announcements'] = update_announcements
+    context['admit_cards'] = admit_cards 
     return my_render_to_response(request, 'portal_pages/index.html', context)
 
 
@@ -275,6 +281,8 @@ def get_dashboard_context(availableQuizIds, course, current_affairs, modules, mo
                     'name': quiz.description,
                     'id': quiz.id,
                     'total_questions': quiz.questionpaper_set.get(quiz=quiz.id).tot_questions(),
+                    'qp': quiz.questionpaper_set.get(quiz=quiz.id).id,
+                    'learning_unit': quiz.learningunit_set.get().learning_unit.get().id,
                     'duration': quiz.duration,
                     'weightage': quiz.weightage,
                     'module_id': module.id,
@@ -404,12 +412,19 @@ def test_series(request):
         for test in range(1,6):
             if request.POST.get(f'test{test}') != 'NONE':
                 all_tests.append(request.POST.get(f'test{test}'))
+                test_date_day = request.POST.get(f'test_date{test}_day')
+                test_date_month = request.POST.get(f'test_date{test}_month')
+                test_date_year = request.POST.get(f'test_date{test}_year')
+                test_date = datetime.datetime.strptime(test_date_year + '-' + test_date_month + '-' + test_date_day, '%Y-%m-%d').date()
+                if test_date < timezone.now().date():
+                    messages.warning(request, "You can only add future dates or today's date to tests")
+                    context['form_1'] = TestSeriesForm(request.user, request.POST)
+                    return my_render_to_response(request, 'portal_pages/test-series.html', context)
         all_tests.sort()
         f='0'
         for a in all_tests:
             if a==f:
-                messages.warning(request, "tests are repeated")
-                print(TestSeriesForm(request.user, request.POST))
+                messages.warning(request, "Tests are repeated")
                 context['form_1'] = TestSeriesForm(request.user, request.POST)
                 return my_render_to_response(request, 'portal_pages/test-series.html', context)
             else:
@@ -469,12 +484,13 @@ def add_test_to_series(request):
     test_series = request.POST.get('test-series')
     test = request.POST.get('test')
     date = request.POST.get('date')
+    print(date)
     t_s = Test_Series.objects.get(id = test_series)
-    print([q.quiz.id for q in t_s.tests.all()])
-    print(test)
-    print(test in [q.quiz.id for q in t_s.tests.all()])
+    if date < timezone.now().date().strftime("%Y-%m-%d"):
+        messages.warning(request, "You can only add future dates or today's date for tests")
+        return my_redirect('/exam/test-series/')
     if int(test) in [q.quiz.id for q in t_s.tests.all()]:
-        messages.warning(request, "test already present")
+        messages.warning(request, "Test already present")
         return my_redirect('/exam/test-series/')
     quiz = Quiz.objects.get(id=test)
     test_ = Test(test_name=quiz.description, quiz=quiz, test_date=date)
