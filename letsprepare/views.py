@@ -19,6 +19,7 @@ from random import randint
 from online_test import settings
 from django.utils import timezone
 from django.db import IntegrityError
+from django.core.paginator import Paginator
 
 from yaksh.send_emails import generate_activation_key
 from datetime import datetime, date
@@ -491,7 +492,10 @@ def current_affairs_all(request):
         p_month = today_dt + relativedelta(months=-i)
         months_to_show.append(p_month)
     ca = CurrentAffair.objects.all().order_by("-pubDate")
-    context = {'ca': ca, 'prev_months': months_to_show}
+    paginator = Paginator(ca, 5)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    context = {'prev_months': months_to_show, 'page_obj': page_obj}
     return my_render_to_response(request, "portal_pages/current-affairs.html", context)
 
 def current_affairs_month(request, month, year):
@@ -501,7 +505,10 @@ def current_affairs_month(request, month, year):
         p_month = today_dt + relativedelta(months=-i)
         months_to_show.append(p_month)
     ca = CurrentAffair.objects.all().filter(pubDate__year=year).filter(pubDate__month=month).order_by("-pubDate")
-    context = {'ca': ca, 'prev_months': months_to_show}
+    paginator = Paginator(ca, 5)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    context = {'prev_months': months_to_show, 'page_obj': page_obj}
     return my_render_to_response(request, "portal_pages/current-affairs.html", context)
 
 

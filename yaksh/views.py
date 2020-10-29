@@ -250,9 +250,9 @@ def dashboard(request, course_id):
     current_affairs = CurrentAffair.objects.order_by('-pubDate')[:3]
     modules_data = []
     quiz_data = []
-    updates_result = Update.objects.order_by('-pubDate').filter(type='result')[:5]
-    update_announcements = Update.objects.order_by('-pubDate').filter(type='announcement')[:5]
-    admit_cards = Update.objects.order_by('-pubDate').filter(type='admit_card')[:5]
+    updates_result = Update.objects.order_by('-pubDate').filter(type='result')[:20]
+    update_announcements = Update.objects.order_by('-pubDate').filter(type='announcement')[:20]
+    admit_cards = Update.objects.order_by('-pubDate').filter(type='admit_card')[:20]
     try:
         availableQuizzes = json.loads(json.dumps(AvailableQuizzesSerializer(AvailableQuizzes.objects.filter(user=user, successful = True), many=True).data))
         availableQuizIds = [quiz['quiz'] for quiz in availableQuizzes]
@@ -403,6 +403,14 @@ def test_series(request):
     if request.method == 'POST':
         test_series_name = request.POST.get('test_series_name')
         test_series_description = request.POST.get('test_series_desc')
+        try:
+            check = Test_Series.objects.get(test_series_name=test_series_name)
+        except:
+            check = None
+        if check is not None:
+            messages.warning(request, f"You already have a test series with name \"{test_series_name}\".")
+            context['form_1'] = TestSeriesForm(request.user, request.POST)
+            return my_render_to_response(request, 'portal_pages/test-series.html', context)
         t_s = Test_Series(test_series_name = test_series_name, test_series_description = test_series_description, created_by=request.user)
         test1 = request.POST.get('test1')
         test_date1_day = request.POST.get('test_date1_day')
@@ -877,7 +885,7 @@ def start(request, questionpaper_id=None, attempt_num=None, course_id=None,
     if not user.profile.full_access and not quest_paper.quiz.is_free:
         if quest_paper.quiz.id not in availableQuizIds:
             messages.warning(request, 'Quiz not available. Please unlock.')
-            return my_redirect('/letsprepare/buy')
+            return my_redirect(f'/letsprepare/buy?module={module_id}&quiz={quest_paper.quiz.id}')
     course = Course.objects.get(id=course_id)
     learning_module = course.learning_module.get(id=module_id)
     learning_unit = learning_module.learning_unit.get(quiz=quest_paper.quiz.id)
@@ -4093,18 +4101,19 @@ def anon_enroll(request, course_id):
         print(e)
     
     if course == None:
-        my_redirect('')
+        return my_redirect('/letsprepare/select-exams')
     ip = request.META['REMOTE_ADDR']
-    anon_user = AnonymousUser.objects.get(user_ip=ip)
+    anon_user = AnonymousUser.objects.get_or_create(user_ip=ip)[0]
+    print(anon_user)
     if not int(course_id) in anon_user.interests:
         anon_user.interests.append(int(course_id))
         anon_user.save()
         
-    else:
-        messages.warning(
-                request,
-                "You are already enrolled for {0} by {1}".format(
-                    course.name, course.creator.get_full_name()
-                )
-            )
-    return my_redirect('/letsprepare/select-exams')
+    # else:
+    #     messages.warning(
+    #             request,
+    #             "You are already enrolled for {0} by {1}".format(
+    #                 course.name, course.creator.get_full_name()
+    #             )
+    #         )
+    return my_redirect(f'/exam/dashboard/{course_id}')

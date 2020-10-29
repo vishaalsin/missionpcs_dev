@@ -81,18 +81,19 @@
 
                     </ul>
                 </li>
-                <li class="nav-item drop-down">
-                    <a href="#" class="nav-link">Test Series<span class="fa fa-chevron-down"></span></a>
-                    <ul id="test-se-drop" class="dropdown-content">
-
-                    </ul>
-                </li>
+                
                 <li class="nav-item drop-down">
                     <a href="#" class="nav-link">Previous Year Paper<span class="fa fa-chevron-down"></span></a>
                     <ul id="prev-year-drop" class="dropdown-content">
 
                     </ul>
                 </li>
+                <li class="nav-item drop-down">
+                  <a href="{% url 'letsprepare:all_current_affairs' %}" class="nav-link">Current Affairs</a>
+                  <ul id="test-se-drop" class="dropdown-content">
+
+                  </ul>
+              </li>
                 {% endif %}
             </ul>
             <form class="search-bar mb-3 mb-lg-0">
