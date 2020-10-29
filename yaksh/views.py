@@ -276,13 +276,17 @@ def get_dashboard_context(availableQuizIds, course, current_affairs, modules, mo
         has_quizzes = 0
         for quiz in quizzes:
             if quiz.id in availableQuizIds or quiz.is_free:
+                try:
+                    tot_q = quiz.questionpaper_set.get(quiz=quiz.id).tot_questions()
+                except:
+                    tot_q =0
                 quiz_data.append({
                     'code': quiz.quiz_code,
                     'name': quiz.description,
                     'id': quiz.id,
-                    'total_questions': quiz.questionpaper_set.get(quiz=quiz.id).tot_questions(),
                     'qp': quiz.questionpaper_set.get(quiz=quiz.id).id,
                     'learning_unit': quiz.learningunit_set.get().learning_unit.get().id,
+                    'total_questions': tot_q,
                     'duration': quiz.duration,
                     'weightage': quiz.weightage,
                     'module_id': module.id,
