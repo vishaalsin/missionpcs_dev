@@ -18,35 +18,34 @@ function load_navdata(){
             // Exams drop down
 
             let courseli = document.createElement('li');
-            courseli.classList = "sub-dropdown";
+            courseli.classList = "dropdown";
             let courselink = document.createElement('a');
-            courselink.href = "#a";
+            courselink.href = `/exam/anon_enroll/${response[res].id}`;
             courselink.textContent = response[res].name;
             courseli.appendChild(courselink);
-
             // subdropdown subject in exams
-            let course_sub_drop_ul = document.createElement('ul');
-            course_sub_drop_ul.classList = "sub-dropdown-content";
-            course_sub_drop_a = document.createElement('a');
-            course_sub_drop_a.href="#";
-            course_sub_drop_a.textContent = "Subjects";
+            // let course_sub_drop_ul = document.createElement('ul');
+            // course_sub_drop_ul.classList = "sub-dropdown-content";
+            // course_sub_drop_a = document.createElement('a');
+            // course_sub_drop_a.href=`/exam/subjects/${response[res].id}`;
+            // course_sub_drop_a.textContent = "Subjects";
             
-            course_sub_drop_ul.appendChild(course_sub_drop_a);
-            course_sub_drop_a = document.createElement('a');
-            course_sub_drop_a.href="#";
-            course_sub_drop_a.textContent = "Test Series";
-            course_sub_drop_ul.appendChild(course_sub_drop_a);
+            // course_sub_drop_ul.appendChild(course_sub_drop_a);
+            // course_sub_drop_a = document.createElement('a');
+            // course_sub_drop_a.href="#";
+            // course_sub_drop_a.textContent = "Test Series";
+            // course_sub_drop_ul.appendChild(course_sub_drop_a);
             
-            course_sub_drop_a = document.createElement('a');
-            course_sub_drop_a.href="#";
-            course_sub_drop_a.textContent = "Previous Year Paper";
-            course_sub_drop_ul.appendChild(course_sub_drop_a);
+            // course_sub_drop_a = document.createElement('a');
+            // course_sub_drop_a.href="#";
+            // course_sub_drop_a.textContent = "Previous Year Paper";
+            // course_sub_drop_ul.appendChild(course_sub_drop_a);
             
-            course_sub_drop_a = document.createElement('a');
-            course_sub_drop_a.href="#";
-            course_sub_drop_a.textContent = "Announcements";
-            course_sub_drop_ul.appendChild(course_sub_drop_a);
-            courseli.appendChild(course_sub_drop_ul);
+            // course_sub_drop_a = document.createElement('a');
+            // course_sub_drop_a.href="#";
+            // course_sub_drop_a.textContent = "Announcements";
+            // course_sub_drop_ul.appendChild(course_sub_drop_a);
+            // courseli.appendChild(course_sub_drop_ul);
 
             // Sub Dropdown Test Series
             
@@ -57,18 +56,11 @@ function load_navdata(){
             // subjects drop down
             courseli = document.createElement('li');
             courselink = document.createElement('a');
-            courselink.href = "#b";
+            courselink.href = `/exam/subjects/${response[res].id}`;
             courselink.textContent = response[res].name
             courseli.appendChild(courselink)
             document.querySelector('#subjects-drop').appendChild(courseli)
 
-            // Tests Drop down
-            courseli = document.createElement('li');
-            courselink = document.createElement('a');
-            courselink.href = "#c";
-            courselink.textContent = response[res].name
-            courseli.appendChild(courselink)
-            document.querySelector('#test-se-drop').appendChild(courseli)
             
             // Previous Year Drop down
             courseli = document.createElement('li');
@@ -77,6 +69,14 @@ function load_navdata(){
             courselink.textContent = response[res].name
             courseli.appendChild(courselink)
             document.querySelector('#prev-year-drop').appendChild(courseli)
+            // Tests Drop down
+            // courseli = document.createElement('li');
+            // courselink = document.createElement('a');
+            // courselink.href = "#c";
+            // courselink.textContent = response[res].name
+            // courseli.appendChild(courselink)
+            // document.querySelector('#test-se-drop').appendChild(courseli)
+            
         }
     };
     request.send();

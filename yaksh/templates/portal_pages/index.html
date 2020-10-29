@@ -119,15 +119,15 @@
                      <img src=" {% static 'portal_pages/images/test_icon_2.png' %} " alt="Previous Paper Icons" />
                      <h6 class="card-title">Previous Year Papers</h6>
                  </a>
-                 <a href="#" class="card-body">
+                 <a href="{% url 'yaksh:test_series' %}" class="card-body">
                      <img src=" {% static 'portal_pages/images/paper_icon_2.png'  %}" alt="Test Icon" />
-                     <h6 class="card-title">Tests Series</h6>
+                     <h6 class="card-title">Set up Your goals</h6>
                  </a>
-                 <a href="#" class="card-body">
+                 <a href="#announcements" class="card-body">
                      <img src=" {% static 'portal_pages/images/announ_icon.png'  %}" alt="Announcements icon" />
                      <h6 class="card-title">Announcements</h6>
                  </a>
-                 <a href="#" class="card-body">
+                 <a href="{% url 'letsprepare:all_current_affairs' %}" class="card-body">
                      <img src=" {% static 'portal_pages/images/news-icon.jpg'  %}" alt="News icon" />
                      <h6 class="card-title">Current Affairs</h6>
                  </a>
@@ -163,7 +163,7 @@
                               </div>
                               <div class="badge badge-primary px-3 py-1">{{ quiz.module_name }}</div>
                           </div>
-                          <a href="#" class="start-test-btn float-right">
+                          <a href="/exam/start/{{quiz.qp}}/{{quiz.learning_unit}}/{{quiz.module_id}}/" class="start-test-btn float-right">
                               Start Test <i class="fa fa-caret-right"></i>
                           </a>
                       </div>
@@ -176,7 +176,7 @@
           
           
             <!-- Test Series -->
-            <section id="test-series" class="test-series">
+            <!-- <section id="test-series" class="test-series">
               <h3 class="sub-head">&diamond; Suggested Test Series &diamond;</h3>
               <div class="container">
                 <div class="row">
@@ -240,7 +240,7 @@
                 <a href="#" class="view-more-btn mt-5"><i class="fa fa-arrow-down"></i></a>
                 <p class="view-more-text">Explore all test series</p>
               </div>
-            </section>
+            </section> -->
             
         
             {% load tz %}
@@ -262,15 +262,16 @@
                       <div class="col-md-8">
                           <div class=" ml-2 card-head">
                           </div>
-                          <div class="card-body">
+                          <div class="card-body text-left">
                               <h3 id="news-head">
                                   <a href="#"> <b>{{ ca.title }}</b> </a>
                               </h3>
                               <!-- <p class="card-text"><a href="#" class="badge badge-primary"><span class="fa fa-tag mr-2"></span>Economy & Banking Current Affairs</a></p> -->
                               <p class="card-text text-secondary">{{ ca.summary }}...
                                   <h6><a href="{% url 'letsprepare:current_affair-detail' ca.id %}" class="readmore-btn">Read More</a></h6>
-                              </p>
-  
+                                </p>
+                                <p>Source : <a href="{{ ca.link }}"> The Hindu</a></p>
+
                           </div>
                       </div>
                   </div>
@@ -280,5 +281,58 @@
           <a href="{% url 'letsprepare:all_current_affairs' %}" class="view-more-btn mt-5"><i class="fa fa-arrow-down"></i></a>
           <p class="view-more-text">View All Current Affairs</p>
       </div>
+      <section id="updates">
+        <h3 class="sub-head mb-0">&diamond; Latest Updates &diamond;</h3>
+        <div class="row">
+          <div class="col-sm-12 col-md-6 col-lg-4 pt-5">
+            <div class="card">
+              <div class="card-body">
+                <h4>Results</h4>
+                <div>
+                {% for result in updates_result %}
+                <a href="{{ result.link }}"><p>{{ result.headline }}</p></a>
+                {% endfor %}
+                </div>
+                <!-- <a href="#"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p></a>
+                <a href="#"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p></a>
+                <a href="#"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p></a>
+                <a href="#"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p></a> -->
+              </div>
+              <!-- <a href="#" class="view-more">View More</a> -->
+            </div>
+          </div>
+          <div class="col-sm-12 col-md-6 col-lg-4 pt-5">
+            <div class="card">
+              <div class="card-body">
+                <h4>Admit Card</h4>
+                <div>
+                {% for admit_card in admit_cards %}
+                <a href="{{ admit_card.link }}"><p>{{ admit_card.headline }}</p></a>
+                {% endfor %}
+                </div>
+                
+                <!-- <a href="#"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p></a>
+                <a href="#"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p></a>
+                <a href="#"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p></a>
+                <a href="#"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p></a> -->
+              </div>
+              <!-- <a href="#" class="view-more">View More</a> -->
+            </div>
+          </div>
+          <div class="col-sm-12 col-md-6 col-lg-4 pt-5" id="announcements">
+            <div class="card">
+              <div class="card-body">
+                <h4>Announcements</h4>
+                <div>
+                {% for anncment in update_announcements %}
+                <a href="{{ anncment.link }}"><p>{{ anncment.headline }}</p></a>
+                {% endfor %}
+                </div>
+              </div>
+              <!-- <a href="#" class="view-more">View More</a> -->
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
 {% endblock %}

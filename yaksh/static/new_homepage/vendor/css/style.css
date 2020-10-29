@@ -842,8 +842,21 @@ h3.sub-head::after {
 #updates .card {
     border-radius: 0px;
     text-align: left;
-    height: 100%;
     margin-bottom: 5px;
+}
+
+#updates .card .card-body div {
+    height: 575px;
+    overflow-y: scroll;
+    padding: 1.25rem;
+}
+
+#updates .card-body {
+    padding: 0px;
+}
+
+#updates .card-body h4 {
+    padding: 1.25rem;
 }
 
 #updates h4 {

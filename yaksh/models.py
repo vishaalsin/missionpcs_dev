@@ -635,7 +635,7 @@ class Quiz(models.Model):
 class Test(models.Model):
     test_name = models.CharField(max_length=100, default='New Test')
     quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE, default=None, null=True)
-    test_date = models.DateField(auto_now=False, auto_now_add=False)
+    test_date = models.DateField(auto_now=False, auto_now_add=False, default=timezone.now().today)
 
     def __str__(self):
         return self.quiz.description

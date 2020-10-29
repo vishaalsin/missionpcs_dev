@@ -42,7 +42,7 @@ from yaksh.models import (
     QuestionPaper, QuestionSet, Quiz, Test, Test_Series, Question, StandardTestCase,
     StdIOBasedTestCase, StringTestCase, TestCase, User,
     get_model_class, FIXTURES_DIR_PATH, MOD_GROUP_NAME, Lesson, LessonFile,
-    LearningUnit, LearningModule, CourseStatus, question_types, Post, Comment, Strike, CurrentAffair, AnonymousUser
+    LearningUnit, LearningModule, CourseStatus, question_types, Post, Comment, Strike, CurrentAffair, AnonymousUser, Update
 )
 from yaksh.forms import (
     UserRegisterForm, UserLoginForm, QuizForm, QuestionForm,
@@ -250,6 +250,9 @@ def dashboard(request, course_id):
     current_affairs = CurrentAffair.objects.order_by('-pubDate')[:3]
     modules_data = []
     quiz_data = []
+    updates_result = Update.objects.order_by('-pubDate').filter(type='result')[:20]
+    update_announcements = Update.objects.order_by('-pubDate').filter(type='announcement')[:20]
+    admit_cards = Update.objects.order_by('-pubDate').filter(type='admit_card')[:20]
     try:
         availableQuizzes = json.loads(json.dumps(AvailableQuizzesSerializer(AvailableQuizzes.objects.filter(user=user, successful = True), many=True).data))
         availableQuizIds = [quiz['quiz'] for quiz in availableQuizzes]
@@ -257,6 +260,9 @@ def dashboard(request, course_id):
         availableQuizIds = []
     context = get_dashboard_context(availableQuizIds, course, current_affairs, modules, modules_data, quiz_data,
                                     user_course_list, rest_courses)
+    context['updates_result'] = updates_result 
+    context['update_announcements'] = update_announcements
+    context['admit_cards'] = admit_cards 
     return my_render_to_response(request, 'portal_pages/index.html', context)
 
 
@@ -278,6 +284,8 @@ def get_dashboard_context(availableQuizIds, course, current_affairs, modules, mo
                     'code': quiz.quiz_code,
                     'name': quiz.description,
                     'id': quiz.id,
+                    'qp': quiz.questionpaper_set.get(quiz=quiz.id).id,
+                    'learning_unit': quiz.learningunit_set.get().learning_unit.get().id,
                     'total_questions': tot_q,
                     'duration': quiz.duration,
                     'weightage': quiz.weightage,
@@ -399,6 +407,14 @@ def test_series(request):
     if request.method == 'POST':
         test_series_name = request.POST.get('test_series_name')
         test_series_description = request.POST.get('test_series_desc')
+        try:
+            check = Test_Series.objects.get(test_series_name=test_series_name)
+        except:
+            check = None
+        if check is not None:
+            messages.warning(request, f"You already have a test series with name \"{test_series_name}\".")
+            context['form_1'] = TestSeriesForm(request.user, request.POST)
+            return my_render_to_response(request, 'portal_pages/test-series.html', context)
         t_s = Test_Series(test_series_name = test_series_name, test_series_description = test_series_description, created_by=request.user)
         test1 = request.POST.get('test1')
         test_date1_day = request.POST.get('test_date1_day')
@@ -408,12 +424,19 @@ def test_series(request):
         for test in range(1,6):
             if request.POST.get(f'test{test}') != 'NONE':
                 all_tests.append(request.POST.get(f'test{test}'))
+                test_date_day = request.POST.get(f'test_date{test}_day')
+                test_date_month = request.POST.get(f'test_date{test}_month')
+                test_date_year = request.POST.get(f'test_date{test}_year')
+                test_date = datetime.datetime.strptime(test_date_year + '-' + test_date_month + '-' + test_date_day, '%Y-%m-%d').date()
+                if test_date < timezone.now().date():
+                    messages.warning(request, "You can only add future dates or today's date to tests")
+                    context['form_1'] = TestSeriesForm(request.user, request.POST)
+                    return my_render_to_response(request, 'portal_pages/test-series.html', context)
         all_tests.sort()
         f='0'
         for a in all_tests:
             if a==f:
-                messages.warning(request, "tests are repeated")
-                print(TestSeriesForm(request.user, request.POST))
+                messages.warning(request, "Tests are repeated")
                 context['form_1'] = TestSeriesForm(request.user, request.POST)
                 return my_render_to_response(request, 'portal_pages/test-series.html', context)
             else:
@@ -473,12 +496,13 @@ def add_test_to_series(request):
     test_series = request.POST.get('test-series')
     test = request.POST.get('test')
     date = request.POST.get('date')
+    print(date)
     t_s = Test_Series.objects.get(id = test_series)
-    print([q.quiz.id for q in t_s.tests.all()])
-    print(test)
-    print(test in [q.quiz.id for q in t_s.tests.all()])
+    if date < timezone.now().date().strftime("%Y-%m-%d"):
+        messages.warning(request, "You can only add future dates or today's date for tests")
+        return my_redirect('/exam/test-series/')
     if int(test) in [q.quiz.id for q in t_s.tests.all()]:
-        messages.warning(request, "test already present")
+        messages.warning(request, "Test already present")
         return my_redirect('/exam/test-series/')
     quiz = Quiz.objects.get(id=test)
     test_ = Test(test_name=quiz.description, quiz=quiz, test_date=date)
@@ -865,7 +889,7 @@ def start(request, questionpaper_id=None, attempt_num=None, course_id=None,
     if not user.profile.full_access and not quest_paper.quiz.is_free:
         if quest_paper.quiz.id not in availableQuizIds:
             messages.warning(request, 'Quiz not available. Please unlock.')
-            return my_redirect('/letsprepare/buy')
+            return my_redirect(f'/letsprepare/buy?module={module_id}&quiz={quest_paper.quiz.id}')
     course = Course.objects.get(id=course_id)
     learning_module = course.learning_module.get(id=module_id)
     learning_unit = learning_module.learning_unit.get(quiz=quest_paper.quiz.id)
@@ -4081,18 +4105,19 @@ def anon_enroll(request, course_id):
         print(e)
     
     if course == None:
-        my_redirect('')
+        return my_redirect('/letsprepare/select-exams')
     ip = request.META['REMOTE_ADDR']
-    anon_user = AnonymousUser.objects.get(user_ip=ip)
+    anon_user = AnonymousUser.objects.get_or_create(user_ip=ip)[0]
+    print(anon_user)
     if not int(course_id) in anon_user.interests:
         anon_user.interests.append(int(course_id))
         anon_user.save()
         
-    else:
-        messages.warning(
-                request,
-                "You are already enrolled for {0} by {1}".format(
-                    course.name, course.creator.get_full_name()
-                )
-            )
-    return my_redirect('/letsprepare/select-exams')
+    # else:
+    #     messages.warning(
+    #             request,
+    #             "You are already enrolled for {0} by {1}".format(
+    #                 course.name, course.creator.get_full_name()
+    #             )
+    #         )
+    return my_redirect(f'/exam/dashboard/{course_id}')

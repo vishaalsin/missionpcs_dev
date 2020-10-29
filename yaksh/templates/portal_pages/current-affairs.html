@@ -11,7 +11,7 @@
             <div class="col-lg-9 mt-4">
                 {% block connt %}
                 <div class="affairs">
-                    {% for c in ca %}
+                    {% for c in page_obj %}
                     <div class="card mt-2 mb-3">
                         <div class="row p-4">
                             <div class="col-md-4">
@@ -42,6 +42,41 @@
                     {% endfor %}
                     
                 </div>
+                <div class="pagination">
+                    <span class="step-links">
+                        {% if page_obj.has_previous %}
+                            <a class="btn btn-outline-info mb-4" href="?page=1">&laquo; first</a>
+                            <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.previous_page_number }}">previous</a>
+                        {% else %}
+                            <a class="btn btn-outline-dark disabled mb-4" disabled>&laquo; first</a>
+                            <a class="btn btn-outline-dark disabled mb-4" disabled>previous</a>
+                        {% endif %}
+                        {% if page_obj.number|add:'-2' > 1 %}
+                            <a class="btn btn-outline-info mb-4" href="?page=1">1</a>
+                            <p class="d-inline">...</p>
+                        {% endif %}
+                        {% for num in page_obj.paginator.page_range %}
+                        {% if page_obj.number == num %}
+                            <a class="btn btn-info mb-4" href="?page={{num}}">{{ num }}</a>
+                        {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                            <a class="btn btn-outline-info mb-4" href="?page={{ num }}">{{ num }}</a>
+                        {% endif %}
+                        {% endfor %} 
+                        {% if page_obj.number|add:'2' < page_obj.paginator.num_pages %}
+                            <p class="d-inline">...</p>
+                            <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages }}</a>
+                        {% endif %}
+                        {% if page_obj.has_next %}
+                            
+                            <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.next_page_number }}">next</a>
+                            <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+                        {% else %}
+                            <a class="btn btn-outline-dark disabled mb-4" disabled>&laquo; next</a>
+                            <a class="btn btn-outline-dark disabled mb-4" disabled>last</a>
+                        {% endif %}
+                    </span>
+                </div>
+                
                 {% endblock %}
             </div>
             

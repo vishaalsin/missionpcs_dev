@@ -81,18 +81,19 @@
 
                     </ul>
                 </li>
-                <li class="nav-item drop-down">
-                    <a href="#" class="nav-link">Test Series<span class="fa fa-chevron-down"></span></a>
-                    <ul id="test-se-drop" class="dropdown-content">
-
-                    </ul>
-                </li>
+                
                 <li class="nav-item drop-down">
                     <a href="#" class="nav-link">Previous Year Paper<span class="fa fa-chevron-down"></span></a>
                     <ul id="prev-year-drop" class="dropdown-content">
 
                     </ul>
                 </li>
+                <li class="nav-item drop-down">
+                  <a href="{% url 'letsprepare:all_current_affairs' %}" class="nav-link">Current Affairs</a>
+                  <ul id="test-se-drop" class="dropdown-content">
+
+                  </ul>
+              </li>
                 {% endif %}
             </ul>
             <form class="search-bar mb-3 mb-lg-0">
@@ -302,29 +303,37 @@
 
         <ul class="list-unstyled">
           <li>
-            <a href="#!">Home</a>
+            {% if current_course.id %}
+            <a href="{% url 'yaksh:dashboard' current_course.id %}">
+            Home
+            </a>
+            {% else %}
+            <a href="{% url 'yaksh:index' %}">
+              Home
+            </a>
+            {% endif %}
           </li>
           <li>
-            <a href="#!">Take a tour</a>
+            <a href="/letsprepare/select-exams">Take a tour</a>
           </li>
           <li>
-            <a href="#c-affairs">Current Affairs</a>
+            <a href="{% url 'letsprepare:all_current_affairs' %}">Current Affairs</a>
           </li>
           <li>
-            <a href="#exam">Select Your Exam</a>
+            <a href="/letsprepare/select-exams">Select Your Exam</a>
           </li>
           <li>
-            <a href="#test-series">Test Series</a>
+            <a href="{% url 'yaksh:test_series' %}"Test Series</a>
           </li>
           <li>
-            <a href="#updates">Latest Updates</a>
+            <a href="/letsprepare/#updates">Latest Updates</a>
           </li>
         </ul>
 
       </div>
       <hr class="clearfix w-100 d-md-none">
 
-      <div class="col-md-2 mx-auto">
+      <!-- <div class="col-md-2 mx-auto">
 
         <h5 class="font-weight-bold text-uppercase mt-3 mb-4">Nav Links</h5>
 
@@ -343,7 +352,7 @@
           </li>
         </ul>
 
-      </div>
+      </div> -->
 
     </div>
 

@@ -107,7 +107,7 @@
         </div>
         {% endfor %}
       </div>
-      <a href="#" class="view-more-btn"><i class="fa fa-arrow-down"></i></a>
+      <a href="{% url 'letsprepare:all_current_affairs' %}" class="view-more-btn"><i class="fa fa-arrow-down"></i></a>
       <p class="view-more-text">View More</p>
       </section>
 
@@ -134,7 +134,7 @@
               <div class="row">
                 <div class="col-lg-6 col-12 mb-3">
                   <div class="card">
-                    <a href="#" class="card-body card-prop" id="subjects-body">
+                    <a href="{% url 'yaksh:subjects' course.id %}" class="card-body card-prop" id="subjects-body">
                       <div class="row">
                         <div class="col-md-6 col-12">
                           <h5 class="card-title text-left">Subjects</h5>
@@ -179,7 +179,7 @@
                 </div>
                 <div class="col-lg-6 mb-3 col-12">
                   <div class="card">
-                    <a href="#" class="card-body card-prop" id="announcements-body">
+                    <a href="#announcements" class="card-body card-prop" id="announcements-body">
                       <div class="row">
                         <div class="col-md-6 col-12">
                           <h5 class="card-title text-left">Announcements</h5>
@@ -200,7 +200,7 @@
 
 
 
-      <section id="test-series" class="test-series">
+      <!-- <section id="test-series" class="test-series">
         <h3 class="sub-head">&diamond; Test Series &diamond;</h3>
         <div class="container">
           <div class="row">
@@ -264,14 +264,14 @@
           <a href="#" class="view-more-btn mt-5"><i class="fa fa-arrow-down"></i></a>
           <p class="view-more-text">Explore all test series</p>
         </div>
-      </section>
+      </section> -->
 
 
 
       <section id="updates">
-        <h3 class="sub-head">&diamond; Latest Updates &diamond;</h3>
+        <h3 class="sub-head mb-0">&diamond; Latest Updates &diamond;</h3>
         <div class="row">
-          <div class="col-sm-12 col-md-6 col-lg-4 mb-3">
+          <div class="col-sm-12 col-md-6 col-lg-4 pt-5">
             <div class="card">
               <div class="card-body">
                 <h4>Results</h4>
@@ -286,7 +286,7 @@
               <a href="#" class="view-more">View More</a>
             </div>
           </div>
-          <div class="col-sm-12 col-md-6 col-lg-4 mb-3">
+          <div class="col-sm-12 col-md-6 col-lg-4 pt-5">
             <div class="card">
               <div class="card-body">
                 <h4>Admit Card</h4>
@@ -302,7 +302,7 @@
               <a href="#" class="view-more">View More</a>
             </div>
           </div>
-          <div class="col-sm-12 col-md-6 col-lg-4 mb-3">
+          <div class="col-sm-12 col-md-6 col-lg-4 pt-5" id="announcements">
             <div class="card">
               <div class="card-body">
                 <h4>Announcements</h4>

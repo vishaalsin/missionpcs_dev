@@ -2,8 +2,8 @@ document.addEventListener("DOMContentLoaded", ()=>{
     for(let i=2; i<6; i++){
         console.log(`id_test${i}`);
         
-        document.querySelector(`#id_test${i}`).parentElement.style.display = "none";
-        document.querySelector(`#id_test_date${i}_month`).parentElement.style.display = "none";
+        document.querySelector(`#div_id_test${i}`).style.display = "none";
+        document.querySelector(`#div_id_test_date${i}`).style.display = "none";
 
     }
     let i=2;
@@ -16,8 +16,8 @@ document.addEventListener("DOMContentLoaded", ()=>{
             p_later.textContent = "You can add more tests after Saving the changes"
             add_more.parentElement.appendChild(p_later)
         }
-        document.querySelector(`#id_test${i}`).parentElement.style.display = "block";
-        document.querySelector(`#id_test_date${i}_month`).parentElement.style.display = "block";
+        document.querySelector(`#div_id_test${i}`).style.display = "block";
+        document.querySelector(`#div_id_test_date${i}`).style.display = "block";
         i++;
     }
 })
