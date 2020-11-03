@@ -250,9 +250,7 @@ def dashboard(request, course_id):
     current_affairs = CurrentAffair.objects.order_by('-pubDate')[:3]
     modules_data = []
     quiz_data = []
-    updates_result = Update.objects.order_by('-pubDate').filter(type='result')[:20]
-    update_announcements = Update.objects.order_by('-pubDate').filter(type='announcement')[:20]
-    admit_cards = Update.objects.order_by('-pubDate').filter(type='admit_card')[:20]
+    
     try:
         availableQuizzes = json.loads(json.dumps(AvailableQuizzesSerializer(AvailableQuizzes.objects.filter(user=user, successful = True), many=True).data))
         availableQuizIds = [quiz['quiz'] for quiz in availableQuizzes]
@@ -260,9 +258,15 @@ def dashboard(request, course_id):
         availableQuizIds = []
     context = get_dashboard_context(availableQuizIds, course, current_affairs, modules, modules_data, quiz_data,
                                     user_course_list, rest_courses)
-    context['updates_result'] = updates_result 
-    context['update_announcements'] = update_announcements
-    context['admit_cards'] = admit_cards 
+    t_serieses = Test_Series.objects.filter(created_by=request.user)[:2]
+    print(t_serieses[0].tests.all())
+    form_t = TestForm()
+    quizzes = set()
+    user_units = [[[quizzes.add(unit.quiz) for unit in lmodule.learning_unit.all()] for lmodule in cour.learning_module.all()] for cour in Course.objects.filter(students=request.user)]
+    context['t_serieses'] = t_serieses
+    context['form'] = form_t
+    context['quizzes_1'] = quizzes
+    context['today'] = datetime.date.today()
     return my_render_to_response(request, 'portal_pages/index.html', context)
 
 
@@ -292,6 +296,9 @@ def get_dashboard_context(availableQuizIds, course, current_affairs, modules, mo
                 has_quizzes += 1
         modules_data.append({'name': module.description, 'id': module.id,
                              'total_quizzes': len(quizzes), 'has_quizzes': has_quizzes})
+    updates_result = Update.objects.order_by('-pubDate').filter(type='result')[:20]
+    update_announcements = Update.objects.order_by('-pubDate').filter(type='announcement')[:20]
+    admit_cards = Update.objects.order_by('-pubDate').filter(type='admit_card')[:20]
     context = {
         'courses': user_course_list,
         'modules': modules_data,
@@ -300,6 +307,9 @@ def get_dashboard_context(availableQuizIds, course, current_affairs, modules, mo
         'current_affairs': current_affairs,
         'rest_courses': rest_courses,
     }
+    context['updates_result'] = updates_result 
+    context['update_announcements'] = update_announcements
+    context['admit_cards'] = admit_cards 
     return context
 
 

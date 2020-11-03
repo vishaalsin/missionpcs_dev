@@ -1,0 +1,73 @@
+{% extends "portal_pages/base2.html" %}
+{% load static %}
+{% block title %}
+Latest Updates
+{% endblock %}
+
+{% block cssfile %}
+<link rel="stylesheet" href=" {% static 'upgradev001/css/latest_updates.css' %}" />
+{% endblock %}
+
+{% block content %}
+<section class="latest-updates">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="card updates-nav">
+                    <h5>Latest Updates</h5>
+                    <a href="{% url 'letsprepare:update_result' %}">Result</a>
+                    <a href="{% url 'letsprepare:update_admit_card' %}">Admit Card</a>
+                    <a href="{% url 'letsprepare:update_announcement' %}">Announcements</a>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="card update-nav-link">
+                    {% load tz %}
+                    {% localtime off %}
+                    <h4>{{ heading }}</h4>
+                    {% for update in page_obj %}
+                    <a href="{{ update.link }}" class="updates-link">{{ update.description }}<span class="date"> {{ update.pubDate }}</span></a>
+                    {% endfor %}
+                    {% endlocaltime %}
+                    
+                    <div class="pagination">
+                        <span class="step-links">
+                            {% if page_obj.has_previous %}
+                                <a class="btn btn-outline-info mb-4" href="?page=1">&laquo; first</a>
+                                <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.previous_page_number }}">previous</a>
+                            {% else %}
+                                <a class="btn btn-outline-dark disabled mb-4" disabled>&laquo; first</a>
+                                <a class="btn btn-outline-dark disabled mb-4" disabled>previous</a>
+                            {% endif %}
+                            {% if page_obj.number|add:'-2' > 1 %}
+                                <a class="btn btn-outline-info mb-4" href="?page=1">1</a>
+                                <a class="d-inline">...</a>
+                            {% endif %}
+                            {% for num in page_obj.paginator.page_range %}
+                            {% if page_obj.number == num %}
+                                <a class="active mb-4" href="?page={{num}}">{{ num }}</a>
+                            {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                                <a class="btn btn-outline-info mb-4" href="?page={{ num }}">{{ num }}</a>
+                            {% endif %}
+                            {% endfor %} 
+                            {% if page_obj.number|add:'2' < page_obj.paginator.num_pages %}
+                                <a class="d-inline">...</a>
+                                <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages }}</a>
+                            {% endif %}
+                            {% if page_obj.has_next %}
+                                
+                                <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.next_page_number }}">next</a>
+                                <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+                            {% else %}
+                                <a class="btn btn-outline-dark disabled mb-4" disabled>&laquo; next</a>
+                                <a class="btn btn-outline-dark disabled mb-4" disabled>last</a>
+                            {% endif %}
+                        </span>
+                    </div>
+                
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
