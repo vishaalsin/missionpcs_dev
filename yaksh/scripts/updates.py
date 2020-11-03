@@ -23,8 +23,8 @@ else:
     print("Please use -h argument for help")
     exit()
 
-url = 'http://127.0.0.1:8000/api/login/'
-cred = {'username': 'test', 'password': 'test'}
+url = server_url + 'api/login/'
+cred = {'username': 'vishal', 'password': 'plmoknijb'}
 
 courses = req.get(f'{server_url}api/all_courses')
 
@@ -45,13 +45,13 @@ try:
             #     continue
             if update['title'].find('result') !=-1:
                 response = req.post(f'{server_url}api/updates/', json={'headline': update['title'], 'description': update['title'], 'link': update['link'], 'type': 'result', 'guid': update['guid']['#text'],'pubDate': pdate.isoformat(), 'course': cid}, headers={'Authorization': f'token {user_token}'})
-                print(response.status_code)
+                print(response.status_code, response.text)
             elif update['title'].find('admit') !=-1:
                 response = req.post(f'{server_url}api/updates/', json={'headline': update['title'], 'description': update['title'], 'link': update['link'], 'type': 'admit_card', 'guid': update['guid']['#text'],'pubDate': pdate.isoformat(), 'course': cid}, headers={'Authorization': f'token {user_token}'})
-                print(response.status_code)
+                print(response.status_code, response.text)
             else:
                 response = req.post(f'{server_url}api/updates/', json={'headline': update['title'], 'description': update['title'], 'link': update['link'], 'type': 'announcement', 'guid': update['guid']['#text'],'pubDate': pdate.isoformat(), 'course': cid}, headers={'Authorization': f'token {user_token}'})
-                print(response.status_code)
+                print(response.status_code, response.text)
             print(update['title'])
 except Exception as e:
     print(e)
