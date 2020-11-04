@@ -100,6 +100,44 @@
     height: 512px;
 }
 
+.goals {
+    text-align: center;
+    padding: 3rem 2rem;
+}
+
+.goals h2 {
+    color: black;
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: 1.2;   
+}
+
+.goals p {
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    color: #222222;
+}
+
+.goals .setup-goals {
+    border: none;
+    background-color: blueviolet;
+    color: white;
+    font-weight: 500;
+    border-radius: 5px;
+    font-size: 17px;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.35);
+    padding: 0.5rem 3rem;
+}
+
+.gradient-bg {
+    background-image: linear-gradient(#eeeeee, white);
+}
+
+.rv-gradient {
+    background-image: linear-gradient(white, #eeeeee)
+}
+
 @media only screen and (max-width: 768px) {
     .cr-prop {
         height: 100%;

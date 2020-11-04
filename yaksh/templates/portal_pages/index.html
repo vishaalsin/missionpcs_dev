@@ -3,6 +3,8 @@
 {% load socialaccount %}
 {% load static %}
 {% block cssfile %}
+<link rel="stylesheet" href=" {% static 'portal_pages/style/test-series.css' %}" />
+<script src="{% static 'portal_pages/js/test-series.js' %}"></script>
     <link rel="stylesheet" href=" {% static 'portal_pages/style/current-affairs.css' %}" />
     <link rel="stylesheet" href=" {% static 'portal_pages/style/index.css' %}" />
 {% endblock %}
@@ -22,7 +24,7 @@
           <br>
       {% endfor %}
   {% endif %}
-<div class="container-fluid">
+<div class="container-fluid gradient-bg">
   
   <div class="row">
     <div id="carouselIndicators2" class="carousel slide col-12 col-lg-8 col-xl-9" data-ride="carousel">
@@ -119,10 +121,17 @@
                      <img src=" {% static 'portal_pages/images/test_icon_2.png' %} " alt="Previous Paper Icons" />
                      <h6 class="card-title">Previous Year Papers</h6>
                  </a>
+                 {% if user.is_authenticated %}
                  <a href="{% url 'yaksh:test_series' %}" class="card-body">
                      <img src=" {% static 'portal_pages/images/paper_icon_2.png'  %}" alt="Test Icon" />
                      <h6 class="card-title">Set up Your goals</h6>
                  </a>
+                 {% else %}
+                 <a href="#" class="card-body login-register">
+                    <img src=" {% static 'portal_pages/images/paper_icon_2.png'  %}" alt="Test Icon" />
+                    <h6 class="card-title">Set up Your goals</h6>
+                </a>
+                {% endif %}
                  <a href="#announcements" class="card-body">
                      <img src=" {% static 'portal_pages/images/announ_icon.png'  %}" alt="Announcements icon" />
                      <h6 class="card-title">Announcements</h6>
@@ -136,8 +145,199 @@
  </div>
   </div>
   </div>
-    
+  <section class="goals bg-white test-series">
+    <h2>Setup Your Goals</h2>
+    {% if user.is_authenticated and t_serieses %}
+    <div class="container">
+    <div class="row ">
+      {% for t_series in t_serieses %}
+      <div class="col-lg-6">
+          <div class="card test-card mb-3">
+              <div class="card-body">
+                  <div class="d-flex justify-content-between">
+                      <h5 class="card-title">{{ t_series.test_series_name }}</h5>
+                      <button id="delete-series" class="btn btn-danger" data-toggle="modal" data-target="#delete-series-{{ t_series.id }}">X</button>
+                       <!-- Delete Modal -->
+                          <div class="modal fade" id="delete-series-{{ t_series.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h5 class="modal-title" id="exampleModalLongTitle">Delete {{ t_series.test_series_name }}</h5>
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                  </button>
+                                </div>
+                                <div class="modal-body">
+                                  Do you want to delete {{ t_series.test_series_name }} ?
+                                </div>
+                                <div class="modal-footer">
+                                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                  <a href="/exam/delete-series/{{ t_series.id }}" class="btn btn-danger">Delete</a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                  </div>
+                  <h6 class="card-subtitle mb-2 light-text">Completed Tests: 3 / 12</h6>
+                  <div class="progress">
+                      <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                  <h6 class="card-subtitle mt-2 mb-2 light-text">Next Test</h6>
+                  <div class="card-foot d-flex flex-wrap justify-content-between">
+                    {% load custom_filters %}
+                    {% with next_tests=t_series.tests.all|in_date:today %}
+                      {% if next_tests.first %}
+                        
+                        <div class="sub-card">
+                          <h6>{{ next_tests.first.test_name }}</h6>
+                          <div class="test-info"><small>
+                              <i class="fa fa-question-circle mr-1"></i> 10
+                              Questions
+                              </small>
+                              <small><i class="fa fa-check mr-1"></i>
+                              16 Marks</small>
+                              <small><i class="fa fa-clock-o mr-1"></i>30 Minutes</small>
+                          </div>
+                        <div class="text-center">
+                          {% if next_tests.first.test_date == today %}
+                            <a class="btn btn-primary mb-1" href="/exam/start/{{next_tests.first.quiz.questionpaper_set.get.id}}/{{next_tests.first.quiz.learningunit_set.get.learning_unit.get.id}}/{{next_tests.first.quiz.learningunit_set.get.learning_unit.get.learning_module.get.id}}/" class="btn-1">Start</a>
+                          {% endif %}
+                          <div class="date">Test Date: {{ next_tests.first.test_date }}</div>
+                        </div>
+                      </div>
+                        
+                      {% else %}
+                      <div class="sub-card">
+                          <h6>No Tests Yet</h6>
+                          <div class="date">Please add a test</div>
+                      </div>
+                      {% endif %}
+                      {% endwith %}
+                      
+                      <div class="card-btn">
+                        
+                          <a href="#" class="btn-1">Performance</a>
+                                                              <!-- Add Tests Button trigger modal -->
+                          <a href="#" class="btn-1" data-toggle="modal" data-target="#add-test-{{ t_series.id }}">
+                            Add Test
+                          </a>
+
+                          <!-- Modal -->
+                          <div class="modal fade" id="add-test-{{ t_series.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                              <div class="modal-content">
+                                <form action='{% url "yaksh:add_test_to_series" %}' method="POST">
+                                    <div class="modal-header">
+                                      <h5 class="modal-title" id="exampleModalLongTitle">Add Test to {{ t_series.test_series_name }}</h5>
+                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                      </button>
+                                    </div>
+                                    <div class="modal-body">
+
+                                          {% csrf_token %}
+                                          <select class="form-control" name="test" id="select-quiz">
+                                              <option value="none">Select Quiz</option>
+                                              {% for quiz in quizzes_1 %}
+                                              <option value="{{ quiz.id }}">{{ quiz.quiz_code }}</option>
+                                              {% endfor %}
+                                          </select>
+                                          <input class="form-control" type="date" name="date" id="quiz-date">
+                                          <select class="form-control" name="test-series" id="select-test-series" style="display: none;">
+                                              <option value="{{ t_series.id }}">{{ t_series.id }}</option>
+                                          </select>
+
+                                    </div>
+                                    <div class="modal-footer">
+                                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                      <input class="btn btn-success" type="submit">
+                                    </div>
+                                </form>
+                              </div>
+                            </div>
+                          </div>
+
+                          <a href="#" class="btn-1" type="button" data-toggle="modal" data-target="#test-series-{{ t_series.id }}">View Details</a>
+                      </div>
+                          <!-- When View Details Clicked ===> Model View for Test-Series -->
+                          <div class="modal fade" id="test-series-{{ t_series.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                              <div class="modal-dialog modal-dialog-centered" role="document">
+                                  <div class="modal-content">
+                                      <div class="modal-header">
+                                          <h5 class="modal-title" id="exampleModalCenterTitle">Test Series</h5>
+
+                                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                              <span aria-hidden="true">&times;</span>
+                                          </button>
+                                      </div>
+                                      <div class="modal-body">
+                                          <h5 class="card-title">{{ t_series.test_series_name }}</h5>
+                                          <h6 class="card-subtitle mb-2 light-text">Completed Tests: 3 / 12</h6>
+                                          <div class="progress mb-2">
+                                              <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                          </div>
+                                          <h6 class="card-subtitle mt-2 mb-0 light-text">Description</h6>
+                                          <p>{{ t_series.test_series_description }}</p>
+
+                                          <div class="completed-test">
+                                              <div class="head">
+                                                  <center>
+                                                      <h6 class="card-subtitle mt-2 light-text mb-3"><b>Completed Tests</b></h6>
+                                                  </center>
+                                              </div>
+                                              <div class="test-body">
+                                                  <a class="mock-test" href="#">
+                                                      <h6>Mock Test - 4</h6>
+                                                      <div class="badge badge-pill badge-success">Test Date: 30 Aug</div>
+                                                  </a>
+                                              </div>
+                                          </div>
+                                          <div class="upcoming-test">
+                                              <div class="head">
+                                                  <center>
+                                                      <h6 class="card-subtitle light-text mb-3"><b>Upcoming Tests</b></h6>
+                                                  </center>
+                                              </div>
+                                              <div class="test-body">
+                                                  {% for test in t_series.tests.all %}
+                                                  <div class="row justify-content-center align-items-center">
+                                                      <a class="col-10 mock-test" href="#">
+                                                      <h6>{{ test.test_name }}</h6>
+                                                      <div class="badge badge-pill badge-success">{{ test.test_date }}</div>
+                                                  </a>
+                                                  <a href="/exam/delete-test/{{ test.id }}"  class="col-1 badge badge-pill badge-danger">X</a><!--/exam/delete-test/{{ test.id }}-->
+
+                                                  </div>
+                                                  {% empty %}
+                                                  <a class="mock-test" href="#">
+                                                      <h6>No Tests Yet</h6>
+                                                  </a>
+                                                  {% endfor %}
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      {% endfor %}
+  </div>
+  </div>
+    {% else %}
+      
+      <p>Hey! You can plan things ahead by Setting up your Goals. Click on "Create Goals" to create your own test series. You can add tests in Test Series and schedule it according to your time</p>
+      {% if user.is_authenticated %}
+      <a href="{% url 'yaksh:test_series' %}" class="setup-goals">Create Goals</a>
+      {% else %}
+      <button class="setup-goals login-register">Create Goals</button>
+      {% endif %}    
+    {% endif %}
+  </section>
     <!-- Learning Corner  -->
+    <div class="rv-gradient">
         <div class="container text-center p-4">
             <h3 class="sub-head">&diamond; Suggested Free Tests &diamond;</h3>
           <div class="row">
@@ -172,6 +372,7 @@
               </div>
           </div>
       </div>
+    </div>
         <div class="container-xl text-center p-4">
           
           
@@ -298,7 +499,7 @@
                 <a href="#"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p></a>
                 <a href="#"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p></a> -->
               </div>
-              <!-- <a href="#" class="view-more">View More</a> -->
+              <a href="{% url 'letsprepare:update_result' %}" class="view-more">View More</a>
             </div>
           </div>
           <div class="col-sm-12 col-md-6 col-lg-4 pt-5">
@@ -316,7 +517,9 @@
                 <a href="#"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p></a>
                 <a href="#"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p></a> -->
               </div>
-              <!-- <a href="#" class="view-more">View More</a> -->
+              <a href="{% url 'letsprepare:update_admit_card' %}" class="view-more">View More</a>
+
+
             </div>
           </div>
           <div class="col-sm-12 col-md-6 col-lg-4 pt-5" id="announcements">
@@ -329,7 +532,7 @@
                 {% endfor %}
                 </div>
               </div>
-              <!-- <a href="#" class="view-more">View More</a> -->
+              <a href="{% url 'letsprepare:update_announcement' %}" class="view-more">View More</a>
             </div>
           </div>
         </div>

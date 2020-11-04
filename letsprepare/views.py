@@ -5,7 +5,7 @@ from django.http import JsonResponse
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt,csrf_protect
 from yaksh.decorators import has_profile
-from yaksh.models import QuestionPaper, AnswerPaper, Profile, Course, Update, CurrentAffair
+from yaksh.models import QuestionPaper, AnswerPaper, Profile, Course, Update, CurrentAffair, Update
 from yaksh.models import LearningModule, Quiz
 from yaksh.views import my_render_to_response, my_redirect
 from rest_framework import status
@@ -387,9 +387,9 @@ def index(request):
     # """Take the credentials of the user and log the user in."""
     # next_url = request.GET.get('next')
     courses = Course.objects.all()
-    updates_result = Update.objects.order_by('-pubDate').filter(type='result')[:5]
-    update_announcements = Update.objects.order_by('-pubDate').filter(type='announcement')[:5]
-    admit_cards = Update.objects.order_by('-pubDate').filter(type='admit_card')[:5]
+    updates_result = Update.objects.order_by('-pubDate').filter(type='result')[:30]
+    update_announcements = Update.objects.order_by('-pubDate').filter(type='announcement')[:30]
+    admit_cards = Update.objects.order_by('-pubDate').filter(type='admit_card')[:30]
     this_month = datetime.now().month
     months_to_show = []
     today_dt = date.today()
@@ -540,3 +540,29 @@ def verify_payment(request):
         except:
             return my_render_to_response(request, 'yaksh/404.html')
     return my_redirect('/letsprepare')
+
+def latest_updates(request):
+    return my_render_to_response(request, 'upgradev001/latest_update.html')
+
+def result(request):
+    updates_result = Update.objects.order_by('-pubDate').filter(type='result')
+    paginator = Paginator(updates_result, 10)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    context = {"updates": updates_result, "heading": "Results", 'page_obj': page_obj}
+    return my_render_to_response(request, 'upgradev001/latest_update.html', context)
+def announcements(request):
+    update_announcements = Update.objects.order_by('-pubDate').filter(type='announcement')
+    paginator = Paginator(update_announcements, 10)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    context = {"updates": update_announcements, "heading": "Announcements", 'page_obj': page_obj}
+    return my_render_to_response(request, 'upgradev001/latest_update.html', context)
+
+def admit_card(request):
+    admit_cards = Update.objects.order_by('-pubDate').filter(type='admit_card')
+    paginator = Paginator(admit_cards, 10)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    context = {"updates": admit_cards, "heading": "Admit Cards", 'page_obj': page_obj}
+    return my_render_to_response(request, 'upgradev001/latest_update.html', context)

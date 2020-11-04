@@ -275,42 +275,47 @@
             <div class="card">
               <div class="card-body">
                 <h4>Results</h4>
+                <div>
                 {% for result in updates_result %}
                 <a href="{{ result.link }}"><p>{{ result.headline }}</p></a>
                 {% endfor %}
+                </div>
                 <!-- <a href="#"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p></a>
                 <a href="#"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p></a>
                 <a href="#"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p></a>
                 <a href="#"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p></a> -->
               </div>
-              <a href="#" class="view-more">View More</a>
+              <a href="{% url 'letsprepare:update_result' %}" class="view-more">View More</a>
             </div>
           </div>
           <div class="col-sm-12 col-md-6 col-lg-4 pt-5">
             <div class="card">
               <div class="card-body">
                 <h4>Admit Card</h4>
+                <div>
                 {% for admit_card in admit_cards %}
                 <a href="{{ admit_card.link }}"><p>{{ admit_card.headline }}</p></a>
                 {% endfor %}
-                
+                </div>
                 <!-- <a href="#"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p></a>
                 <a href="#"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p></a>
                 <a href="#"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p></a>
                 <a href="#"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p></a> -->
               </div>
-              <a href="#" class="view-more">View More</a>
+              <a href="{% url 'letsprepare:update_admit_card' %}" class="view-more">View More</a>
             </div>
           </div>
           <div class="col-sm-12 col-md-6 col-lg-4 pt-5" id="announcements">
             <div class="card">
               <div class="card-body">
                 <h4>Announcements</h4>
+                <div>
                 {% for anncment in update_announcements %}
                 <a href="{{ anncment.link }}"><p>{{ anncment.headline }}</p></a>
                 {% endfor %}
+                </div>
               </div>
-              <a href="#" class="view-more">View More</a>
+              <a href="{% url 'letsprepare:update_announcement' %}" class="view-more">View More</a>
             </div>
           </div>
         </div>

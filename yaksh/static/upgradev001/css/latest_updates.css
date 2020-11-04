@@ -1,0 +1,123 @@
+body {
+    background-color: #eeeeee;
+}
+
+a {
+    transition: 0.3s;
+    color: black;
+}
+
+a:hover {
+    color: #28a745;
+}
+
+.latest-updates {
+    margin-top: 1rem;
+}
+
+.latest-updates .updates-nav a, .latest-updates .updates-link {
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.latest-updates .updates-nav a {
+    padding: 0.3rem 1.5rem;
+    margin-bottom: 0;
+    background-color: #f9f9f9;
+    margin-bottom: 0.3rem;
+}
+
+.latest-updates .updates-nav a:first-child {
+    border-top: 1px solid #dddddd;
+}
+
+.latest-updates .updates-nav a:hover {
+    background-color: #28a745;
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.latest-updates .updates-nav {
+    border-radius: 0px;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border: 1px solid #28a745;
+}
+
+.latest-updates .updates-nav h5 {
+    font-size: 18px;
+    padding: 1rem 1.5rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0;
+    border-bottom: #28a745;
+}
+
+.latest-updates .updates-link:first-child {
+    border-top: 1px solid #dddddd;
+}
+
+.latest-updates .updates-link {
+    padding: 0.5rem 1.5rem;
+    border-radius: 1px;
+    margin-bottom: 0;
+    border-bottom: 1px solid #dddddd;
+}
+
+.latest-updates .updates-link:hover {
+    text-decoration: none;
+    background-color: #f9f9f9;
+}
+
+.latest-updates .update-nav-link h4 {
+    font-size: 21px;
+    margin-bottom: 0;
+    font-weight: 600;
+    padding: 1rem 2rem;
+    padding-top: 1.5rem;
+    border-bottom: 1px solid #28a745;
+    display: block;
+    line-height: 1;
+}
+
+.latest-updates .update-nav-link .date {
+    float: right;
+    padding: 0px 4px;
+    font-weight: 600;
+    background-color: #dddddd;
+    color: #111111;
+    margin-top: 8px;
+    border-radius: 3px;
+    font-size: 12px;
+}
+
+.latest-updates .update-nav-link .pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 0;
+}
+
+.latest-updates .update-nav-link .pagination a {
+    float: left;
+    color: #111111;
+    margin: 8px 8px;
+    text-decoration: none
+}
+
+.latest-updates .update-nav-link .pagination a.active {
+    background-color: #28a745;
+    border-radius: 50%;
+    color: #ffffff;
+    height: 35px;
+    width: 35px;
+    line-height: 35px;
+    text-align: center;
+}
+
+.latest-updates .update-nav-link .pagination .prev {
+    margin-right: 30px;
+}
+
+.latest-updates .update-nav-link .pagination .next {
+    margin-left: 30px;
+}

@@ -102,7 +102,12 @@
                                         16 Marks</small>
                                         <small><i class="fa fa-clock-o mr-1"></i>30 Minutes</small>
                                     </div>
+                                  <div class="text-center">
+                                    {% if next_tests.first.test_date == today %}
+                                      <a class="btn btn-primary mb-1" href="/exam/start/{{next_tests.first.quiz.questionpaper_set.get.id}}/{{next_tests.first.quiz.learningunit_set.get.learning_unit.get.id}}/{{next_tests.first.quiz.learningunit_set.get.learning_unit.get.learning_module.get.id}}/" class="btn-1">Start</a>
+                                    {% endif %}
                                     <div class="date">Test Date: {{ next_tests.first.test_date }}</div>
+                                  </div>
                                 </div>
                                   
                                 {% else %}
@@ -111,12 +116,10 @@
                                     <div class="date">Please add a test</div>
                                 </div>
                                 {% endif %}
+                                {% endwith %}
                                 
                                 <div class="card-btn">
-                                  {% if next_tests.first.test_date == today %}
-                                  <a href="/exam/start/{{next_tests.first.quiz.questionpaper_set.get.id}}/{{next_tests.first.quiz.learningunit_set.get.learning_unit.get.id}}/{{next_tests.first.quiz.learningunit_set.get.learning_unit.get.learning_module.get.id}}/" class="btn-1">Start</a>
-                                  {% endif %}
-                                  {% endwith %}
+                                  
                                     <a href="#" class="btn-1">Performance</a>
                                                                         <!-- Add Tests Button trigger modal -->
                                     <a href="#" class="btn-1" data-toggle="modal" data-target="#add-test-{{ t_series.id }}">
