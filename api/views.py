@@ -450,6 +450,19 @@ class AllModuleList(APIView):
         serializer = LearningModuleSerializer(modules, many=True)
         return Response(serializer.data)
 
+class PartiModule(APIView):
+    """ List all Modules without any credentials """
+    permission_classes = [permissions.AllowAny]
+
+    def get(self, request,format=None):
+        pk = request.GET.get('q')
+        try:
+            modules = LearningModule.objects.get(name=pk)
+            serializer = LearningModuleSerializer(modules)
+        except:
+            return Response(serializer.error, status=status.HTTP_404_NOT_FOUND)
+        return Response(serializer.data)
+
 class CurrentAffairView(APIView):
     def get(self, request, format=None):
         ca = CurrentAffair.objects.all()

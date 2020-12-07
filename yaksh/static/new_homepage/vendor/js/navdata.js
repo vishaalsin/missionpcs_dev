@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
 function load_navdata(){
     const request = new XMLHttpRequest();
     request.open('GET', '/api/all_courses');
-    request.onload = () => {
+    request.onload = async () => {
         const response = JSON.parse(request.response);
         for(res in response){
             // Exams drop down
@@ -65,10 +65,31 @@ function load_navdata(){
             // Previous Year Drop down
             courseli = document.createElement('li');
             courselink = document.createElement('a');
-            courselink.href = "#d";
+            console.log("prevpaper");
+            // const newrequest = new XMLHttpRequest();
+            //console.log(response[res].name)
+            //newrequest.open('GET', `/api/get_subject/?q=${response[res].name}-PrevPaper`)
+            // var desc = ""
+            // newrequest.onload = async () => {
+            //     const newresponse = JSON.parse(newrequest.response);
+            //     desc=newresponse.description;
+            //     console.log("New Response", desc);
+                
+            // }
+            try{
+            let newresponse = await fetch(`/api/get_subject/?q=${response[res].name}-PrevPaper`);
+            let sub = await newresponse.json()
+            console.log(sub.id)
+            // newrequest.send();
+            courselink.href = `/letsprepare/exam/?id=${sub.id}`;
             courselink.textContent = response[res].name
             courseli.appendChild(courselink)
             document.querySelector('#prev-year-drop').appendChild(courseli)
+            }
+            catch(err){
+                console.log(err);
+            }
+
             // Tests Drop down
             // courseli = document.createElement('li');
             // courselink = document.createElement('a');
@@ -76,7 +97,7 @@ function load_navdata(){
             // courselink.textContent = response[res].name
             // courseli.appendChild(courselink)
             // document.querySelector('#test-se-drop').appendChild(courseli)
-            
+            // console.log(newrequest)
         }
     };
     request.send();

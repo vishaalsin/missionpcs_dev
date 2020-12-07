@@ -259,7 +259,7 @@ def dashboard(request, course_id):
     context = get_dashboard_context(availableQuizIds, course, current_affairs, modules, modules_data, quiz_data,
                                     user_course_list, rest_courses)
     t_serieses = Test_Series.objects.filter(created_by=request.user)[:2]
-    print(t_serieses[0].tests.all())
+    # print(t_serieses[0].tests.all())
     form_t = TestForm()
     quizzes = set()
     user_units = [[[quizzes.add(unit.quiz) for unit in lmodule.learning_unit.all()] for lmodule in cour.learning_module.all()] for cour in Course.objects.filter(students=request.user)]
@@ -314,6 +314,7 @@ def get_dashboard_context(availableQuizIds, course, current_affairs, modules, mo
     context['updates_result'] = updates_result 
     context['update_announcements'] = update_announcements
     context['admit_cards'] = admit_cards 
+    context['prevpap'] = LearningModule.objects.get(name=f"{course.name}-PrevPaper").id
     return context
 
 
@@ -355,7 +356,8 @@ def subjects(request, course_id):
 
 def show_subjects(course_id, request, user, user_course_list):
     course = Course.objects.get(id=course_id)
-    modules = course.learning_module.all()
+    prevpaper_name = f"{course.name}-PrevPaper"
+    modules = course.learning_module.all().exclude(name=prevpaper_name)
     modules_data = []
     quiz_data = []
     try:
@@ -2013,7 +2015,8 @@ def create_modules(request):
                         create_and_save_question_paper(quiz, questions_for_quiz, user)
                     msg = "Modules created successfully."
                     return prof_manage(request, msg)
-                except:
+                except Exception as e:
+                    print(e)
                     msg = 'Unable to upload file'
                     return prof_manage(request, msg)
     upload_form = UploadFileForm()
