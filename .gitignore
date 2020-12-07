@@ -1,4 +1,4 @@
-yaksh/migrations/__pycache__/0006_auto_20200822_1227.cpython-38.pyc
+2yaksh/migrations/__pycache__/0006_auto_20200822_1227.cpython-38.pyc
 yaksh/pipeline/__pycache__/settings.cpython-38.pyc
 yaksh/pipeline/__pycache__/__init__.cpython-38.pyc
 yaksh/migrations/__pycache__/0005_profile_full_access.cpython-38.pyc
@@ -149,3 +149,8 @@ yaksh/templatetags/__pycache__/test_custom_filters.cpython-38-pytest-5.4.3.pyc
 yaksh/tests/__pycache__/__init__.cpython-38.pyc
 yaksh/tests/__pycache__/test_code_server.cpython-38-pytest-5.4.3.pyc
 yaksh_data/data/Firsy/myfile_modern.yaml
+yaksh/migrations/__pycache__/0010_auto_20201126_2352.cpython-38.pyc
+yaksh/migrations/0010_auto_20201126_2352.py
+.gitignore
+letsprepare/migrations/0002_auto_20201207_1809.py
+letsprepare/migrations/__pycache__/0002_auto_20201207_1809.cpython-38.pyc
