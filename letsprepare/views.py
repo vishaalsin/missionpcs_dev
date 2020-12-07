@@ -47,7 +47,7 @@ def show_all_quizzes(request):
     except:
         availableQuizIds = []
     module = LearningModule.objects.get(id = id)
-    course = Course.objects.get(id=id)
+    course = module.learning_module.get()
     quizzes = module.get_quiz_units()
     quizzes = sorted(quizzes, key=lambda item: int(item.quiz_code.split('_')[1]))
     try:
