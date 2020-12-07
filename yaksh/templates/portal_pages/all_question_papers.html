@@ -5,6 +5,7 @@
 {% endblock %}
 {% block title %}Course Module{% endblock %}
 {% block content %}
+
 <div class="container-lg">
         <section id="tests">
             <div class="border rounded">
@@ -28,7 +29,7 @@
                                             {% if qp.available %}
                                                 <a href="/exam/start/{{qp.id}}/{{module_id}}/{{course_id}}/" class="start-btn">Start Test</a>
                                                 {% else %}
-                                                <a href="/exam/start/{{qp.id}}/{{module_id}}/1/" class="danger-btn">Start Test</a>
+                                                <a href="/exam/start/{{qp.id}}/{{module_id}}/{{ course_id }}/" class="danger-btn">Start Test</a>
                                             {% endif %}
                                         </div>
                                         <div class="attempts">Attempts<br>{{ qp.attempts}} / 2</div>

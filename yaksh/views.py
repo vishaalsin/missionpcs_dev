@@ -314,7 +314,7 @@ def get_dashboard_context(availableQuizIds, course, current_affairs, modules, mo
     context['updates_result'] = updates_result 
     context['update_announcements'] = update_announcements
     context['admit_cards'] = admit_cards 
-    context['prevpap'] = LearningModule.objects.get(name=f"{course.name}-PrevPaper")
+    context['prevpap'] = LearningModule.objects.get(name=f"{course.name}-PrevPaper").id
     return context
 
 
