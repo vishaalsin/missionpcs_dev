@@ -3,6 +3,7 @@ const courses= document.querySelector('#courses-list'),
         shoppingCartContent= document.querySelector('#cart-content tbody'),
         clearCartBtn=document.querySelector('#clear-cart');
         checkoutCartBtn=document.querySelector('#cart-checkout');
+        pointsdiv=document.querySelector('#points');
 
 let courses_to_buy = new Set();
 
@@ -28,6 +29,29 @@ function loadEventListeners(){
 }
 
 
+function calculate_total(){
+    param = document.getElementById('cart-checkout')
+    console.log("called")
+    items = param.parentElement.firstElementChild.tBodies[0].children;
+    sum = 0
+    console.log(items)
+    quiz_ids = []
+    for (var i = 0; i < items.length; i++) {
+      sum += parseInt(items[i].cells[1].innerText.replace("Rs.", ""))
+      quiz_ids.push(parseInt(items[i].cells[2].innerText))
+    }
+    tot = document.getElementById('total');
+    console.log(tot)
+    points = document.getElementById('pts').innerText.trim();
+    parseInt(points);
+    if ((sum - points) < 0){
+        tot.innerHTML = `Total = Rs. 0 <del>Rs. ${sum}</del>`;
+    }
+    else {
+        tot.innerHTML = `Total = Rs. ${sum-points} <del>Rs. ${sum}</del>`;
+    }
+    console.log("Sum", sum)
+}
 
 
 
@@ -95,9 +119,10 @@ function buycourse(e){
                 addIntoCart(quiz_code, quiz_price, quiz_id);
                 }
             }
+        calculate_total()
 }
     }
-
+    
 
 //    getCourseInfo(course);
     alert("Quizzes Added!!")
@@ -120,6 +145,7 @@ function addIntoCart(quiz_code, quiz_price, quiz_id){
 
     `;
     shoppingCartContent.appendChild(row);
+    calculate_total();
 
 }
 
@@ -148,6 +174,7 @@ function removeCourse(e){
        
     
         }
+    calculate_total();
 }
 
 function clearCart(e){
@@ -160,6 +187,7 @@ function clearCart(e){
             bt.innerHTML = "Add to Cart";
         }
     })
+    calculate_total();
 }
 
 function checkoutCart(e){

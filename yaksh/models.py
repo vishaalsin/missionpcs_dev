@@ -2828,3 +2828,29 @@ class AnonymousUser(models.Model):
     interests = ListTextField(null=False, base_field=IntegerField(), size=20, )
     def __str__(self):
         return self.user_ip
+
+##############################################################################
+
+class PointSystem(models.Model):
+    points = models.IntegerField(default=0)
+    reward = ListTextField(blank=True, null=True, base_field=IntegerField(), size=1000, default=[])
+    redeemed = ListTextField(blank=True, null=True, base_field=IntegerField(), size=1000, default=[])
+    bought = ListTextField(blank=True, null=True, base_field=IntegerField(), size=1000, default=[])    
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    def add_reward(self, quiz_id):
+        quiz_id = int(quiz_id)
+        if quiz_id in self.reward or quiz_id in self.redeemed:
+            pass
+        else:
+            self.reward.append(quiz_id)
+            self.save()
+    def reward_points(self):
+        return len(self.reward)*5
+    def collect_reward(self):
+        self.points = self.points + self.reward_points()
+        for r in self.reward:
+            self.redeemed.append(r)
+        self.reward = []
+        self.save()
+    def __str__(self):
+        return str(self.points)

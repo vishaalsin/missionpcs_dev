@@ -5,6 +5,7 @@
 {% endblock %}
 {% block content %}
 <div class="container-fluid">
+    
     <div class="modules row" style="min-height: 370px;">
         <div id="courses-list" class="container col-12 col-lg-8 my-4">
                     {% if messages %}
@@ -62,6 +63,11 @@
             </div>
         </div>
         <div class="">
+            <div class="px-4 bg-white rounded shadow-sm">
+                <h4 class="d-inline">Your Points: </h4>
+                <span id="pts">{{ points.points}}</span> Mcoins
+                <p>1 Mcoin = 1 Rs</p>
+            </div>
             <div id="shopping-cart" class="p-4 m-2">
                 <table id="cart-content" class="d-block w-100">
                     <thead class="d-block w-100">
@@ -73,6 +79,9 @@
                     </thead>
                     <tbody class="d-block w-100"></tbody>
                 </table>
+                <div id="total">
+                    Total = 0
+                </div>
                 <br>
         
                 <a href="#" id="clear-cart" class="clear-cart-btn">Clear Cart</a>

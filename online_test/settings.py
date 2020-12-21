@@ -39,6 +39,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
+    'robots',
     # 'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -88,7 +89,7 @@ WSGI_APPLICATION = 'online_test.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'New_Database',#'shivam',
+        'NAME': 'postgres',#'shivam',
         'USER': 'postgres',
         'PASSWORD': '12345678',#'shivam20',
         'HOST': 'localhost',

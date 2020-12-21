@@ -5,7 +5,7 @@ from django.http import JsonResponse
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt,csrf_protect
 from yaksh.decorators import has_profile
-from yaksh.models import QuestionPaper, AnswerPaper, Profile, Course, Update, CurrentAffair, Update
+from yaksh.models import QuestionPaper, AnswerPaper, Profile, Course, Update, CurrentAffair, Update, PointSystem
 from yaksh.models import LearningModule, Quiz
 from yaksh.views import my_render_to_response, my_redirect
 from rest_framework import status
@@ -137,10 +137,11 @@ def show_all_on_sale(request):
                 quiz_data[-1]['available'] = False
         module_price = sum([quiz['price'] for quiz in quiz_data if not quiz['available']])
         modules_data.append({'name': module.description, 'id': module.id, 'quizzes': quiz_data, 'state': 'Active', 'org_price' : module_price *2, 'price' : module_price})
-
+    points = PointSystem.objects.get_or_create(user = request.user)[0]
     context = {
         'user': user, 'modules': modules_data,
-        'title': 'ALL  AVAILABLE  MODULES'
+        'title': 'ALL  AVAILABLE  MODULES',
+        'points': points
     }
     # return my_render_to_response(request, "yaksh/all_on_sale.html", context)
     return my_render_to_response(request, "buy/all_on_sale.html", context)
@@ -161,18 +162,30 @@ def assign_quizzes(request):
         amount = sum([quiz.price for quiz in Quiz.objects.filter(id__in=[quiz for quiz in results['quizzes']])])
 
         order_amount = amount*100
-
+        points =PointSystem.objects.get_or_create(user=request.user)[0]
+        order_amount = order_amount - (points.points*100)
+        if order_amount<0:
+            order_amount=0
         order_currency = 'INR'
         order_receipt = ''
         notes = {'': ''}
 
         # CREAING ORDER
-        response = client.order.create(
-            dict(amount=order_amount, currency=order_currency, receipt=order_receipt, notes=notes, payment_capture='0'))
-        order_id = response['id']
-        order_status = response['status']
+        if order_amount==0:
+            response = client.order.create(
+                dict(amount=100, currency=order_currency, receipt=order_receipt, notes=notes,
+                     payment_capture='0'))
+            order_id = response['id']
+            order_status = 'redeemed'
+        else:
+            response = client.order.create(
+                dict(amount=order_amount, currency=order_currency, receipt=order_receipt, notes=notes, payment_capture='0'))
+            order_id = response['id']
+
+            order_status = response['status']
 
         for quiz in results['quizzes']:
+
             data = {'user': request.user.id,
                     'quiz': quiz,
                     'order_id': order_id
@@ -180,7 +193,17 @@ def assign_quizzes(request):
             available_quizzes_serializer = AvailableQuizzesSerializer(data=data)
             if available_quizzes_serializer.is_valid():
                 available_quizzes_serializer.save()
-
+        if order_status=='redeemed':
+            reddata = {
+                'razorpay_payment_id': "redeemed",
+                'razorpay_order_id': order_id,
+                'razorpay_signature': "redeemed"
+            }
+            if settings.IS_DEVELOPMENT:
+                url = 'http://127.0.0.1:8000/letsprepare/verify_payment/'
+            else:
+                url = 'https://missionpcs.com/letsprepare/verify_payment/'
+            return JsonResponse({'paymentParams': reddata, 'url' : url})
         context = {}
         if order_status == 'created':
             # Server data for user convinience
@@ -386,7 +409,8 @@ def index(request):
     
     # """Take the credentials of the user and log the user in."""
     # next_url = request.GET.get('next')
-    courses = Course.objects.all()
+    courses= [{"name": c, "prevp": LearningModule.objects.get(name=f"{c}-PrevPaper")} for c in Course.objects.all()]
+    # courses["name"] = Course.objects.all()
     updates_result = Update.objects.order_by('-pubDate').filter(type='result')[:30]
     update_announcements = Update.objects.order_by('-pubDate').filter(type='announcement')[:30]
     admit_cards = Update.objects.order_by('-pubDate').filter(type='admit_card')[:30]
@@ -518,6 +542,10 @@ def verify_payment(request):
 
         data_dict = {}
         response = request.POST
+        print(response)
+        if response['razorpay_payment_id'] == 'redeemed':
+            PaytmHistory.objects.create(user=request.user, ORDERID=response['razorpay_order_id'], RESPCODE='REDEMPTION',
+                                        RESPMSG='REDEMPTION')
         params_dict = {
             'razorpay_payment_id': response['razorpay_payment_id'],
             'razorpay_order_id': response['razorpay_order_id'],
@@ -526,16 +554,28 @@ def verify_payment(request):
 
         # VERIFYING SIGNATURE
         try:
-            status = client.utility.verify_payment_signature(params_dict)
-            data_dict['status_code'] = status
+            count = 0
+            if response['razorpay_payment_id'] != 'redeemed':
+                status = client.utility.verify_payment_signature(params_dict)
+                data_dict['status_code'] = status
             # return data_dict
             orders = list(AvailableQuizzes.objects.filter(order_id=response['razorpay_order_id']))
             user = orders[0].user
-            del data_dict['status_code']
-            PaytmHistory.objects.create(user=user, **data_dict)
+            if response['razorpay_payment_id'] != 'redeemed':
+                del data_dict['status_code']
+                PaytmHistory.objects.create(user=user, **data_dict)
             for order in orders:
                 order.successful = True
                 order.save()
+                count = count + 1
+            # remove points as transaction is complete
+            points = PointSystem.objects.get_or_create(user=user)[0]
+            if (count*5) >= points.points:
+                points.points = 0
+                points.save()
+            else:
+                points.points = points.points - (count*5)
+                points.save()
             return my_redirect('/letsprepare')
         except:
             return my_render_to_response(request, 'yaksh/404.html')

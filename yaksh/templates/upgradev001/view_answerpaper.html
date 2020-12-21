@@ -27,6 +27,22 @@
         </a>
     {% endif %}
   <br><br>
+  <!-- Redeem System -> Start  -->
+  <div class="px-4 pb-2 bg-white rounded shadow-sm">
+    <h4 class="d-inline">Your Points: </h4>
+    <span id="pts">{{ points.points}}</span> Mcoins
+    <p>1 Mcoin = 1 Rs</p>
+    {% if points.reward_points > 0 %}
+  You have {{ points.reward_points }} more reward point. Click Redeem to add your point
+  <a class="btn btn-success" href="/exam/redeem/">Redeem</a>
+  {% else %}
+  If you score more 80% you get 5 Mcoins. Better Luck next time.
+  {% endif %}
+</div>
+
+  
+  
+  <!-- Redeem System -> end -->
   {% if data.papers %}
     {% for fig, paper in data.papers %}
       <br>
