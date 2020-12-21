@@ -249,6 +249,8 @@ urlpatterns = [
         views.delete_question, name="delete_question"),
     url(r'^manage/search/questions', views.search_questions_by_tags,
         name="search_questions_by_tags"),
+    url(r'^redeem/$', views.redeem_points,
+        name="redeem"),
     path('view/notifications', views.view_notifications,
          name="view_notifications"),
     path('mark/notifications/<uuid:message_uid>',

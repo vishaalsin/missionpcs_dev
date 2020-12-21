@@ -1,7 +1,7 @@
 from yaksh.models import Question, Quiz, QuestionPaper, Profile, Test, Test_Series
 from yaksh.models import (TestCase, StandardTestCase, StdIOBasedTestCase,
                           Course, AnswerPaper, CourseStatus, LearningModule,
-                          Lesson, Post, Comment, CurrentAffair, Update, AnonymousUser
+                          Lesson, Post, Comment, CurrentAffair, Update, AnonymousUser, PointSystem
                           )
 from django.contrib import admin
 
@@ -64,3 +64,4 @@ admin.site.register(LearningModule, LearningModuleAdmin)
 admin.site.register(CurrentAffair)
 admin.site.register(Update)
 admin.site.register(AnonymousUser)
+admin.site.register(PointSystem)

@@ -42,7 +42,8 @@ from yaksh.models import (
     QuestionPaper, QuestionSet, Quiz, Test, Test_Series, Question, StandardTestCase,
     StdIOBasedTestCase, StringTestCase, TestCase, User,
     get_model_class, FIXTURES_DIR_PATH, MOD_GROUP_NAME, Lesson, LessonFile,
-    LearningUnit, LearningModule, CourseStatus, question_types, Post, Comment, Strike, CurrentAffair, AnonymousUser, Update
+    LearningUnit, LearningModule, CourseStatus, question_types, Post, Comment, Strike, CurrentAffair, AnonymousUser, Update,
+    PointSystem
 )
 from yaksh.forms import (
     UserRegisterForm, UserLoginForm, QuizForm, QuestionForm,
@@ -420,7 +421,7 @@ def test_series(request):
         test_series_name = request.POST.get('test_series_name')
         test_series_description = request.POST.get('test_series_desc')
         try:
-            check = Test_Series.objects.get(test_series_name=test_series_name)
+            check = Test_Series.objects.get(test_series_name=test_series_name, created_by=request.user)
         except:
             check = None
         if check is not None:
@@ -2755,6 +2756,10 @@ def view_answerpaper(request, questionpaper_id, course_id):
     user = request.user
     quiz = get_object_or_404(QuestionPaper, pk=questionpaper_id).quiz
     course = get_object_or_404(Course, pk=course_id)
+    points = PointSystem.objects.get_or_create(user = request.user)[0]
+    print(quiz.id)
+
+    
     if quiz.view_answerpaper and user in course.students.all():
         data = AnswerPaper.objects.get_user_data(user, questionpaper_id,
                                                  course_id)
@@ -2773,11 +2778,13 @@ def view_answerpaper(request, questionpaper_id, course_id):
                     scrollZoom=False,
                     staticPlot=True
                 ), include_plotlyjs=False)
-
+            
+            if paper.percent >= 80:
+                points.add_reward(quiz.id)
             figs_.append(plot_div)
         data['papers'] = zip(figs_,papers)
         context = {'data': data, 'quiz': quiz, 'course_id': course.id,
-                   "has_user_assignment": has_user_assignment}
+                   "has_user_assignment": has_user_assignment, "points": points}
         return my_render_to_response(
             request, 'upgradev001/view_answerpaper.html', context
         )
@@ -4134,3 +4141,13 @@ def anon_enroll(request, course_id):
     #             )
     #         )
     return my_redirect(f'/exam/dashboard/{course_id}')
+
+def redeem_points(request):
+    points = PointSystem.objects.get_or_create(user = request.user)[0]
+    if points.reward_points() > 0:
+        points.collect_reward()
+    else:
+        messages.warning(request, f"You have no points to redeem.")
+        return my_redirect('/letsprepare')
+    messages.warning(request, f"You have {points.points} points to shop.")
+    return my_redirect('/letsprepare/buy/')
