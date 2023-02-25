@@ -21,3 +21,6 @@ pip install social-auth-app-django --upgrade
 pip install django-celery-beat --upgrade
 pip install django-cors-headers --upgrade
 pip install django==3.2 --upgrade
+invoke serve
+python manage.py makemigrations notifications_plugin
+python manage.py migrate notifications_plugin
