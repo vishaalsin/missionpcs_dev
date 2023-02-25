@@ -10,3 +10,14 @@ sudo apt-get install python-dev
 sudo apt-get install gcc
 sudo reboot
 pip install -r requirements/requirements-common.txt
+pip install python-decouple
+pip install django-robots
+pip install django-sslserver
+pip install django-extensions
+pip install django-celery-results --upgrade
+pip install psycopg2-binary
+pip install django-mysql
+pip install social-auth-app-django --upgrade
+pip install django-celery-beat --upgrade
+pip install django-cors-headers --upgrade
+pip install django==3.2 --upgrade
